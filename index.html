@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airam Tech - Advanced Image Compressor</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a8a4e6;
+            --background: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        nav a:hover {
+            background: var(--background);
+            color: var(--primary-color);
+        }
+
+        .logo {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            background: linear-gradient(45deg, #6c5ce7, #857bec);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--secondary-color);
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: #fbfaff;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .controls {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        input[type="number"], input[type="range"] {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 200px;
+        }
+
+        input[type="range"] {
+            width: 300px;
+            accent-color: var(--primary-color);
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9ff;
+            border-radius: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="dmca.html">DMCA</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+
+    <div class="logo">
+        <h1>🖼️ Airam Compressor</h1>
+    </div>
+
+    <div class="container">
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <p>📁 Drag & drop or click to upload</p>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div>Original Size: <span id="originalSize">0 KB</span></div>
+            <div>Target Size: <span id="targetSize">0 KB</span></div>
+            <div>Compressed: <span id="compressedSize">0 KB</span></div>
+        </div>
+
+        <div class="controls">
+            <div class="input-group">
+                <label>Target Size (KB):</label>
+                <input type="number" id="targetKB" min="10" value="100">
+                <label>Quality:</label>
+                <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <button onclick="compressImage()" id="compressBtn">🚀 Compress Now</button>
+            <a id="downloadLink" style="display: none;">
+                <button>💾 Download Compressed Image</button>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Airam Tech. Crafted with ❤️ by <a href="https://airamtech.com" target="_blank">Airam Tech</a></p>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const compressBtn = document.getElementById('compressBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        const targetKB = document.getElementById('targetKB');
+        const qualityRange = document.getElementById('quality');
+        const stats = document.getElementById('stats');
+        const progress = document.getElementById('progress');
+
+        let originalFile = null;
+
+        fileInput.addEventListener('change', function(e) {
+            originalFile = e.target.files[0];
+            if (originalFile) {
+                stats.style.display = 'flex';
+                document.getElementById('originalSize').textContent = 
+                    (originalFile.size / 1024).toFixed(2) + ' KB';
+                document.getElementById('targetSize').textContent = 
+                    targetKB.value + ' KB';
+            }
+        });
+
+        async function compressImage() {
+            if (!originalFile) return;
+
+            const targetSizeKB = Number(targetKB.value);
+            let quality = Number(qualityRange.value);
+            let compressedBlob = await compressToQuality(originalFile, quality);
+            
+            // If size-based compression needed
+            if ((compressedBlob.size / 1024) > targetSizeKB) {
+                compressedBlob = await findOptimalQuality(originalFile, targetSizeKB);
+            }
+
+            updateUIStats(compressedBlob.size);
+            enableDownload(compressedBlob);
+        }
+
+        async function compressToQuality(file, quality) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.naturalWidth;
+                    canvas.height = img.naturalHeight;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/jpeg', quality);
+                };
+            });
+        }
+
+        async function findOptimalQuality(file, targetKB) {
+            let minQuality = 0.1;
+            let maxQuality = 1.0;
+            let optimalBlob = file;
+            
+            for (let i = 0; i < 6; i++) {
+                const midQuality = (minQuality + maxQuality) / 2;
+                const blob = await compressToQuality(file, midQuality);
+                const currentSizeKB = blob.size / 1024;
+                
+                updateProgress((i + 1) * 16.66);
+                
+                if (currentSizeKB > targetKB) {
+                    maxQuality = midQuality;
+                } else {
+                    minQuality = midQuality;
+                    optimalBlob = blob;
+                }
+            }
+            
+            return optimalBlob;
+        }
+
+        function updateProgress(percentage) {
+            progress.style.width = percentage + '%';
+        }
+
+        function updateUIStats(compressedSize) {
+            const compressedKB = (compressedSize / 1024).toFixed(2);
+            document.getElementById('compressedSize').textContent = 
+                compressedKB + ' KB';
+            
+            const reduction = ((originalFile.size - compressedSize) / originalFile.size * 100).toFixed(1);
+            progress.style.width = '100%';
+        }
+
+        function enableDownload(blob) {
+            const url = URL.createObjectURL(blob);
+            downloadLink.href = url;
+            downloadLink.download = `compressed_${originalFile.name}`;
+            downloadLink.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

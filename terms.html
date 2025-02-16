@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service - Airam Tech</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         /* Shared Styles */
         :root {
-            --primary: #6c5ce7;
-            --secondary: #a8a4e6;
+            --primary-color: #6c5ce7;
+            --secondary-color: #a8a4e6;
             --background: #f8f9fa;
-            --text: #2d3436;
         }
 
         body {
@@ -30,9 +30,10 @@
         }
 
         h1 {
-            color: var(--primary);
+            color: var(--primary-color);
             text-align: center;
             margin-bottom: 2rem;
+            font-size: 2.5rem;
         }
 
         .terms-section {
@@ -42,8 +43,51 @@
             border-radius: 12px;
         }
 
-        nav, footer {
-            /* Add your navigation and footer styles from previous code */
+        /* Navigation and Footer - Same as index.html */
+        nav {
+            background: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -78,7 +122,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Airam Tech. <a href="https://github.com/yourusername/airam-compressor">View on GitHub</a></p>
+        <p>&copy; 2024 Airam Tech. <a href="https://github.com/yourusername/airam-compressor" style="color: #a8a4e6;">View on GitHub</a></p>
     </footer>
 </body>
 </html>

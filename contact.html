@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Airam Tech</title>
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, textarea {
+            padding: 1rem;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .contact-info {
+            padding: 2rem;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Same navigation as terms.html -->
+
+    <div class="container">
+        <h1>📧 Contact Us</h1>
+        
+        <div class="contact-container">
+            <div class="contact-form">
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea rows="6" placeholder="Your Message" required></textarea>
+                    <button type="submit" style="background: var(--primary); color: white; padding: 1rem; border: none; border-radius: 8px; cursor: pointer;">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+
+            <div class="contact-info">
+                <h2>📌 Our Office</h2>
+                <p>123 Tech Street<br>Digital City, DC 12345</p>
+                
+                <h2>📞 Contact Info</h2>
+                <p>Email: support@airamtech.com<br>Phone: +1 (555) 123-4567</p>
+                
+                <h2>🌐 Follow Us</h2>
+                <div class="social-links">
+                    <a href="#" style="color: var(--primary);">Twitter</a>
+                    <a href="#" style="color: var(--primary);">GitHub</a>
+                    <a href="#" style="color: var(--primary);">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same footer as terms.html -->
+</body>
+</html>

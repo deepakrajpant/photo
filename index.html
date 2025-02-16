@@ -6,36 +6,6 @@
     <title>Airam Tech - Advanced Image Compressor</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
-     /* Add new button styles */
-        .choose-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.9rem;
-        }
-
-        .choose-btn:hover {
-            opacity: 0.9;
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .choose-btn {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
-        }
         :root {
             --primary-color: #6c5ce7;
             --secondary-color: #a8a4e6;
@@ -258,7 +228,6 @@
     </style>
 </head>
 <body>
- 
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -273,13 +242,12 @@
         <h1>🖼️ Airam Compressor</h1>
     </div>
 
-     <div class="container">
-   <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-     <img id="previewImage" alt="Image preview">
-     <p id="uploadText">📁 Drag & drop or click to upload</p>
-     <button class="choose-btn" onclick="document.getElementById('fileInput').click(); event.stopPropagation();">📂 Choose Photo</button>
-     <input type="file" id="fileInput" accept="image/*" hidden>
-   </div>
+    <div class="container">
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <img id="previewImage" alt="Image preview">
+            <p id="uploadText">📁 Drag & drop or click to upload</p>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+        </div>
 
         <div class="stats" id="stats" style="display: none;">
             <div class="stat-item">

@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#6366f1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dream Japan">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%236366f1'/%3E%3Ctext x='96' y='128' font-family='sans-serif' font-size='100' font-weight='900' fill='white' text-anchor='middle'%3E日%3C/text%3E%3C/svg%3E">
 <title>Dream Japan — JFT Mock Test</title>
 <style>
 :root{
@@ -17,13 +22,27 @@
   --shadow:0 2px 8px rgba(15,23,42,.06);
   --shadow-lg:0 12px 32px rgba(15,23,42,.12);
   --radius:16px;--radius-sm:10px;
+  --sakura:#fbcfe8;
+}
+[data-theme="dark"]{
+  --navy:#e2e8f0;--navy2:#cbd5e1;--navy3:#94a3b8;
+  --bg:#0b1220;--bg2:#0f172a;--card:#131c2e;--text:#e2e8f0;--muted:#94a3b8;--border:#25324a;
+  --shadow:0 2px 8px rgba(0,0,0,.35);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme: dark){
+  [data-theme="auto"]{
+    --navy:#e2e8f0;--navy2:#cbd5e1;--navy3:#94a3b8;
+    --bg:#0b1220;--bg2:#0f172a;--card:#131c2e;--text:#e2e8f0;--muted:#94a3b8;--border:#25324a;
+    --shadow:0 2px 8px rgba(0,0,0,.35);
+    --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+  }
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Noto Sans JP",Roboto,sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s}
 #root{min-height:100vh}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
-.wrap-sm{max-width:440px;margin:0 auto;padding:0 16px}
 
 h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
 h2{font-size:20px;font-weight:800;letter-spacing:-.3px}
@@ -81,7 +100,7 @@ p{line-height:1.6}
 .input:focus,textarea.input:focus,select.input:focus{outline:none;border-color:var(--purple)}
 textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 
-.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, var(--card) 92%, transparent);
   backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--border);padding:10px 0}
 .topbar-inner{max-width:960px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px}
 .logo{width:38px;height:38px;border-radius:50%;background:var(--grad);display:grid;
@@ -169,7 +188,8 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 .q-text{font-size:18px;font-weight:700;line-height:1.6;margin-bottom:14px;white-space:pre-line;
   text-align:left}
 .media{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
-.media img{width:100%;border-radius:14px;border:1px solid var(--border);display:block}
+.media img{width:100%;border-radius:14px;border:1px solid var(--border);display:block;
+  background:var(--bg2)}
 .audio-row{display:flex;align-items:center;gap:10px;background:var(--bg);
   border:1px solid var(--border);padding:12px 14px;border-radius:14px}
 .play-btn{width:44px;height:44px;border-radius:50%;border:0;background:var(--grad);color:#fff;
@@ -187,7 +207,7 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 .opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);
   border-radius:13px;background:var(--card);cursor:pointer;transition:all .16s}
 .opt:hover{border-color:var(--purple2)}
-.opt.sel{border-color:var(--purple);background:#eef2ff;transform:translateX(3px)}
+.opt.sel{border-color:var(--purple);background:color-mix(in srgb, var(--purple) 8%, var(--card));transform:translateX(3px)}
 .opt-ltr{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:grid;
   place-items:center;font-size:11.5px;font-weight:800;color:var(--muted);flex-shrink:0}
 .opt.sel .opt-ltr{background:var(--purple);border-color:var(--purple);color:#fff}
@@ -285,7 +305,7 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 .gbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;
   border:1.5px solid var(--border);border-radius:12px;background:var(--card);font-size:14px;
   font-weight:800;cursor:pointer;transition:all .15s;font-family:inherit;margin-bottom:12px}
-.gbtn:hover{border-color:var(--purple);background:#f5f3ff}
+.gbtn:hover{border-color:var(--purple);background:color-mix(in srgb, var(--purple) 5%, var(--card))}
 .gbtn:disabled{opacity:.5}
 .divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);
   font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
@@ -295,7 +315,8 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 
 .plan-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px;
   margin-bottom:12px;transition:all .15s}
-.plan-card.featured{border-color:var(--purple);background:linear-gradient(180deg,#faf5ff 0%,#fff 100%)}
+.plan-card.featured{border-color:var(--purple);background:linear-gradient(180deg,
+  color-mix(in srgb, var(--purple) 5%, var(--card)) 0%, var(--card) 100%)}
 .plan-card .price{font-size:26px;font-weight:900;background:var(--grad);-webkit-background-clip:text;
   -webkit-text-fill-color:transparent;background-clip:text}
 .plan-card .benefits{list-style:none;margin-top:12px}
@@ -320,8 +341,7 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 .role-badge{display:inline-block;background:rgba(255,255,255,.25);padding:4px 12px;border-radius:20px;
   font-size:10.5px;font-weight:800;letter-spacing:.5px;margin-top:8px;text-transform:uppercase}
 
-/* ===== NEW: Bottom nav (mobile) ===== */
-.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:color-mix(in srgb, var(--card) 96%, transparent);
   backdrop-filter:saturate(180%) blur(8px);border-top:1px solid var(--border);
   padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:40}
 .bnav-inner{max-width:520px;margin:0 auto;display:flex;justify-content:space-around}
@@ -335,7 +355,7 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
   body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
   .bottom-nav{display:block}
 }
-/* ===== NEW: Streak / leaderboard / bookmarks ===== */
+
 .streak-banner{background:linear-gradient(135deg,#ff9500,#ff3b30);color:#fff;border-radius:16px;
   padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(255,59,48,.25);margin-top:14px}
 .streak-banner .fire{font-size:32px}
@@ -365,6 +385,91 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
 .practice-card h4{font-size:14px;margin-bottom:2px}
 .practice-card p{font-size:11.5px;color:var(--muted)}
 
+/* ===== PWA Banners ===== */
+.offline-banner{position:fixed;top:0;left:0;right:0;background:var(--orange);color:#fff;
+  padding:8px 16px;text-align:center;font-size:12px;font-weight:800;z-index:500;
+  padding-top:calc(8px + env(safe-area-inset-top))}
+.install-banner{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:12px;right:12px;
+  background:var(--card);border:1.5px solid var(--purple);border-radius:14px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);z-index:45;max-width:420px;
+  margin:0 auto}
+.install-banner span{flex:1;font-size:12.5px;font-weight:800}
+.install-banner button{padding:8px 12px;border:0;border-radius:8px;font-family:inherit;
+  font-weight:800;font-size:11.5px;cursor:pointer}
+.install-banner button.primary{background:var(--grad);color:#fff}
+.install-banner button.dismiss{background:var(--bg2);color:var(--muted)}
+
+/* ===== Skeleton ===== */
+.skeleton{background:linear-gradient(90deg, var(--bg2) 25%, var(--border) 50%, var(--bg2) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ===== Gamification ===== */
+.xp-bar{background:var(--bg2);border-radius:12px;height:14px;overflow:hidden;position:relative}
+.xp-bar i{display:block;height:100%;background:var(--grad);border-radius:12px;
+  transition:width .6s cubic-bezier(.3,.8,.4,1)}
+.xp-label{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.5px;
+  text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between}
+.level-badge{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;
+  font-size:22px;font-weight:900;color:#fff;flex-shrink:0;
+  box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.level-badge.bronze{background:linear-gradient(135deg,#cd7f32,#a65e1a)}
+.level-badge.silver{background:linear-gradient(135deg,#c0c0c0,#8b8b8b)}
+.level-badge.gold{background:linear-gradient(135deg,#ffd700,#ffa500)}
+.level-badge.platinum{background:linear-gradient(135deg,#e5e4e2,#a8a9ad)}
+.level-badge.diamond{background:linear-gradient(135deg,#b9f2ff,#5b8def)}
+
+.quest-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+  padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.quest-card.done{border-color:var(--green);background:color-mix(in srgb, var(--green) 6%, var(--card))}
+.quest-icon{font-size:26px;flex-shrink:0}
+.quest-info{flex:1;min-width:0}
+.quest-info h4{font-size:13.5px;margin-bottom:2px}
+.quest-info p{font-size:11px;color:var(--muted)}
+.quest-progress{font-size:12px;font-weight:800;color:var(--purple);flex-shrink:0}
+
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:400px){.ach-grid{grid-template-columns:repeat(2,1fr)}}
+.ach-badge{background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+  padding:14px 8px;text-align:center;transition:all .15s}
+.ach-badge.unlocked{border-color:var(--orange);
+  background:color-mix(in srgb, var(--orange) 8%, var(--card))}
+.ach-badge .icon{font-size:32px;margin-bottom:6px;display:block;filter:grayscale(1);opacity:.4}
+.ach-badge.unlocked .icon{filter:none;opacity:1}
+.ach-badge h4{font-size:11px;font-weight:800;line-height:1.3}
+.ach-badge p{font-size:9.5px;color:var(--muted);margin-top:3px}
+
+/* ===== Heatmap ===== */
+.heatmap{display:grid;grid-template-columns:repeat(53, 1fr);gap:3px;
+  overflow-x:auto;padding-bottom:8px}
+.heatmap-day{width:12px;height:12px;border-radius:3px;background:var(--bg2);flex-shrink:0}
+.heatmap-day[data-lvl="1"]{background:color-mix(in srgb, var(--green) 30%, var(--bg2))}
+.heatmap-day[data-lvl="2"]{background:color-mix(in srgb, var(--green) 55%, var(--bg2))}
+.heatmap-day[data-lvl="3"]{background:color-mix(in srgb, var(--green) 75%, var(--bg2))}
+.heatmap-day[data-lvl="4"]{background:var(--green)}
+
+/* ===== Flashcard ===== */
+.flashcard-wrap{min-height:60vh;display:flex;flex-direction:column;gap:16px;padding:16px 0}
+.flashcard{background:var(--card);border:1.5px solid var(--border);border-radius:22px;
+  padding:32px 22px;box-shadow:var(--shadow-lg);text-align:center;min-height:280px;
+  display:flex;flex-direction:column;justify-content:center;position:relative;
+  cursor:pointer;user-select:none;transition:transform .3s}
+.flashcard.flipped{background:linear-gradient(135deg,
+  color-mix(in srgb, var(--purple) 8%, var(--card)),
+  color-mix(in srgb, var(--pink) 5%, var(--card)))}
+.flashcard .front-text{font-size:26px;font-weight:800;line-height:1.5;white-space:pre-line}
+.flashcard .back-text{font-size:20px;font-weight:700;line-height:1.6;color:var(--purple)}
+.flashcard .hint{font-size:11px;color:var(--muted);margin-top:20px;font-weight:700;
+  letter-spacing:.8px;text-transform:uppercase}
+.srs-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.srs-btn{padding:12px 6px;border:0;border-radius:12px;font-family:inherit;font-weight:800;
+  cursor:pointer;font-size:11px;color:#fff;transition:transform .12s}
+.srs-btn:active{transform:scale(.95)}
+.srs-again{background:var(--red)}
+.srs-hard{background:var(--orange)}
+.srs-good{background:var(--teal)}
+.srs-easy{background:var(--green)}
+
 @media(max-width:560px){
   h1{font-size:22px}
   .hero{padding:22px 18px}
@@ -373,12 +478,21 @@ textarea.input{resize:vertical;min-height:80px;line-height:1.5}
   .q-text{font-size:16px}
 }
 img[loading="lazy"]{content-visibility:auto}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <div id="toast"></div>
 <div class="overlay" id="modal"></div>
+<div id="offlineBanner" class="offline-banner" style="display:none">📡 Offline mode — using cached data</div>
+<div id="installBanner" class="install-banner" style="display:none">
+  <span>📱 Install Dream Japan for faster access</span>
+  <button class="primary" id="installBtn">Install</button>
+  <button class="dismiss" id="dismissInstall">✕</button>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -389,7 +503,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc,
-  collection, query, where, getDocs, addDoc, serverTimestamp, onSnapshot, orderBy, limit
+  collection, query, where, getDocs, addDoc, serverTimestamp, onSnapshot, orderBy, limit,
+  enableIndexedDbPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 /* ============================================================
@@ -405,12 +520,7 @@ const FIREBASE_CONFIG = {
   measurementId: "G-V3M5626QM5"
 };
 const ADMIN_EMAIL = "deepakrajpant978@gmail.com";
-
-// 👉 Change to YOUR GitHub repo (raw content base)
-// Example: https://raw.githubusercontent.com/deepak-raj-pant/jft-mocktest/main/
 const REPO_BASE = "https://raw.githubusercontent.com/deepakrajpant/photo/main/";
-
-// Firestore doc that stores the questions array
 const QUESTIONS_DOC = "jftoctnovset/QORwII8D7qLZ7wuCDW36";
 
 const CACHE_KEY = "dj_q_cache_v3";
@@ -418,6 +528,7 @@ const CACHE_TTL = 30 * 60 * 1000;
 const EXAM_MIN = 60;
 const MAX_PLAYS = 2;
 const PASS_PCT = 0.8;
+const XP_PER_LEVEL = 500;
 
 const SECTIONS = [
   { key: "sv", name: "Script & Vocabulary",       short: "VOCAB",  count: 16, marks: 3, icon: "📝" },
@@ -431,9 +542,39 @@ const SET_NAMES = [
   { name: "PONPYUTA",   kana: "ぽ" }, { name: "MAGARIMASU", kana: "ま" }
 ];
 
+// Achievement definitions (unlocked based on profile stats)
+const ACHIEVEMENTS = [
+  { id: "first_exam",  icon: "🎯", name: "First Steps",     desc: "Complete 1 exam",        check: p => (p.testsCompleted || 0) >= 1 },
+  { id: "perfect",     icon: "💯", name: "Perfectionist",   desc: "Score 100% on a set",    check: p => (p.bestScore || 0) >= 100 },
+  { id: "streak3",     icon: "🔥", name: "Warm Up",         desc: "3-day streak",           check: p => ((p.streak && p.streak.count) || 0) >= 3 },
+  { id: "streak7",     icon: "🌋", name: "On Fire",         desc: "7-day streak",           check: p => ((p.streak && p.streak.count) || 0) >= 7 },
+  { id: "xp500",       icon: "⭐", name: "Rising Star",     desc: "Earn 500 XP",            check: p => (p.xp || 0) >= 500 },
+  { id: "xp1000",      icon: "🌟", name: "Shining",         desc: "Earn 1000 XP",           check: p => (p.xp || 0) >= 1000 },
+  { id: "xp5000",      icon: "💫", name: "Unstoppable",     desc: "Earn 5000 XP",           check: p => (p.xp || 0) >= 5000 },
+  { id: "flash50",     icon: "📚", name: "Scholar",         desc: "Study 50 flashcards",    check: p => (p.flashcardsStudied || 0) >= 50 },
+  { id: "exam5",       icon: "🏅", name: "Marathoner",      desc: "Complete 5 exams",       check: p => (p.testsCompleted || 0) >= 5 },
+  { id: "exam10",      icon: "🏆", name: "Champion",        desc: "Complete 10 exams",      check: p => (p.testsCompleted || 0) >= 10 },
+  { id: "perfect5",    icon: "👑", name: "Legend",          desc: "5 perfect scores",       check: p => (p.perfectScores || 0) >= 5 },
+  { id: "early_bird",  icon: "🌅", name: "Early Bird",      desc: "Practice before 7 AM",   check: p => !!p.earlyBird },
+  { id: "night_owl",   icon: "🦉", name: "Night Owl",       desc: "Practice after 10 PM",   check: p => !!p.nightOwl },
+  { id: "note_taker",  icon: "📝", name: "Note Taker",      desc: "Add 10 question notes",  check: p => Object.keys(p.notes || {}).length >= 10 },
+  { id: "bookmark10",  icon: "🔖", name: "Curator",         desc: "Bookmark 10 questions",  check: p => (p.bookmarks || []).length >= 10 }
+];
+
+// Daily quest templates
+const QUEST_TEMPLATES = [
+  { id: "answer10",  icon: "✏️", name: "Answer 10 questions",     goal: 10, xp: 50,  track: "questionsAnswered" },
+  { id: "listen1",   icon: "🎧", name: "Complete 1 listening",    goal: 1,  xp: 100, track: "listenSectionsDone" },
+  { id: "streak",    icon: "🔥", name: "Maintain your streak",    goal: 1,  xp: 75,  track: "loginToday" },
+  { id: "flash10",   icon: "📚", name: "Review 10 flashcards",    goal: 10, xp: 75,  track: "flashcardsToday" },
+  { id: "perfect1",  icon: "💯", name: "Get a perfect score",     goal: 1,  xp: 150, track: "perfectToday" }
+];
+
 const app = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
 const db = getFirestore(app);
+// Firestore offline persistence (helps when reconnecting)
+enableIndexedDbPersistence(db).catch(() => {});
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
@@ -449,20 +590,23 @@ const state = {
   sets: [],
   plans: [],
   userSub: null,
-  exam: null,          // exam mode
-  practice: null,      // practice mode
+  exam: null,
+  practice: null,
   results: [],
-  bookmarks: [],
   leaderboard: [],
+  flashcards: null,     // { deck: [...], idx, flipped }
+  offline: false,
   _tick: null,
   _audio: null,
   _allStudents: null,
-  _allQs: null
+  _allQs: null,
+  _installPrompt: null,
+  _flashSession: { done: 0, correct: 0 }
 };
 let totalQ = 52, fullMarks = 250, passMarks = 200;
 
 /* ============================================================
-   UTILS
+   UTILITIES
    ============================================================ */
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
@@ -480,11 +624,8 @@ function modal(title, bodyHTML, buttons) {
   const btns = buttons || [{ label: "OK", cls: "btn-primary" }];
   const btnHtml = btns.map((b, i) =>
     `<button class="btn ${b.cls || "btn-primary"}" data-idx="${i}">${b.label}</button>`).join("");
-  m.innerHTML = `<div class="modal-card">
-    <h3>${esc(title)}</h3>
-    <div>${bodyHTML}</div>
-    <div class="modal-actions">${btnHtml}</div>
-  </div>`;
+  m.innerHTML = `<div class="modal-card"><h3>${esc(title)}</h3><div>${bodyHTML}</div>
+    <div class="modal-actions">${btnHtml}</div></div>`;
   m.classList.add("show");
   m.querySelectorAll(".modal-actions button").forEach(btn => {
     btn.onclick = () => {
@@ -506,8 +647,14 @@ function daysLeft(ts) {
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return Math.max(0, Math.ceil((d - Date.now()) / 86400000));
 }
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+function haptic(ms = 10) {
+  try { if (navigator.vibrate) navigator.vibrate(ms); } catch {}
+}
 
-/* Resolve image / audio: relative path → repo raw, GitHub blob → raw, etc. */
 function resolveUrl(url) {
   if (!url) return "";
   url = String(url).trim();
@@ -539,7 +686,69 @@ function sceneData(kind) {
 }
 
 /* ============================================================
-   FIRESTORE
+   THEME (Dark mode)
+   ============================================================ */
+function initTheme() {
+  const saved = localStorage.getItem("dj_theme") || "auto";
+  document.documentElement.dataset.theme = saved;
+}
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem("dj_theme", t);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    const dark = t === "dark" || (t === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+    meta.content = dark ? "#0b1220" : "#6366f1";
+  }
+}
+function cycleTheme() {
+  const cur = localStorage.getItem("dj_theme") || "auto";
+  const next = cur === "auto" ? "light" : cur === "light" ? "dark" : "auto";
+  setTheme(next);
+  toast(`Theme: ${next}`, "ok");
+  render();
+}
+
+/* ============================================================
+   INDEXEDDB — local cache
+   ============================================================ */
+const IDB_NAME = "dj_db";
+const IDB_VERSION = 1;
+let _idb = null;
+
+function openIDB() {
+  return new Promise((resolve) => {
+    if (_idb) return resolve(_idb);
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains("kv")) db.createObjectStore("kv");
+    };
+    req.onsuccess = () => { _idb = req.result; resolve(_idb); };
+    req.onerror = () => resolve(null);
+  });
+}
+async function idbGet(key) {
+  const db = await openIDB(); if (!db) return null;
+  return new Promise(res => {
+    const tx = db.transaction("kv", "readonly");
+    const r = tx.objectStore("kv").get(key);
+    r.onsuccess = () => res(r.result || null);
+    r.onerror = () => res(null);
+  });
+}
+async function idbSet(key, val) {
+  const db = await openIDB(); if (!db) return;
+  return new Promise(res => {
+    const tx = db.transaction("kv", "readwrite");
+    tx.objectStore("kv").put(val, key);
+    tx.oncomplete = () => res();
+    tx.onerror = () => res();
+  });
+}
+
+/* ============================================================
+   FIRESTORE — questions
    ============================================================ */
 function normalizeRow(r) {
   if (!r) return null;
@@ -610,8 +819,15 @@ async function loadQuestions(force = false) {
   try {
     const rows = await fetchQuestionsFromFirestore();
     setCache(rows);
+    // Mirror to IDB (for offline)
+    idbSet("questions", { rows, ts: Date.now() }).catch(() => {});
     return { rows, fromCache: false, ts: Date.now() };
   } catch (e) {
+    // Try IDB fallback
+    const idb = await idbGet("questions");
+    if (idb && Array.isArray(idb.rows)) {
+      return { rows: idb.rows, fromCache: true, ts: idb.ts || Date.now(), error: e };
+    }
     if (cached) return { rows: cached.rows, fromCache: true, ts: cached.ts, error: e };
     throw e;
   }
@@ -652,7 +868,7 @@ function recomputeTotals() {
 }
 
 /* ============================================================
-   DATA LOADERS
+   USER PROFILE
    ============================================================ */
 async function ensureUserProfile(user) {
   const ref = doc(db, "users", user.uid);
@@ -674,6 +890,14 @@ async function ensureUserProfile(user) {
     bookmarks: [],
     streak: { count: 0, last: null },
     bestScore: 0,
+    testsCompleted: 0,
+    perfectScores: 0,
+    xp: 0,
+    achievements: [],
+    notes: {},
+    flashcards: {},
+    flashcardsStudied: 0,
+    quests: null,
     createdAt: serverTimestamp(),
     lastLogin: serverTimestamp()
   };
@@ -690,9 +914,9 @@ async function loadPlans() {
     if (!plans.length) {
       const defs = [
         { id: "p15", name: "15-Day Premium", price: 500, days: 15, active: true,
-          benefits: ["Full access to all 6 sets", "Unlimited attempts", "Answer explanations", "Progress tracking", "Practice Mode access", "Bookmarks & Streak"] },
+          benefits: ["All 6 mock tests", "Unlimited attempts", "Practice Mode", "Bookmarks & Streak", "Flashcards + SRS"] },
         { id: "p30", name: "30-Day Premium", price: 1000, days: 30, active: true,
-          benefits: ["Everything in 15-day", "Priority support", "Section-wise analytics", "Leaderboard eligibility", "PDF result export"] }
+          benefits: ["Everything in 15-day", "Analytics & Heatmap", "Leaderboard", "Priority support"] }
       ];
       for (const p of defs) await setDoc(doc(db, "plans", p.id), p);
       return defs;
@@ -708,7 +932,7 @@ async function loadResults(uid) {
     const out = [];
     snap.forEach(d => out.push({ id: d.id, ...d.data() }));
     return out;
-  } catch (e) { console.error("loadResults", e); return []; }
+  } catch (e) { return []; }
 }
 
 async function loadLeaderboard() {
@@ -720,28 +944,251 @@ async function loadLeaderboard() {
       const u = d.data();
       if ((u.bestScore || 0) > 0) out.push({
         uid: d.id, name: u.name || "Student",
-        photoURL: u.photoURL || "", bestScore: u.bestScore,
-        streak: (u.streak && u.streak.count) || 0
+        bestScore: u.bestScore, streak: (u.streak && u.streak.count) || 0
       });
     });
     return out;
-  } catch (e) { console.error("loadLeaderboard", e); return []; }
+  } catch { return []; }
+}
+
+/* ============================================================
+   GAMIFICATION
+   ============================================================ */
+function levelForXp(xp) {
+  const lvl = Math.floor(xp / XP_PER_LEVEL) + 1;
+  const tiers = ["bronze", "silver", "gold", "platinum", "diamond"];
+  const tier = tiers[Math.min(tiers.length - 1, Math.floor((lvl - 1) / 3))];
+  const progress = xp % XP_PER_LEVEL;
+  return { level: lvl, tier, progress, pct: (progress / XP_PER_LEVEL) * 100 };
+}
+
+async function awardXP(amount, reason) {
+  if (!state.user) return;
+  const p = state.profile || {};
+  const newXp = (p.xp || 0) + amount;
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), { xp: newXp });
+    state.profile.xp = newXp;
+    if (reason) toast(`+${amount} XP — ${reason}`, "ok");
+    checkAchievements();
+  } catch {}
+}
+
+async function checkAchievements() {
+  const p = state.profile || {};
+  const have = new Set(p.achievements || []);
+  const newly = [];
+  ACHIEVEMENTS.forEach(a => {
+    if (!have.has(a.id) && a.check(p)) { have.add(a.id); newly.push(a); }
+  });
+  if (!newly.length) return;
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), { achievements: Array.from(have) });
+    state.profile.achievements = Array.from(have);
+    newly.forEach((a, i) => setTimeout(() => toast(`🏆 ${a.name} unlocked!`, "ok"), i * 800));
+  } catch {}
+}
+
+/* ---- Daily Quests ---- */
+function getTodayQuests() {
+  const p = state.profile || {};
+  const key = todayKey();
+  if (!p.quests || p.quests.date !== key) {
+    // New day — create fresh quests
+    const picks = QUEST_TEMPLATES.slice(0, 3); // first 3 as today's quests
+    return {
+      date: key,
+      list: picks.map(q => ({ id: q.id, progress: 0, done: false })),
+      stats: { questionsAnswered: 0, listenSectionsDone: 0, flashcardsToday: 0, perfectToday: 0, loginToday: 1 }
+    };
+  }
+  return p.quests;
+}
+
+async function saveQuests(q) {
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), { quests: q });
+    state.profile.quests = q;
+  } catch {}
+}
+
+async function updateQuestProgress(track, inc = 1) {
+  if (!state.user) return;
+  const q = getTodayQuests();
+  const key = todayKey();
+  if (q.date !== key) { q.date = key; q.list.forEach(x => { x.progress = 0; x.done = false; }); }
+  q.stats[track] = (q.stats[track] || 0) + inc;
+  let xpEarned = 0;
+  q.list.forEach(item => {
+    const tmpl = QUEST_TEMPLATES.find(t => t.id === item.id);
+    if (!tmpl || item.done) return;
+    const stat = q.stats[tmpl.track] || 0;
+    item.progress = Math.min(stat, tmpl.goal);
+    if (item.progress >= tmpl.goal) {
+      item.done = true;
+      xpEarned += tmpl.xp;
+    }
+  });
+  await saveQuests(q);
+  if (xpEarned > 0) {
+    await awardXP(xpEarned, "Quest complete");
+    toast(`🎯 Quest complete! +${xpEarned} XP`, "ok");
+  }
+}
+
+/* ============================================================
+   FLASHCARDS — SM-2 SRS
+   ============================================================ */
+function buildFlashcardDeck() {
+  // Extract "Q → correct answer" cards from all questions
+  const deck = [];
+  state.sets.forEach(set => set.sections.forEach(sec => sec.questions.forEach((q, qi) => {
+    const correctAnswer = q.o[q.a];
+    if (!correctAnswer) return;
+    deck.push({
+      id: `${set.idx}-${sec.key}-${qi}`,
+      front: q.p || q.q,
+      back: correctAnswer,
+      setIdx: set.idx,
+      section: sec.key,
+      qi
+    });
+  })));
+  return deck;
+}
+
+function sm2Update(srsState, rating) {
+  // rating: 0=again, 1=hard, 2=good, 3=easy
+  let { interval = 1, ease = 2.5, reps = 0 } = srsState || {};
+  if (rating === 0) { interval = 1; ease = Math.max(1.3, ease - 0.2); reps = 0; }
+  else if (rating === 1) { interval = Math.max(1, Math.round(interval * 1.2)); ease = Math.max(1.3, ease - 0.15); reps++; }
+  else if (rating === 2) { interval = Math.max(1, Math.round(interval * ease)); reps++; }
+  else if (rating === 3) { interval = Math.max(1, Math.round(interval * ease * 1.3)); ease += 0.15; reps++; }
+  const due = Date.now() + interval * 86400000;
+  return { interval, ease, reps, due, lastRating: rating };
+}
+
+async function rateFlashcard(rating) {
+  const { deck, idx } = state.flashcards || {};
+  if (!deck || idx == null) return;
+  const card = deck[idx];
+  const p = state.profile || {};
+  const all = p.flashcards || {};
+  all[card.id] = sm2Update(all[card.id], rating);
+
+  // Track stats
+  const newStudied = (p.flashcardsStudied || 0) + 1;
+
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), {
+      flashcards: all,
+      flashcardsStudied: newStudied
+    });
+    state.profile.flashcards = all;
+    state.profile.flashcardsStudied = newStudied;
+  } catch {}
+
+  // XP + quest
+  const xp = rating >= 2 ? 8 : 3;
+  await awardXP(xp);
+  await updateQuestProgress("flashcardsToday", 1);
+
+  state._flashSession.done++;
+  if (rating >= 2) state._flashSession.correct++;
+  haptic(rating >= 2 ? 15 : 8);
+
+  // Next card
+  if (idx + 1 >= deck.length) {
+    finishFlashcards();
+  } else {
+    state.flashcards.idx = idx + 1;
+    state.flashcards.flipped = false;
+    render();
+  }
+}
+
+function finishFlashcards() {
+  const { done, correct } = state._flashSession;
+  const pct = done ? Math.round(correct / done * 100) : 0;
+  modal("Flashcards Complete!", `
+    <div class="center">
+      <div style="font-size:48px;margin-bottom:8px">🎉</div>
+      <h3 style="font-size:28px;color:var(--purple)">${done} cards</h3>
+      <p class="muted">${correct} correct · ${pct}%</p>
+    </div>`, [
+    { label: "Done", cls: "btn-primary", onClick: () => {
+      state.flashcards = null;
+      state._flashSession = { done: 0, correct: 0 };
+      navigate("home");
+    }},
+    { label: "Study More", cls: "btn-ghost", onClick: () => {
+      state._flashSession = { done: 0, correct: 0 };
+      startFlashcards();
+    }}
+  ]);
+}
+
+/* ============================================================
+   PWA — Install + Offline + SW
+   ============================================================ */
+function registerSW() {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    });
+  }
+}
+
+function setupInstallPrompt() {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    state._installPrompt = e;
+    // Show after 2nd visit
+    const visits = parseInt(localStorage.getItem("dj_visits") || "0") + 1;
+    localStorage.setItem("dj_visits", visits);
+    if (visits >= 2 && !localStorage.getItem("dj_install_dismissed")) {
+      const b = $("installBanner");
+      if (b) b.style.display = "flex";
+    }
+  });
+  const ib = $("installBtn");
+  const db = $("dismissInstall");
+  if (ib) ib.onclick = async () => {
+    if (!state._installPrompt) return;
+    state._installPrompt.prompt();
+    const res = await state._installPrompt.userChoice;
+    if (res.outcome === "accepted") toast("Installing…", "ok");
+    state._installPrompt = null;
+    $("installBanner").style.display = "none";
+  };
+  if (db) db.onclick = () => {
+    localStorage.setItem("dj_install_dismissed", "1");
+    $("installBanner").style.display = "none";
+  };
+}
+
+function setupOffline() {
+  const banner = $("offlineBanner");
+  const update = () => {
+    state.offline = !navigator.onLine;
+    if (banner) banner.style.display = state.offline ? "block" : "none";
+  };
+  window.addEventListener("online", update);
+  window.addEventListener("offline", update);
+  update();
 }
 
 /* ============================================================
    AUTH
    ============================================================ */
 async function handleGoogleLogin() {
-  try {
-    await signInWithPopup(auth, provider);
-  } catch (e) {
+  try { await signInWithPopup(auth, provider); }
+  catch (e) {
     if (["auth/popup-blocked","auth/popup-closed-by-user","auth/cancelled-popup-request",
          "auth/operation-not-supported-in-this-environment"].includes(e.code)) {
       try { await signInWithRedirect(auth, provider); }
       catch (re) { toast(re.message, "err"); }
-    } else {
-      toast("Login failed: " + (e.code || e.message), "err");
-    }
+    } else toast("Login failed: " + (e.code || e.message), "err");
   }
 }
 async function handleEmailLogin(email, pass) {
@@ -759,13 +1206,7 @@ async function handleEmailLogin(email, pass) {
 async function handleEmailSignup(email, pass, name) {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await setDoc(doc(db, "users", cred.user.uid), {
-      name: name || email.split("@")[0], email, photoURL: "",
-      emailVerified: false, role: email === ADMIN_EMAIL ? "admin" : "student",
-      status: "active", practiceAccess: false, premium: null,
-      bookmarks: [], streak: { count: 0, last: null }, bestScore: 0,
-      createdAt: serverTimestamp(), lastLogin: serverTimestamp()
-    });
+    await ensureUserProfile(cred.user);
     try { await sendEmailVerification(cred.user); } catch {}
     toast("Account created! Check email to verify.", "ok");
   } catch (e) {
@@ -778,7 +1219,7 @@ async function handleEmailSignup(email, pass, name) {
   }
 }
 async function handlePasswordReset(email) {
-  try { await sendPasswordResetEmail(auth, email); toast("Reset link sent to your email", "ok"); }
+  try { await sendPasswordResetEmail(auth, email); toast("Reset link sent", "ok"); }
   catch (e) { toast("Failed: " + e.message, "err"); }
 }
 async function handleLogout() {
@@ -800,22 +1241,28 @@ function render() {
   const r = $("root");
   const s = state.screen;
   let html = "";
-  if (s === "loading") html = renderLoading();
-  else if (s === "login") html = renderLogin();
-  else if (s === "signup") html = renderSignup();
-  else if (s === "home") html = renderHome();
-  else if (s === "sets") html = renderSets();
-  else if (s === "start") html = renderStart();
-  else if (s === "exam") html = renderExam();
-  else if (s === "result") html = renderResult();
-  else if (s === "review") html = renderReview();
-  else if (s === "profile") html = renderProfile();
-  else if (s === "premium") html = renderPremium();
-  else if (s === "practice") html = renderPractice();
-  else if (s === "bookmarks") html = renderBookmarks();
-  else if (s === "leaderboard") html = renderLeaderboard();
-  else if (s === "admin") html = renderAdmin();
-  else html = renderLoading();
+  const renderers = {
+    loading: renderLoading,
+    login: renderLogin,
+    signup: renderSignup,
+    home: renderHome,
+    sets: renderSets,
+    start: renderStart,
+    exam: renderExam,
+    result: renderResult,
+    review: renderReview,
+    profile: renderProfile,
+    premium: renderPremium,
+    practice: renderPractice,
+    bookmarks: renderBookmarks,
+    leaderboard: renderLeaderboard,
+    flashcards: renderFlashcards,
+    achievements: renderAchievements,
+    analytics: renderAnalytics,
+    notes: renderNotes,
+    admin: renderAdmin
+  };
+  html = (renderers[s] || renderLoading)();
   r.innerHTML = html;
   postRender();
 }
@@ -829,29 +1276,20 @@ function postRender() {
     if (agree && startBtn) {
       agree.onchange = () => { startBtn.disabled = !agree.checked; };
       startBtn.onclick = () => {
-        if (!agree.checked) return toast("Please agree to the rules", "err");
+        if (!agree.checked) return toast("Please agree to rules", "err");
         beginExam();
       };
     }
   }
-  // Audio buttons
   document.querySelectorAll('[data-play="1"]').forEach(btn => {
     btn.onclick = () => {
       const ex = state.exam || state.practice;
       if (!ex) return;
-      const sec = ex.sections ? ex.sections[ex.si] : null;
+      const sec = ex.sections[ex.si];
       const q = sec ? sec.questions[ex.qi] : null;
       if (q) playAudio(q);
     };
   });
-  // Bookmark buttons
-  document.querySelectorAll('[data-bookmark]').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      toggleBookmark(btn.dataset.bookmark, btn.dataset.qi);
-    };
-  });
-  // Result ring
   if (state.screen === "result" && state.params.result) {
     const ring = $("resultRing");
     if (ring) setTimeout(() => {
@@ -860,6 +1298,7 @@ function postRender() {
   }
   if (state.screen === "admin") attachAdminHandlers();
   attachBottomNav();
+  prefetchNextMedia();
 }
 
 function attachBottomNav() {
@@ -867,24 +1306,36 @@ function attachBottomNav() {
   let nav = document.getElementById("bottomNav");
   if (!nav) {
     nav = document.createElement("nav");
-    nav.id = "bottomNav";
-    nav.className = "bottom-nav";
+    nav.id = "bottomNav"; nav.className = "bottom-nav";
     document.body.appendChild(nav);
   }
   const cur = state.screen;
   const items = [
     { key: "home", icon: "🏠", label: "Home", onClick: () => navigate("home") },
     { key: "sets", icon: "📚", label: "Tests", onClick: () => navigate("sets") },
-    { key: "premium", icon: "⭐", label: "Premium", onClick: () => navigate("premium") },
+    { key: "flashcards", icon: "🎴", label: "Cards", onClick: () => startFlashcards() },
     { key: "profile", icon: "👤", label: "Profile", onClick: () => navigate("profile") }
   ];
   nav.innerHTML = `<div class="bnav-inner">${items.map(it => `
-    <button class="bnav-item ${cur === it.key ? "on" : ""}" data-nav="${it.key}">
+    <button class="bnav-item ${cur === it.key ? "on" : ""}">
       <span class="ic">${it.icon}</span><span>${it.label}</span>
     </button>`).join("")}</div>`;
-  nav.querySelectorAll(".bnav-item").forEach((b, i) => {
-    b.onclick = items[i].onClick;
-  });
+  nav.querySelectorAll(".bnav-item").forEach((b, i) => b.onclick = items[i].onClick);
+}
+
+function prefetchNextMedia() {
+  // Prefetch next question's image/audio
+  const ex = state.exam || state.practice;
+  if (!ex) return;
+  const sec = ex.sections[ex.si];
+  if (!sec) return;
+  const nextQ = sec.questions[ex.qi + 1];
+  if (!nextQ) return;
+  if (nextQ.img && !nextQ.img.startsWith("data:")) {
+    const l = document.createElement("link");
+    l.rel = "preload"; l.as = "image"; l.href = nextQ.img;
+    document.head.appendChild(l);
+  }
 }
 
 /* ============================================================
@@ -896,26 +1347,24 @@ function renderLoading() {
 }
 
 function renderLogin() {
-  return `<div class="login-wrap">
-    <div class="login-card">
-      <div class="login-logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
-      <h2>Dream Japan</h2>
-      <p class="sub">Sign in to access JFT-BASIC mock tests</p>
-      <button class="gbtn" id="gLogin">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continue with Google
-      </button>
-      <div class="divider">or</div>
-      <div class="field"><label>Email</label>
-        <input type="email" id="loginEmail" class="input" placeholder="you@example.com"></div>
-      <div class="field"><label>Password</label>
-        <input type="password" id="loginPass" class="input" placeholder="••••••••"></div>
-      <button class="btn btn-primary btn-block mt-2" id="emailLogin">Sign In</button>
-      <div class="login-link">
-        <a id="forgotLink">Forgot password?</a> · <a id="signupLink">Create account</a>
-      </div>
+  return `<div class="login-wrap"><div class="login-card">
+    <div class="login-logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <h2>Dream Japan</h2>
+    <p class="sub">Sign in to access JFT-BASIC mock tests</p>
+    <button class="gbtn" id="gLogin">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+    <div class="divider">or</div>
+    <div class="field"><label>Email</label>
+      <input type="email" id="loginEmail" class="input" placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label>
+      <input type="password" id="loginPass" class="input" placeholder="••••••••"></div>
+    <button class="btn btn-primary btn-block mt-2" id="emailLogin">Sign In</button>
+    <div class="login-link">
+      <a id="forgotLink">Forgot password?</a> · <a id="signupLink">Create account</a>
     </div>
-  </div>`;
+  </div></div>`;
 }
 function attachLoginHandlers() {
   $("gLogin").onclick = handleGoogleLogin;
@@ -933,23 +1382,21 @@ function attachLoginHandlers() {
 }
 
 function renderSignup() {
-  return `<div class="login-wrap">
-    <div class="login-card">
-      <div class="login-logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
-      <h2>Create Account</h2>
-      <p class="sub">Join Dream Japan and start practising</p>
-      <div class="field"><label>Name</label>
-        <input type="text" id="signName" class="input" placeholder="Your name"></div>
-      <div class="field"><label>Email</label>
-        <input type="email" id="signEmail" class="input" placeholder="you@example.com"></div>
-      <div class="field"><label>Password</label>
-        <input type="password" id="signPass" class="input" placeholder="6+ characters"></div>
-      <div class="field"><label>Confirm Password</label>
-        <input type="password" id="signPass2" class="input" placeholder="Re-enter password"></div>
-      <button class="btn btn-primary btn-block mt-2" id="emailSignup">Create Account</button>
-      <div class="login-link">Already have an account? <a id="backLogin">Sign in</a></div>
-    </div>
-  </div>`;
+  return `<div class="login-wrap"><div class="login-card">
+    <div class="login-logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <h2>Create Account</h2>
+    <p class="sub">Join Dream Japan and start practising</p>
+    <div class="field"><label>Name</label>
+      <input type="text" id="signName" class="input" placeholder="Your name"></div>
+    <div class="field"><label>Email</label>
+      <input type="email" id="signEmail" class="input" placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label>
+      <input type="password" id="signPass" class="input" placeholder="6+ characters"></div>
+    <div class="field"><label>Confirm Password</label>
+      <input type="password" id="signPass2" class="input" placeholder="Re-enter password"></div>
+    <button class="btn btn-primary btn-block mt-2" id="emailSignup">Create Account</button>
+    <div class="login-link">Already have an account? <a id="backLogin">Sign in</a></div>
+  </div></div>`;
 }
 function attachSignupHandlers() {
   $("backLogin").onclick = () => navigate("login");
@@ -975,11 +1422,11 @@ function topbarHTML() {
     ? `<img src="${esc(p.photoURL)}" class="avatar" alt="" loading="lazy">`
     : `<div class="avatar" style="display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:800;font-size:13px">${initial}</div>`;
   return `<div class="topbar"><div class="topbar-inner">
-    <div class="logo" onclick="__dj.goHome()" style="cursor:pointer"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
-    <div class="brand" onclick="__dj.goHome()" style="cursor:pointer">
+    <div class="logo" data-nav="home" style="cursor:pointer"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <div class="brand" data-nav="home" style="cursor:pointer">
       <h1>Dream Japan</h1><p>JFT MOCK TEST</p>
     </div>
-    <button class="user-btn" onclick="__dj.goProfile()">${avatar}
+    <button class="user-btn" data-nav="profile">${avatar}
       <span>${esc(p.name || state.user.email)}</span></button>
   </div></div>`;
 }
@@ -996,19 +1443,32 @@ function renderHome() {
   const premiumActive = p.premium && daysLeft(p.premium.expiry) > 0;
   const hasAccess = premiumActive || p.practiceAccess || state.isAdmin;
   const streak = (p.streak && p.streak.count) || 0;
+  const lvl = levelForXp(p.xp || 0);
+  const quests = getTodayQuests();
 
   return `${topbarHTML()}
   <div class="wrap">
-    <div class="hero" onclick="__dj.goSets()">
+    <div class="hero" data-nav="sets">
       <small>JFT-BASIC · PRACTICE SERIES</small>
       <h2>Mock Test 2026</h2>
       <p>Six full-length practice sets built on the official 4-section JFT pattern.</p>
       <div class="hero-stats">
         <div><strong>${state.sets.length || 6}</strong><span>Sets</span></div>
-        <div><strong>${completed}</strong><span>Completed</span></div>
-        <div><strong>${completed ? best + "%" : "–"}</strong><span>Best %</span></div>
+        <div><strong>${completed}</strong><span>Done</span></div>
+        <div><strong>${completed ? best + "%" : "–"}</strong><span>Best</span></div>
       </div>
       <div class="hero-cta">Start practising →</div>
+    </div>
+
+    <div class="card mt-2">
+      <div class="flex" style="gap:12px;margin-bottom:10px">
+        <div class="level-badge ${lvl.tier}">${lvl.level}</div>
+        <div style="flex:1">
+          <div class="xp-label"><span>Level ${lvl.level} · ${lvl.tier}</span><span>${p.xp || 0} XP</span></div>
+          <div class="xp-bar"><i style="width:${lvl.pct}%"></i></div>
+          <p class="muted small" style="margin-top:4px">${XP_PER_LEVEL - lvl.progress} XP to level ${lvl.level + 1}</p>
+        </div>
+      </div>
     </div>
 
     ${streak > 0 ? `
@@ -1028,40 +1488,60 @@ function renderHome() {
           <h3 style="margin-bottom:6px">Access Required</h3>
           <p class="muted" style="margin-bottom:12px">You need practice access or premium to take tests.</p>
           <div class="flex" style="gap:8px;flex-wrap:wrap">
-            <button class="btn btn-primary btn-sm" onclick="__dj.goPremium()">View Plans</button>
-            <button class="btn btn-ghost btn-sm" onclick="__dj.requestAccess()">Request Access</button>
+            <button class="btn btn-primary btn-sm" data-nav="premium">View Plans</button>
+            <button class="btn btn-ghost btn-sm" data-action="requestAccess">Request Access</button>
           </div>
         </div>
       </div>
     </div>` : ""}
 
     <div class="grid-2 mt-2">
-      <div class="card" style="cursor:pointer;text-align:center" onclick="__dj.goPractice()">
+      <div class="card" style="cursor:pointer;text-align:center" data-nav="practice">
         <div style="font-size:28px;margin-bottom:6px">🎯</div>
         <h4 style="font-size:13px">Quick Practice</h4>
         <p class="muted small">Pick a section</p>
       </div>
-      <div class="card" style="cursor:pointer;text-align:center" onclick="__dj.goBookmarks()">
-        <div style="font-size:28px;margin-bottom:6px">🔖</div>
-        <h4 style="font-size:13px">Bookmarks</h4>
-        <p class="muted small">${(p.bookmarks || []).length} saved</p>
+      <div class="card" style="cursor:pointer;text-align:center" data-action="startFlashcards">
+        <div style="font-size:28px;margin-bottom:6px">🎴</div>
+        <h4 style="font-size:13px">Flashcards</h4>
+        <p class="muted small">SRS study</p>
       </div>
-      <div class="card" style="cursor:pointer;text-align:center" onclick="__dj.goLeaderboard()">
+      <div class="card" style="cursor:pointer;text-align:center" data-nav="analytics">
+        <div style="font-size:28px;margin-bottom:6px">📊</div>
+        <h4 style="font-size:13px">Analytics</h4>
+        <p class="muted small">Progress & heatmap</p>
+      </div>
+      <div class="card" style="cursor:pointer;text-align:center" data-nav="achievements">
         <div style="font-size:28px;margin-bottom:6px">🏆</div>
-        <h4 style="font-size:13px">Leaderboard</h4>
-        <p class="muted small">Top students</p>
-      </div>
-      <div class="card" style="cursor:pointer;text-align:center" onclick="__dj.goPremium()">
-        <div style="font-size:28px;margin-bottom:6px">⭐</div>
-        <h4 style="font-size:13px">Premium</h4>
-        <p class="muted small">${premiumActive ? daysLeft(p.premium.expiry) + "d left" : "View plans"}</p>
+        <h4 style="font-size:13px">Achievements</h4>
+        <p class="muted small">${(p.achievements || []).length} unlocked</p>
       </div>
     </div>
 
     <div class="card mt-2">
       <div class="flex-between mb-2">
+        <h3>Today's Quests</h3>
+        <span class="badge badge-info">${quests.list.filter(q => q.done).length}/${quests.list.length}</span>
+      </div>
+      ${quests.list.map(item => {
+        const tmpl = QUEST_TEMPLATES.find(t => t.id === item.id);
+        if (!tmpl) return "";
+        const prog = item.progress || 0;
+        return `<div class="quest-card ${item.done ? "done" : ""}">
+          <div class="quest-icon">${tmpl.icon}</div>
+          <div class="quest-info">
+            <h4>${tmpl.name}</h4>
+            <p>+${tmpl.xp} XP · ${prog}/${tmpl.goal}</p>
+          </div>
+          <div class="quest-progress">${item.done ? "✓" : `${prog}/${tmpl.goal}`}</div>
+        </div>`;
+      }).join("")}
+    </div>
+
+    <div class="card mt-2">
+      <div class="flex-between mb-2">
         <h3>Recent Activity</h3>
-        <button class="btn btn-ghost btn-sm" onclick="__dj.goProfile()">Profile →</button>
+        <button class="btn btn-ghost btn-sm" data-nav="profile">Profile →</button>
       </div>
       ${completed ? results.slice(0, 3).map(r => `
         <div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)">
@@ -1084,10 +1564,10 @@ function renderHome() {
 function renderSets() {
   return `${topbarHTML()}
   <div class="wrap" style="padding-top:16px;padding-bottom:40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
     <h2 class="mb-2">Choose a Set</h2>
     ${state.sets.map((s, i) => `
-      <div class="set-card" onclick="__dj.openSet(${i})">
+      <div class="set-card" data-action="openSet" data-idx="${i}">
         <div class="set-kana">${s.kana}</div>
         <div class="set-info">
           <small>SET ${s.idx}</small>
@@ -1111,19 +1591,19 @@ function renderStart() {
 
   if (!hasAccess) {
     return `${topbarHTML()}<div class="wrap" style="padding-top:16px">
-      <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goSets()">← Back</button>
+      <button class="btn btn-ghost btn-sm mb-2" data-nav="sets">← Back</button>
       <div class="card center">
         <div style="font-size:48px;margin-bottom:12px">🔒</div>
         <h2>Access Required</h2>
-        <p class="muted mt-1 mb-3">Practice access or premium is needed to start exams.</p>
-        <button class="btn btn-primary btn-block mb-1" onclick="__dj.goPremium()">View Plans</button>
-        <button class="btn btn-ghost btn-block" onclick="__dj.requestAccess()">Request Access</button>
+        <p class="muted mt-1 mb-3">Practice access or premium is needed.</p>
+        <button class="btn btn-primary btn-block mb-1" data-nav="premium">View Plans</button>
+        <button class="btn btn-ghost btn-block" data-action="requestAccess">Request Access</button>
       </div>
     </div>`;
   }
 
   return `${topbarHTML()}<div class="wrap" style="padding-top:16px;padding-bottom:40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goSets()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="sets">← Back</button>
     <div class="card card-lg">
       <div style="width:70px;height:70px;border-radius:50%;background:var(--grad);color:#fff;
         display:grid;place-items:center;font-size:32px;font-weight:800;margin:0 auto 16px">${set.kana}</div>
@@ -1168,7 +1648,7 @@ function renderExam() {
   const ansIdx = q.sel;
 
   let mediaHTML = "";
-  if (q.img) mediaHTML += `<img src="${esc(q.img)}" loading="lazy" onerror="this.style.display='none'">`;
+  if (q.img) mediaHTML += `<img src="${esc(q.img)}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
   if (q.au) mediaHTML += `<div class="audio-row" id="audRow">
     <button class="play-btn" data-play="1">▶</button>
     <button class="play-btn rep" data-play="1">↻</button>
@@ -1177,7 +1657,7 @@ function renderExam() {
   if (mediaHTML) mediaHTML = `<div class="media">${mediaHTML}</div>`;
 
   const optsHTML = q.o.slice(0, q.o[3] ? 4 : 3).map((t, i) => `
-    <div class="opt ${ansIdx === i ? "sel" : ""}" onclick="__dj.selectOpt(${i})">
+    <div class="opt ${ansIdx === i ? "sel" : ""}" data-action="selectOpt" data-idx="${i}">
       <div class="opt-ltr">${"ABCD"[i]}</div>
       <div class="opt-tx">${esc(t)}</div>
     </div>`).join("");
@@ -1187,7 +1667,7 @@ function renderExam() {
   const nextLabel = isLastQ ? (isLastSec ? "Submit Exam ✓" : "Finish Section →") : "Next →";
 
   return `<div class="exam-bar"><div class="exam-bar-inner">
-    <button class="xback" onclick="__dj.askLeave()">✕</button>
+    <button class="xback" data-action="askLeave">✕</button>
     <div class="exam-info">
       <b>Set ${ex.set.idx} · ${ex.set.name}</b>
       <span>Section ${ex.si + 1} of 4 — ${sec.name}</span>
@@ -1202,7 +1682,7 @@ function renderExam() {
     <div class="palette">${sec.questions.map((qq, i) =>
       `<button class="pal-btn ${qq.sel !== undefined ? "ans" : ""} ${i === ex.qi ? "cur" : ""}"
         ${i > ex.maxReachable ? "disabled" : ""}
-        onclick="__dj.jumpTo(${i})">${i + 1}</button>`).join("")}</div>
+        data-action="jumpTo" data-idx="${i}">${i + 1}</button>`).join("")}</div>
 
     <div class="q-card">
       <div class="q-meta">
@@ -1214,11 +1694,14 @@ function renderExam() {
       <div class="q-text">${esc(q.q)}</div>
       ${mediaHTML}
       <div class="opts">${optsHTML}</div>
+      <div class="flex" style="justify-content:flex-end;margin-top:10px">
+        <button class="btn btn-sm btn-ghost" data-action="flagQ">🚩 Report</button>
+      </div>
     </div>
 
     <div class="exam-nav">
-      <button class="btn btn-ghost" ${ex.qi === 0 ? "disabled" : ""} onclick="__dj.prevQ()">← Previous</button>
-      <button class="btn btn-primary" ${q.sel === undefined ? "disabled" : ""} onclick="__dj.nextQ()">${nextLabel}</button>
+      <button class="btn btn-ghost" ${ex.qi === 0 ? "disabled" : ""} data-action="prevQ">← Previous</button>
+      <button class="btn btn-primary" ${q.sel === undefined ? "disabled" : ""} data-action="nextQ">${nextLabel}</button>
     </div>
   </div>`;
 }
@@ -1262,12 +1745,12 @@ function renderResult() {
     </div>
 
     <div class="grid-2 mt-2">
-      <button class="btn btn-ghost" onclick="__dj.openReview('all')">All Answers</button>
-      <button class="btn btn-ghost" onclick="__dj.openReview('wrong')">Wrong Only</button>
+      <button class="btn btn-ghost" data-action="openReviewAll">All Answers</button>
+      <button class="btn btn-ghost" data-action="openReviewWrong">Wrong Only</button>
     </div>
-    <button class="btn btn-teal btn-block mt-1" onclick="__dj.shareResult()">📤 Share Result</button>
-    <button class="btn btn-primary btn-block mt-1" onclick="__dj.retrySet()">Try Again</button>
-    <button class="btn btn-ghost btn-block mt-1" onclick="__dj.goSets()">Back to Sets</button>
+    <button class="btn btn-teal btn-block mt-1" data-action="sharePNG">📤 Share PNG</button>
+    <button class="btn btn-primary btn-block mt-1" data-action="retrySet">Try Again</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="sets">Back to Sets</button>
   </div>`;
 }
 
@@ -1279,12 +1762,12 @@ function renderReview() {
   const filter = state.params.filter || "all";
   if (!r) return renderHome();
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goResult()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-action="goResult">← Back</button>
     <div class="flex-between mb-2">
       <h2>Answer Review</h2>
       <div class="flex" style="gap:6px">
-        <button class="btn btn-sm ${filter === "all" ? "btn-primary" : "btn-ghost"}" onclick="__dj.openReview('all')">All</button>
-        <button class="btn btn-sm ${filter === "wrong" ? "btn-primary" : "btn-ghost"}" onclick="__dj.openReview('wrong')">Wrong</button>
+        <button class="btn btn-sm ${filter === "all" ? "btn-primary" : "btn-ghost"}" data-action="openReviewAll">All</button>
+        <button class="btn btn-sm ${filter === "wrong" ? "btn-primary" : "btn-ghost"}" data-action="openReviewWrong">Wrong</button>
       </div>
     </div>
     ${r.sections.map(s => {
@@ -1296,12 +1779,11 @@ function renderReview() {
             <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:6px">Q${it.idx + 1} · ${s.marks} marks${it.yourAns === undefined ? " · not answered" : ""}</div>
             ${it.p ? `<div class="passage" style="font-size:13px;padding:10px;margin-bottom:8px">${esc(it.p)}</div>` : ""}
             ${it.img ? `<img src="${esc(it.img)}" loading="lazy" style="width:100%;border-radius:10px;margin-bottom:8px" onerror="this.style.display='none'">` : ""}
-            ${it.au ? `<div class="muted small mb-1" style="font-weight:700">🔊 ${esc(it.au.startsWith("tts:") ? it.au.slice(4) : it.au)}</div>` : ""}
             <div style="font-size:13.5px;line-height:1.5;margin-bottom:8px;white-space:pre-line">${esc(it.q)}</div>
             ${it.o.map((txt, i) => {
               if (i === 3 && !txt) return "";
               const isC = i === it.correctAns, isY = i === it.yourAns;
-              const cls = isC ? "background:#d1fae5;border-color:var(--green)" : (isY && !isC ? "background:#fee2e2;border-color:var(--red)" : "");
+              const cls = isC ? "background:rgba(16,185,129,.15);border-color:var(--green)" : (isY && !isC ? "background:rgba(239,68,68,.15);border-color:var(--red)" : "");
               return `<div style="padding:9px 11px;border:1px solid var(--border);border-radius:9px;margin-top:6px;font-size:12.5px;${cls}">
                 ${"ABCD"[i]}. ${esc(txt)} ${isC ? "✓ Correct" : ""} ${isY && !isC ? "✗ Your answer" : ""}</div>`;
             }).join("")}
@@ -1317,6 +1799,8 @@ function renderProfile() {
   const p = state.profile || {};
   const premActive = p.premium && daysLeft(p.premium.expiry) > 0;
   const streak = (p.streak && p.streak.count) || 0;
+  const lvl = levelForXp(p.xp || 0);
+  const theme = localStorage.getItem("dj_theme") || "auto";
   return `${topbarHTML()}
   <div class="wrap" style="padding-bottom:40px">
     <div class="profile-header">
@@ -1325,6 +1809,16 @@ function renderProfile() {
       <h2>${esc(p.name || "Student")}</h2>
       <p>${esc(p.email || "")}</p>
       <div class="role-badge">${state.isAdmin ? "👑 Administrator" : premActive ? "⭐ Premium" : "Student"}</div>
+    </div>
+
+    <div class="card mt-2">
+      <div class="flex" style="gap:12px;margin-bottom:10px">
+        <div class="level-badge ${lvl.tier}">${lvl.level}</div>
+        <div style="flex:1">
+          <div class="xp-label"><span>Level ${lvl.level} · ${lvl.tier}</span><span>${p.xp || 0} XP</span></div>
+          <div class="xp-bar"><i style="width:${lvl.pct}%"></i></div>
+        </div>
+      </div>
     </div>
 
     <div class="grid-3 mt-2">
@@ -1344,15 +1838,18 @@ function renderProfile() {
         <span class="muted small">Premium</span>
         <span class="badge ${premActive ? "badge-prem" : "badge-muted"}">${premActive ? `${p.premium.plan} · ${daysLeft(p.premium.expiry)}d` : "Inactive"}</span></div>
       <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)">
-        <span class="muted small">Member Since</span>
-        <span style="font-size:12px;font-weight:700">${fmtDate(p.createdAt)}</span></div>
+        <span class="muted small">Theme</span>
+        <button class="btn btn-sm btn-ghost" data-action="cycleTheme">${theme} 🌓</button></div>
     </div>
 
-    ${state.isAdmin ? `<button class="btn btn-primary btn-block mt-2" onclick="__dj.goAdmin()">⚙ Open Admin Dashboard</button>` : ""}
-    <button class="btn btn-ghost btn-block mt-1" onclick="__dj.goBookmarks()">🔖 My Bookmarks (${(p.bookmarks || []).length})</button>
-    <button class="btn btn-ghost btn-block mt-1" onclick="__dj.goLeaderboard()">🏆 Leaderboard</button>
-    <button class="btn btn-ghost btn-block mt-1" onclick="__dj.goPremium()">View Premium Plans</button>
-    <button class="btn btn-danger btn-block mt-1" onclick="__dj.logout()">Logout</button>
+    ${state.isAdmin ? `<button class="btn btn-primary btn-block mt-2" data-nav="admin">⚙ Open Admin Dashboard</button>` : ""}
+    <button class="btn btn-ghost btn-block mt-1" data-nav="analytics">📊 Analytics & Heatmap</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="achievements">🏆 Achievements (${(p.achievements || []).length})</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="bookmarks">🔖 Bookmarks (${(p.bookmarks || []).length})</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="notes">📝 My Notes (${Object.keys(p.notes || {}).length})</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="leaderboard">🏆 Leaderboard</button>
+    <button class="btn btn-ghost btn-block mt-1" data-nav="premium">Premium Plans</button>
+    <button class="btn btn-danger btn-block mt-1" data-action="logout">Logout</button>
   </div>`;
 }
 
@@ -1365,7 +1862,7 @@ function renderPremium() {
 
   if (premiumActive) {
     return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-      <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+      <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
       <div class="premium-status">
         <h3>⭐ Premium Active</h3>
         <p class="plan-name">${esc(p.premium.plan)}</p>
@@ -1384,24 +1881,16 @@ function renderPremium() {
           <div style="font-size:10px;opacity:.9;font-weight:700">days remaining</div>
         </div>
       </div>
-      <div class="card mt-2">
-        <h3 class="mb-2">Your Premium Benefits</h3>
-        <ul style="list-style:none;padding:0">
-          ${["Unlimited attempts","Answer explanations","Practice Mode","Bookmarks & Streak tracking","Leaderboard eligibility"]
-            .map(b => `<li style="padding:8px 0;font-size:13px;display:flex;gap:8px;align-items:center">
-              <span style="color:var(--green);font-weight:900">✓</span>${b}</li>`).join("")}
-        </ul>
-      </div>
-      <button class="btn btn-primary btn-block mt-3" onclick="__dj.goSets()">Start Practising</button>
+      <button class="btn btn-primary btn-block mt-3" data-nav="sets">Start Practising</button>
     </div>`;
   }
 
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
     <div class="card-prem card-lg" style="border-radius:22px;margin-bottom:16px;padding:28px 22px">
       <div style="font-size:36px;margin-bottom:8px">⭐</div>
       <h2 style="color:#fff;font-size:24px;margin-bottom:6px">Unlock Premium</h2>
-      <p style="font-size:13px;opacity:.95;max-width:340px">Get full access to all 6 mock tests, unlimited attempts, practice mode, and more.</p>
+      <p style="font-size:13px;opacity:.95;max-width:340px">All 6 mock tests, flashcards, analytics, and more.</p>
     </div>
     <h3 class="mb-2">Choose your plan</h3>
     ${state.plans.filter(pl => pl.active).map((pl, i) => `
@@ -1415,38 +1904,35 @@ function renderPremium() {
           </div>
         </div>
         <ul class="benefits">${(pl.benefits || []).map(b => `<li>${esc(b)}</li>`).join("")}</ul>
-        <button class="btn btn-prem btn-block mt-2" onclick="__dj.requestPremium('${pl.id}')">Request ${esc(pl.name)}</button>
+        <button class="btn btn-prem btn-block mt-2" data-action="requestPremium" data-id="${pl.id}">Request ${esc(pl.name)}</button>
       </div>`).join("")}
-    <div class="card mt-2" style="background:var(--bg)">
-      <h3 class="mb-1" style="font-size:13px">How it works</h3>
-      <p class="muted small" style="line-height:1.6">Premium is activated manually by the admin after payment is confirmed. Tap "Request" — admin will activate your access after payment verification.</p>
-    </div>
   </div>`;
 }
 
 /* ============================================================
-   PRACTICE MODE (Premium)
+   PRACTICE MODE
    ============================================================ */
 function renderPractice() {
   const p = state.profile || {};
   const premActive = p.premium && daysLeft(p.premium.expiry) > 0;
+  if (state.practice) return renderExam(); // Practice reuses exam render
   if (!premActive && !p.practiceAccess && !state.isAdmin) {
     return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-      <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+      <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
       <div class="card center">
         <div style="font-size:48px;margin-bottom:12px">⭐</div>
         <h2>Premium Feature</h2>
-        <p class="muted mt-1 mb-3">Practice Mode is available for premium members only.</p>
-        <button class="btn btn-prem btn-block" onclick="__dj.goPremium()">View Plans</button>
+        <p class="muted mt-1 mb-3">Practice Mode is for premium members.</p>
+        <button class="btn btn-prem btn-block" data-nav="premium">View Plans</button>
       </div>
     </div>`;
   }
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
     <h2 class="mb-1">Quick Practice</h2>
-    <p class="muted mb-3">Choose a section — 10 questions, no timer</p>
+    <p class="muted mb-3">10 questions, no timer</p>
     ${SECTIONS.map(s => `
-      <div class="practice-card" onclick="__dj.startPractice('${s.key}')">
+      <div class="practice-card" data-action="startPractice" data-id="${s.key}">
         <div class="ic" style="background:var(--grad);color:#fff">${s.icon}</div>
         <div style="flex:1">
           <h4>${esc(s.name)}</h4>
@@ -1458,6 +1944,162 @@ function renderPractice() {
 }
 
 /* ============================================================
+   FLASHCARDS
+   ============================================================ */
+function renderFlashcards() {
+  if (!state.flashcards) return renderHome();
+  const { deck, idx, flipped } = state.flashcards;
+  const card = deck[idx];
+  if (!card) return renderHome();
+  const total = deck.length;
+  return `${topbarHTML()}<div class="wrap" style="padding:16px 0 100px">
+    <div class="flex-between mb-2">
+      <button class="btn btn-ghost btn-sm" data-action="exitFlashcards">← Exit</button>
+      <span class="badge badge-info">${idx + 1} / ${total}</span>
+    </div>
+
+    <div class="flashcard-wrap">
+      <div class="flashcard ${flipped ? "flipped" : ""}" data-action="flipCard">
+        ${flipped
+          ? `<div class="back-text">${esc(card.back)}</div>`
+          : `<div class="front-text">${esc(card.front)}</div>`}
+        <div class="hint">${flipped ? "How well did you know it?" : "Tap to reveal answer"}</div>
+      </div>
+
+      ${flipped ? `
+        <div class="srs-actions">
+          <button class="srs-btn srs-again" data-action="rateCard" data-idx="0">Again</button>
+          <button class="srs-btn srs-hard" data-action="rateCard" data-idx="1">Hard</button>
+          <button class="srs-btn srs-good" data-action="rateCard" data-idx="2">Good</button>
+          <button class="srs-btn srs-easy" data-action="rateCard" data-idx="3">Easy</button>
+        </div>` : ""}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   ACHIEVEMENTS
+   ============================================================ */
+function renderAchievements() {
+  const p = state.profile || {};
+  const unlocked = new Set(p.achievements || []);
+  return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
+    <h2 class="mb-1">🏆 Achievements</h2>
+    <p class="muted mb-3">${unlocked.size} of ${ACHIEVEMENTS.length} unlocked</p>
+    <div class="ach-grid">
+      ${ACHIEVEMENTS.map(a => `
+        <div class="ach-badge ${unlocked.has(a.id) ? "unlocked" : ""}">
+          <span class="icon">${a.icon}</span>
+          <h4>${esc(a.name)}</h4>
+          <p>${esc(a.desc)}</p>
+        </div>`).join("")}
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
+function renderAnalytics() {
+  const p = state.profile || {};
+  const results = state.results || [];
+  // Per-section strength
+  const sectionScores = {};
+  SECTIONS.forEach(s => sectionScores[s.key] = { name: s.name, correct: 0, total: 0 });
+  results.forEach(r => r.sections.forEach(s => {
+    const key = s.name.includes("Script") ? "sv" :
+                s.name.includes("Conversation") ? "ce" :
+                s.name.includes("Listening") ? "lc" :
+                s.name.includes("Reading") ? "rc" : null;
+    if (key && sectionScores[key]) {
+      const correct = s.items.filter(it => it.yourAns === it.correctAns).length;
+      sectionScores[key].correct += correct;
+      sectionScores[key].total += s.items.length;
+    }
+  }));
+
+  // Heatmap — last 12 weeks
+  const today = new Date();
+  const activity = p.activity || {};
+  const heatCells = [];
+  for (let i = 83; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const cnt = activity[key] || 0;
+    const lvl = cnt === 0 ? 0 : cnt < 3 ? 1 : cnt < 6 ? 2 : cnt < 10 ? 3 : 4;
+    heatCells.push({ key, lvl });
+  }
+
+  return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
+    <h2 class="mb-2">📊 Your Analytics</h2>
+
+    <div class="card mb-2">
+      <h3 class="mb-2">Section Strengths</h3>
+      ${SECTIONS.map(s => {
+        const st = sectionScores[s.key];
+        const pct = st.total ? Math.round(st.correct / st.total * 100) : 0;
+        return `<div style="padding:8px 0">
+          <div class="flex-between mb-1">
+            <span style="font-size:12px;font-weight:800">${s.icon} ${s.name}</span>
+            <span style="font-size:12px;font-weight:800;color:var(--purple)">${pct}%</span>
+          </div>
+          <div class="xp-bar"><i style="width:${pct}%"></i></div>
+        </div>`;
+      }).join("")}
+    </div>
+
+    <div class="card mb-2">
+      <h3 class="mb-2">Activity Heatmap (12 weeks)</h3>
+      <div class="heatmap">
+        ${heatCells.map(c => `<div class="heatmap-day" data-lvl="${c.lvl}" title="${c.key}"></div>`).join("")}
+      </div>
+      <p class="muted small mt-2">Darker = more questions answered</p>
+    </div>
+
+    <div class="card">
+      <h3 class="mb-2">Summary</h3>
+      <div class="flex-between" style="padding:8px 0">
+        <span class="muted small">Exams Taken</span>
+        <span style="font-weight:800">${results.length}</span>
+      </div>
+      <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)">
+        <span class="muted small">Best Score</span>
+        <span style="font-weight:800">${p.bestScore || 0}%</span>
+      </div>
+      <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)">
+        <span class="muted small">Flashcards Studied</span>
+        <span style="font-weight:800">${p.flashcardsStudied || 0}</span>
+      </div>
+      <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)">
+        <span class="muted small">Notes</span>
+        <span style="font-weight:800">${Object.keys(p.notes || {}).length}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+function renderNotes() {
+  const p = state.profile || {};
+  const notes = p.notes || {};
+  const list = Object.entries(notes);
+  return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
+    <h2 class="mb-2">📝 My Notes</h2>
+    ${list.length ? list.map(([k, v]) => `
+      <div class="card mb-1">
+        <div style="font-size:11px;color:var(--muted);font-weight:800;margin-bottom:6px">${esc(v.q || k)}</div>
+        <div style="font-size:13px;line-height:1.5">${esc(v.note || "")}</div>
+      </div>`).join("") : `<div class="empty"><div class="big">📝</div>No notes yet.<br>Add a note on any question during practice.</div>`}
+  </div>`;
+}
+
+/* ============================================================
    BOOKMARKS
    ============================================================ */
 function renderBookmarks() {
@@ -1465,13 +2107,13 @@ function renderBookmarks() {
   const bms = (p.bookmarks || []);
   if (!bms.length) {
     return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-      <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+      <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
       <h2 class="mb-2">My Bookmarks</h2>
-      <div class="empty"><div class="big">🔖</div>No bookmarks yet.<br>Tap the bookmark icon on any question during practice.</div>
+      <div class="empty"><div class="big">🔖</div>No bookmarks yet.</div>
     </div>`;
   }
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
     <h2 class="mb-2">My Bookmarks (${bms.length})</h2>
     ${bms.map((bm, i) => {
       const set = state.sets[bm.set - 1];
@@ -1483,10 +2125,10 @@ function renderBookmarks() {
       return `<div class="card mb-1">
         <div class="flex-between mb-1">
           <span class="badge badge-info">Set ${bm.set} · ${sec.short}</span>
-          <button class="btn btn-sm btn-ghost" onclick="__dj.removeBookmark(${i})">Remove</button>
+          <button class="btn btn-sm btn-ghost" data-action="removeBookmark" data-idx="${i}">Remove</button>
         </div>
         <div style="font-size:13.5px;line-height:1.5;margin-bottom:8px">${esc(q.q)}</div>
-        ${q.o.map((t, oi) => t ? `<div style="padding:7px 10px;font-size:12px;color:var(--muted);border-radius:6px;margin-top:4px;${oi === q.a ? "background:#d1fae5;color:#047857;font-weight:700" : ""}">
+        ${q.o.map((t, oi) => t ? `<div style="padding:7px 10px;font-size:12px;color:var(--muted);border-radius:6px;margin-top:4px;${oi === q.a ? "background:rgba(16,185,129,.15);color:var(--green);font-weight:700" : ""}">
           ${"ABCD"[oi]}. ${esc(t)} ${oi === q.a ? "✓" : ""}</div>` : "").join("")}
       </div>`;
     }).join("")}
@@ -1499,7 +2141,7 @@ function renderBookmarks() {
 function renderLeaderboard() {
   const lb = state.leaderboard || [];
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goHome()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="home">← Back</button>
     <h2 class="mb-1">🏆 Leaderboard</h2>
     <p class="muted mb-3">Top 20 students by best score</p>
     <div class="card">
@@ -1519,7 +2161,7 @@ function renderLeaderboard() {
 }
 
 /* ============================================================
-   ADMIN
+   ADMIN (compact — same as before)
    ============================================================ */
 let adminTab = "overview";
 
@@ -1541,11 +2183,11 @@ function renderAdmin() {
   };
   const content = contentMap[adminTab] ? contentMap[adminTab]() : "";
   return `${topbarHTML()}<div class="wrap" style="padding:16px 0 40px">
-    <button class="btn btn-ghost btn-sm mb-2" onclick="__dj.goProfile()">← Back</button>
+    <button class="btn btn-ghost btn-sm mb-2" data-nav="profile">← Back</button>
     <h2 class="mb-2">⚙ Admin Dashboard</h2>
     <div class="admin-tabs">
       ${tabs.map(t => `<button class="admin-tab ${adminTab === t.id ? "on" : ""}"
-        onclick="__dj.adminTab('${t.id}')">${t.label}</button>`).join("")}
+        data-action="adminTab" data-id="${t.id}">${t.label}</button>`).join("")}
     </div>
     <div id="adminContent">${content}</div>
   </div>`;
@@ -1554,20 +2196,20 @@ function renderAdmin() {
 function renderAdminOverview() {
   setTimeout(loadAdminStats, 10);
   return `<div class="grid-2">
-    <div class="stat-card"><div class="num" id="statTotal">…</div><div class="lbl">Total Students</div></div>
+    <div class="stat-card"><div class="num" id="statTotal">…</div><div class="lbl">Students</div></div>
     <div class="stat-card"><div class="num" id="statActive">…</div><div class="lbl">Active</div></div>
     <div class="stat-card"><div class="num" id="statBlocked">…</div><div class="lbl">Blocked</div></div>
     <div class="stat-card"><div class="num" id="statPremium">…</div><div class="lbl">Premium</div></div>
-    <div class="stat-card"><div class="num" id="statPending">…</div><div class="lbl">Pending Requests</div></div>
+    <div class="stat-card"><div class="num" id="statPending">…</div><div class="lbl">Requests</div></div>
     <div class="stat-card"><div class="num" id="statQuestions">…</div><div class="lbl">Questions</div></div>
   </div>
   <div class="card mt-2">
     <h3 class="mb-1">Quick Actions</h3>
     <div class="grid-2">
-      <button class="btn btn-primary btn-sm" onclick="__dj.adminTab('students')">Students</button>
-      <button class="btn btn-teal btn-sm" onclick="__dj.adminTab('questions')">Questions</button>
-      <button class="btn btn-ghost btn-sm" onclick="__dj.adminTab('requests')">Requests</button>
-      <button class="btn btn-ghost btn-sm" onclick="__dj.refreshQuestions()">↻ Refresh Q</button>
+      <button class="btn btn-primary btn-sm" data-action="adminTab" data-id="students">Students</button>
+      <button class="btn btn-teal btn-sm" data-action="adminTab" data-id="questions">Questions</button>
+      <button class="btn btn-ghost btn-sm" data-action="adminTab" data-id="requests">Requests</button>
+      <button class="btn btn-ghost btn-sm" data-action="refreshQuestions">↻ Refresh Q</button>
     </div>
   </div>`;
 }
@@ -1590,13 +2232,13 @@ async function loadAdminStats() {
     if ($("statPremium")) $("statPremium").textContent = premiumActive;
     if ($("statPending")) $("statPending").textContent = reqSnap.size;
     if ($("statQuestions")) $("statQuestions").textContent = qs;
-  } catch (e) { console.error("loadAdminStats", e); }
+  } catch (e) { console.error(e); }
 }
 
 function renderAdminStudents() {
   setTimeout(loadStudentsList, 10);
   return `<div class="field">
-    <input type="text" id="studentSearch" class="input" placeholder="Search by name or email…" oninput="__dj.filterStudents()">
+    <input type="text" id="studentSearch" class="input" placeholder="Search by name or email…">
   </div>
   <div id="studentsList"><p class="muted center" style="padding:24px">Loading…</p></div>`;
 }
@@ -1613,6 +2255,12 @@ async function loadStudentsList() {
     });
     state._allStudents = users;
     renderStudentRows(users);
+    const s = $("studentSearch");
+    if (s) s.oninput = () => {
+      const q = s.value.toLowerCase();
+      renderStudentRows(users.filter(u =>
+        (u.name || "").toLowerCase().includes(q) || (u.email || "").toLowerCase().includes(q)));
+    };
   } catch (e) {
     list.innerHTML = `<p class="muted" style="color:var(--red)">Error: ${esc(e.message)}</p>`;
   }
@@ -1621,15 +2269,12 @@ async function loadStudentsList() {
 function renderStudentRows(users) {
   const list = $("studentsList");
   if (!list) return;
-  if (!users.length) { list.innerHTML = `<p class="muted center" style="padding:24px">No students found.</p>`; return; }
+  if (!users.length) { list.innerHTML = `<p class="muted center" style="padding:24px">No students.</p>`; return; }
   list.innerHTML = users.map(u => {
     const premActive = u.premium && daysLeft(u.premium.expiry) > 0;
     return `<div class="admin-q-item">
       <div class="flex-between mb-1">
-        <div>
-          <h4>${esc(u.name || "Unnamed")}</h4>
-          <p class="muted small">${esc(u.email)}</p>
-        </div>
+        <div><h4>${esc(u.name || "Unnamed")}</h4><p class="muted small">${esc(u.email)}</p></div>
         <div class="badges">
           ${u.status === "blocked" ? '<span class="badge badge-danger">Blocked</span>' : '<span class="badge badge-success">Active</span>'}
           ${premActive ? '<span class="badge badge-prem">Premium</span>' : ""}
@@ -1637,19 +2282,12 @@ function renderStudentRows(users) {
         </div>
       </div>
       <div class="actions">
-        <button onclick="__dj.grantPremium('${u.uid}')">Grant Premium</button>
-        <button onclick="__dj.togglePractice('${u.uid}', ${!u.practiceAccess})">${u.practiceAccess ? "Revoke" : "Grant"} Practice</button>
-        <button class="${u.status === "blocked" ? "preview" : "del"}" onclick="__dj.toggleBlock('${u.uid}', '${u.status}')">${u.status === "blocked" ? "Unblock" : "Block"}</button>
+        <button data-action="grantPremium" data-uid="${u.uid}">Grant Premium</button>
+        <button data-action="togglePractice" data-uid="${u.uid}" data-val="${!u.practiceAccess}">${u.practiceAccess ? "Revoke" : "Grant"} Practice</button>
+        <button data-action="toggleBlock" data-uid="${u.uid}" data-status="${u.status}">${u.status === "blocked" ? "Unblock" : "Block"}</button>
       </div>
     </div>`;
   }).join("");
-}
-
-function filterStudents() {
-  const q = ($("studentSearch").value || "").toLowerCase();
-  const all = state._allStudents || [];
-  renderStudentRows(all.filter(u =>
-    (u.name || "").toLowerCase().includes(q) || (u.email || "").toLowerCase().includes(q)));
 }
 
 function renderAdminRequests() {
@@ -1664,7 +2302,7 @@ async function loadRequests() {
     const snap = await getDocs(query(collection(db, "accessRequests"), orderBy("createdAt", "desc"), limit(50)));
     const reqs = [];
     snap.forEach(d => reqs.push({ id: d.id, ...d.data() }));
-    if (!reqs.length) { list.innerHTML = `<p class="muted center" style="padding:24px">No requests yet.</p>`; return; }
+    if (!reqs.length) { list.innerHTML = `<p class="muted center" style="padding:24px">No requests.</p>`; return; }
     list.innerHTML = reqs.map(r => `
       <div class="admin-q-item">
         <div class="flex-between mb-1">
@@ -1675,13 +2313,11 @@ async function loadRequests() {
           <span class="badge badge-${r.status === "pending" ? "warn" : r.status === "approved" ? "success" : "danger"}">${esc(r.status)}</span>
         </div>
         ${r.status === "pending" ? `<div class="actions">
-          <button class="preview" onclick="__dj.approveRequest('${r.id}','${r.uid}','${r.type}')">Approve</button>
-          <button class="del" onclick="__dj.rejectRequest('${r.id}')">Reject</button>
+          <button data-action="approveRequest" data-rid="${r.id}" data-uid="${r.uid}" data-type="${r.type}">Approve</button>
+          <button data-action="rejectRequest" data-rid="${r.id}">Reject</button>
         </div>` : ""}
       </div>`).join("");
-  } catch (e) {
-    list.innerHTML = `<p class="muted" style="color:var(--red)">${esc(e.message)}</p>`;
-  }
+  } catch (e) { list.innerHTML = `<p class="muted" style="color:var(--red)">${esc(e.message)}</p>`; }
 }
 
 function renderAdminQuestions() {
@@ -1689,18 +2325,17 @@ function renderAdminQuestions() {
   return `<div class="flex-between mb-2">
     <h3>Questions (${totalQ})</h3>
     <div class="flex" style="gap:6px">
-      <button class="btn btn-ghost btn-sm" onclick="__dj.refreshQuestions()">↻</button>
-      <button class="btn btn-primary btn-sm" onclick="__dj.addQuestion()">+ Add</button>
+      <button class="btn btn-ghost btn-sm" data-action="refreshQuestions">↻</button>
+      <button class="btn btn-primary btn-sm" data-action="addQuestion">+ Add</button>
     </div>
   </div>
   <div class="card" style="background:var(--bg);padding:12px;margin-bottom:12px">
     <p class="muted small" style="line-height:1.6">
-      <b>📁 GitHub Media:</b> Put images in <code>photos/</code> and audio in <code>audio/</code> folders in your repo.<br>
-      In the form below, enter: <code>photos/q1.jpg</code> or <code>audio/q1.mp3</code> (relative path).<br>
+      <b>📁 GitHub Media:</b> Put images in <code>photos/</code> and audio in <code>audio/</code>.<br>
       Base URL: <code>${REPO_BASE}</code>
     </p>
   </div>
-  <div class="field"><input type="text" id="qSearch" class="input" placeholder="Search questions…" oninput="__dj.filterQuestions()"></div>
+  <div class="field"><input type="text" id="qSearch" class="input" placeholder="Search questions…"></div>
   <div id="questionsList"><p class="muted center" style="padding:24px">Loading…</p></div>`;
 }
 
@@ -1714,6 +2349,11 @@ function loadQuestionsList() {
   })));
   state._allQs = allQs;
   renderQuestionRows(allQs);
+  const s = $("qSearch");
+  if (s) s.oninput = () => {
+    const q = s.value.toLowerCase();
+    renderQuestionRows(allQs.filter(item => item.q.q.toLowerCase().includes(q)));
+  };
 }
 
 function renderQuestionRows(qs) {
@@ -1731,16 +2371,11 @@ function renderQuestionRows(qs) {
       </div>
       <div class="qtxt">${esc(item.q.q.slice(0, 200))}</div>
       <div class="actions">
-        <button class="preview" onclick="__dj.previewQ(${i})">Preview</button>
-        <button class="edit" onclick="__dj.editQ(${i})">Edit</button>
-        <button class="del" onclick="__dj.deleteQ(${i})">Delete</button>
+        <button data-action="previewQ" data-idx="${i}">Preview</button>
+        <button class="edit" data-action="editQ" data-idx="${i}">Edit</button>
+        <button class="del" data-action="deleteQ" data-idx="${i}">Delete</button>
       </div>
     </div>`).join("");
-}
-
-function filterQuestions() {
-  const q = ($("qSearch").value || "").toLowerCase();
-  renderQuestionRows((state._allQs || []).filter(item => item.q.q.toLowerCase().includes(q)));
 }
 
 function renderAdminSettings() {
@@ -1748,24 +2383,21 @@ function renderAdminSettings() {
     <h3 class="mb-2">Premium Plans</h3>
     ${state.plans.map(p => `
       <div class="flex-between mb-1" style="padding:10px;background:var(--bg);border-radius:10px">
-        <div><b>${esc(p.name)}</b><div class="muted small">NPR ${p.price} · ${p.days} days</div></div>
+        <div><b>${esc(p.name)}</b><div class="muted small">NPR ${p.price} · ${p.days}d</div></div>
         <span class="badge ${p.active ? "badge-success" : "badge-muted"}">${p.active ? "Active" : "Inactive"}</span>
       </div>`).join("")}
-    <p class="muted small mt-2">Edit plans in Firestore <code>plans</code> collection.</p>
   </div>
   <div class="card mt-2">
     <h3 class="mb-1">System Info</h3>
-    <div class="flex-between" style="padding:8px 0"><span class="muted small">Admin Email</span><span style="font-size:12px">${esc(ADMIN_EMAIL)}</span></div>
-    <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)"><span class="muted small">Questions Doc</span><span style="font-size:11px">${esc(QUESTIONS_DOC)}</span></div>
-    <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)"><span class="muted small">Repo Base</span><span style="font-size:10px;word-break:break-all">${esc(REPO_BASE)}</span></div>
-    <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)"><span class="muted small">Total Q</span><span style="font-size:12px">${totalQ}</span></div>
+    <div class="flex-between" style="padding:8px 0"><span class="muted small">Admin</span><span style="font-size:11px">${esc(ADMIN_EMAIL)}</span></div>
+    <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)"><span class="muted small">Questions Doc</span><span style="font-size:10px;word-break:break-all">${esc(QUESTIONS_DOC)}</span></div>
+    <div class="flex-between" style="padding:8px 0;border-top:1px solid var(--border)"><span class="muted small">Repo</span><span style="font-size:10px;word-break:break-all">${esc(REPO_BASE)}</span></div>
   </div>
   <div class="card mt-2">
     <h3 class="mb-2">Export / Import</h3>
-    <button class="btn btn-primary btn-block mb-2" onclick="__dj.exportJSON()">📥 Download questions.json</button>
-    <input type="file" id="importFile" accept=".json" class="input mb-2">
+    <button class="btn btn-primary btn-block mb-2" data-action="exportJSON">📥 Download questions.json</button>
     <textarea id="importText" class="input" placeholder='{"questions": [...]}' style="min-height:100px"></textarea>
-    <button class="btn btn-teal btn-block mt-2" onclick="__dj.importJSON()">Import</button>
+    <button class="btn btn-teal btn-block mt-2" data-action="importJSON">Import</button>
   </div>`;
 }
 
@@ -1784,14 +2416,9 @@ function beginExam() {
     q.sel = undefined; q.locked = false; q.played = 0;
   }));
   state.exam = {
-    set, setIdx,
-    sections: set.sections,
-    si: 0, qi: 0,
-    left: EXAM_MIN * 60,
-    paused: false,
-    answeredCount: 0,
-    maxReachable: 0,
-    startedAt: Date.now()
+    set, setIdx, sections: set.sections,
+    si: 0, qi: 0, left: EXAM_MIN * 60, paused: false,
+    answeredCount: 0, maxReachable: 0, startedAt: Date.now()
   };
   startTimer();
   updateStreak();
@@ -1801,18 +2428,14 @@ function beginExam() {
 function startTimer() {
   if (state._tick) clearInterval(state._tick);
   state._tickStart = Date.now();
-  state._tickLeftAtStart = state.exam.left;
+  state._tickLeftAtStart = (state.exam || state.practice || {}).left || 0;
   state._tick = setInterval(tick, 500);
 }
 
 function tick() {
   const ex = state.exam;
   if (!ex) { clearInterval(state._tick); return; }
-  if (ex.paused) {
-    state._tickStart = Date.now();
-    state._tickLeftAtStart = ex.left;
-    return;
-  }
+  if (ex.paused) { state._tickStart = Date.now(); state._tickLeftAtStart = ex.left; return; }
   const elapsed = Math.floor((Date.now() - state._tickStart) / 1000);
   ex.left = Math.max(0, state._tickLeftAtStart - elapsed);
   const el = $("timerDisplay");
@@ -1822,7 +2445,7 @@ function tick() {
   }
   if (ex.left <= 0) {
     clearInterval(state._tick);
-    modal("Time is up!", "Submitting automatically…", [{ label: "View Results", cls: "btn-primary", onClick: finishExam }]);
+    modal("Time is up!", "Submitting…", [{ label: "View Results", cls: "btn-primary", onClick: finishExam }]);
   }
 }
 
@@ -1834,40 +2457,36 @@ function stopAudio() {
 function selectOpt(i) {
   const ex = state.exam || state.practice;
   if (!ex) return;
-  const sec = ex.sections ? ex.sections[ex.si] : null;
-  if (!sec) return;
+  const sec = ex.sections[ex.si];
   const q = sec.questions[ex.qi];
   if (q.locked) return;
   q.sel = i;
   ex.answeredCount = sec.questions.filter(x => x.sel !== undefined).length;
+  haptic(10);
 
-  // Update UI without full re-render (keeps audio playing)
-  document.querySelectorAll(".opt").forEach((el, idx) => {
-    el.classList.toggle("sel", idx === i);
-  });
+  // Update only changed nodes
+  document.querySelectorAll(".opt").forEach((el, idx) => el.classList.toggle("sel", idx === i));
   const navBtns = document.querySelectorAll(".exam-nav .btn");
   if (navBtns[1]) navBtns[1].disabled = false;
   const palette = document.querySelectorAll(".pal-btn");
   if (palette[ex.qi]) palette[ex.qi].classList.add("ans");
   const pb = document.querySelector(".progress-bar i");
   if (pb) pb.style.width = (ex.answeredCount / sec.questions.length * 100) + "%";
+
+  // Quest + XP
+  updateQuestProgress("questionsAnswered", 1);
 }
 
 function jumpTo(i) {
   const ex = state.exam || state.practice;
-  if (!ex) return;
-  if (i > ex.maxReachable) return;
-  stopAudio();
-  ex.qi = i;
-  render();
+  if (!ex || i > ex.maxReachable) return;
+  stopAudio(); ex.qi = i; render();
 }
-
 function prevQ() {
   const ex = state.exam || state.practice;
-  if (!ex) return;
-  if (ex.qi > 0) { stopAudio(); ex.qi--; render(); }
+  if (!ex || ex.qi <= 0) return;
+  stopAudio(); ex.qi--; render();
 }
-
 function nextQ() {
   const ex = state.exam || state.practice;
   if (!ex) return;
@@ -1875,13 +2494,10 @@ function nextQ() {
   const q = sec.questions[ex.qi];
   if (q.sel === undefined) return;
   if (ex.qi < sec.questions.length - 1) {
-    stopAudio();
-    ex.qi++;
+    stopAudio(); ex.qi++;
     if (ex.qi > ex.maxReachable) ex.maxReachable = ex.qi;
     render();
-  } else {
-    finishSection();
-  }
+  } else finishSection();
 }
 
 function finishSection() {
@@ -1890,10 +2506,9 @@ function finishSection() {
   const unanswered = sec.questions.filter(x => x.sel === undefined).length;
   const isLast = ex.si === ex.sections.length - 1;
   const isPractice = state.screen === "practice";
-
-  modal(isLast ? (isPractice ? "Finish practice?" : "Submit your exam?") : "Complete this section?",
+  modal(isLast ? (isPractice ? "Finish practice?" : "Submit exam?") : "Complete section?",
     (unanswered ? `${unanswered} unanswered. ` : "") +
-    (isLast ? "You cannot change answers after submitting." : "You cannot return to this section."),
+    (isLast ? "Answers are final." : "Cannot return to this section."),
     [
       { label: "Review", cls: "btn-ghost" },
       { label: isLast ? (isPractice ? "Finish" : "Submit") : "Continue", cls: "btn-primary", onClick: () => {
@@ -1901,9 +2516,7 @@ function finishSection() {
         if (isLast) {
           if (isPractice) finishPractice();
           else finishExam();
-        } else {
-          ex.si++; ex.qi = 0; ex.maxReachable = 0; render();
-        }
+        } else { ex.si++; ex.qi = 0; ex.maxReachable = 0; render(); }
       }}
     ]);
 }
@@ -1914,7 +2527,6 @@ async function finishExam() {
   const ex = state.exam;
   if (!ex) return;
   const used = EXAM_MIN * 60 - ex.left;
-
   let score = 0, correct = 0, unanswered = 0;
   const sections = ex.sections.map(s => {
     const items = s.questions.map((q, idx) => ({
@@ -1930,33 +2542,44 @@ async function finishExam() {
     score += sc; correct += c; unanswered += u;
     return { name: s.name, short: s.short, marks: s.marks, score: sc, max: s.questions.length * s.marks, items };
   });
-
   const wrong = totalQ - correct - unanswered;
   const percentage = Math.round(score / fullMarks * 100);
   const result = {
     setIdx: ex.set.idx, setName: ex.set.name,
-    score, maxScore: fullMarks, percentage,
-    correct, wrong, unanswered, sections,
-    timeUsed: used,
-    startedAt: new Date(ex.startedAt),
-    submittedAt: new Date()
+    score, maxScore: fullMarks, percentage, correct, wrong, unanswered, sections,
+    timeUsed: used, startedAt: new Date(ex.startedAt), submittedAt: new Date()
   };
 
+  // Update profile: testsCompleted, bestScore, perfectScores, activity, XP
+  const p = state.profile || {};
+  const updates = {
+    testsCompleted: (p.testsCompleted || 0) + 1,
+    bestScore: Math.max(p.bestScore || 0, percentage)
+  };
+  if (percentage === 100) updates.perfectScores = (p.perfectScores || 0) + 1;
+
+  // Activity heatmap
+  const activity = { ...(p.activity || {}) };
+  const key = todayKey();
+  activity[key] = (activity[key] || 0) + correct;
+  updates.activity = activity;
+
+  // Save result
   try {
     const attemptId = `attempt_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
     await setDoc(doc(db, "users", state.user.uid, "results", attemptId), {
       ...result, submittedAt: serverTimestamp()
     });
+    await updateDoc(doc(db, "users", state.user.uid), updates);
     state.results.unshift({ ...result, id: attemptId });
-    // Update bestScore
-    const p = state.profile || {};
-    if (percentage > (p.bestScore || 0)) {
-      await updateDoc(doc(db, "users", state.user.uid), { bestScore: percentage });
-    }
-  } catch (e) {
-    console.error("Save result", e);
-    toast("Result saved locally only.", "err");
-  }
+    Object.assign(state.profile, updates);
+  } catch (e) { toast("Saved locally only", "err"); }
+
+  // Award XP + quest
+  const xpAward = 50 + (percentage >= 80 ? 100 : 0) + correct * 2;
+  await awardXP(xpAward, "Exam complete");
+  await updateQuestProgress("perfectToday", percentage === 100 ? 1 : 0);
+  checkAchievements();
 
   state.params.result = result;
   navigate("result");
@@ -1966,27 +2589,20 @@ function askLeave() {
   const ex = state.exam;
   if (ex) ex.paused = true;
   stopAudio();
-  modal("Leave the exam?", "Progress will be lost and timer stops.",
+  modal("Leave the exam?", "Progress will be lost.",
     [
-      { label: "Stay", cls: "btn-ghost" },
+      { label: "Stay", cls: "btn-ghost", onClick: () => { if (ex) ex.paused = false; } },
       { label: "Leave", cls: "btn-danger", onClick: () => {
         if (state._tick) clearInterval(state._tick);
         state.exam = null;
         navigate("sets");
       }}
     ]);
-  const m = $("modal");
-  if (m.querySelectorAll("button")[0]) {
-    m.querySelectorAll("button")[0].onclick = () => {
-      m.classList.remove("show");
-      if (ex) ex.paused = false;
-    };
-  }
 }
 
 function playAudio(q) {
   if ((q.played || 0) >= MAX_PLAYS) {
-    modal("Audio limit reached", `Audio can only be played ${MAX_PLAYS} times per question.`);
+    modal("Audio limit reached", `Only ${MAX_PLAYS} plays per question.`);
     return;
   }
   stopAudio();
@@ -2013,19 +2629,15 @@ function playAudio(q) {
 }
 
 /* ============================================================
-   PRACTICE MODE
+   PRACTICE
    ============================================================ */
 function startPractice(sectionKey) {
-  // Gather 10 questions from the given section across all sets
   const pool = [];
   state.sets.forEach(s => {
     const sec = s.sections.find(x => x.key === sectionKey);
-    if (sec) sec.questions.forEach(q => {
-      pool.push({ ...q, sel: undefined, locked: false, played: 0 });
-    });
+    if (sec) sec.questions.forEach(q => pool.push({ ...q, sel: undefined, locked: false, played: 0 }));
   });
-  if (pool.length < 5) return toast("Not enough questions in this section", "err");
-  // Shuffle
+  if (pool.length < 5) return toast("Not enough questions", "err");
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -2034,10 +2646,12 @@ function startPractice(sectionKey) {
   const meta = SECTIONS.find(s => s.key === sectionKey);
   state.practice = {
     sections: [{ key: meta.key, name: meta.name, short: meta.short, marks: meta.marks,
-      questions: picked, count: picked.length, icon: meta.icon }],
-    si: 0, qi: 0, answeredCount: 0, maxReachable: 0
+      questions: picked, count: picked.length }],
+    si: 0, qi: 0, left: 0, answeredCount: 0, maxReachable: 0
   };
   navigate("practice");
+  // Practice re-renders as exam-like but no timer bar
+  render();
 }
 
 function finishPractice() {
@@ -2047,6 +2661,17 @@ function finishPractice() {
   let correct = 0;
   sec.questions.forEach(q => { if (q.sel === q.a) correct++; });
   const total = sec.questions.length;
+  // Track activity + XP
+  const p = state.profile || {};
+  const activity = { ...(p.activity || {}) };
+  const key = todayKey();
+  activity[key] = (activity[key] || 0) + correct;
+  updateDoc(doc(db, "users", state.user.uid), { activity }).then(() => {
+    state.profile.activity = activity;
+  }).catch(() => {});
+  awardXP(correct * 2, "Practice");
+  updateQuestProgress("listenSectionsDone", sec.key === "lc" ? 1 : 0);
+
   modal("Practice Complete", `
     <div class="center">
       <div style="font-size:48px;margin-bottom:8px">${correct/total >= 0.7 ? "🎉" : "💪"}</div>
@@ -2057,44 +2682,6 @@ function finishPractice() {
       state.practice = null;
       navigate("home");
     }}]);
-}
-
-/* ============================================================
-   BOOKMARKS
-   ============================================================ */
-async function toggleBookmark(setIdx, qi) {
-  if (!state.user) return;
-  const p = state.profile || {};
-  const bms = [...(p.bookmarks || [])];
-  // Find question context
-  const ex = state.exam;
-  if (!ex) return;
-  const sec = ex.sections[ex.si];
-  const key = { set: setIdx, section: sec.key, qi: +qi };
-  const idx = bms.findIndex(b => b.set === key.set && b.section === key.section && b.qi === key.qi);
-  if (idx >= 0) bms.splice(idx, 1);
-  else bms.push({ ...key, addedAt: Date.now() });
-  try {
-    await updateDoc(doc(db, "users", state.user.uid), { bookmarks: bms });
-    state.profile.bookmarks = bms;
-    toast(idx >= 0 ? "Bookmark removed" : "Bookmarked ✓", "ok");
-    // Update button visual
-    document.querySelectorAll(`[data-bookmark="${setIdx}"][data-qi="${qi}"]`).forEach(b => {
-      b.classList.toggle("on", idx < 0);
-      b.textContent = idx < 0 ? "🔖" : "🔖";
-    });
-  } catch (e) { toast("Failed: " + e.message, "err"); }
-}
-
-async function removeBookmark(i) {
-  const bms = [...(state.profile.bookmarks || [])];
-  bms.splice(i, 1);
-  try {
-    await updateDoc(doc(db, "users", state.user.uid), { bookmarks: bms });
-    state.profile.bookmarks = bms;
-    render();
-    toast("Removed", "ok");
-  } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
 /* ============================================================
@@ -2110,7 +2697,7 @@ async function updateStreak() {
   if (!last) newCount = 1;
   else {
     const diffDays = Math.floor((now - last) / 86400000);
-    if (diffDays === 0) { /* same day, no change */ }
+    if (diffDays === 0) { /* same day */ }
     else if (diffDays === 1) newCount++;
     else newCount = 1;
   }
@@ -2118,21 +2705,19 @@ async function updateStreak() {
     await updateDoc(doc(db, "users", state.user.uid), {
       streak: { count: newCount, last: now.toISOString() }
     });
-    if (state.profile) state.profile.streak = { count: newCount, last: now.toISOString() };
-  } catch (e) { console.error("updateStreak", e); }
+    state.profile.streak = { count: newCount, last: now.toISOString() };
+  } catch {}
 }
 
 /* ============================================================
    ADMIN ACTIONS
    ============================================================ */
 function grantPremium(uid) {
-  const planOptions = state.plans.map(p =>
+  const opts = state.plans.map(p =>
     `<option value="${p.id}">${esc(p.name)} — NPR ${p.price} (${p.days}d)</option>`).join("");
   modal("Grant Premium", `
-    <div class="field"><label>Plan</label>
-      <select id="grantPlan" class="input">${planOptions}</select></div>
-    <div class="field"><label>Note (optional)</label>
-      <input type="text" id="grantNote" class="input" placeholder="Payment reference…"></div>
+    <div class="field"><label>Plan</label><select id="grantPlan" class="input">${opts}</select></div>
+    <div class="field"><label>Note</label><input type="text" id="grantNote" class="input" placeholder="Optional"></div>
   `, [
     { label: "Cancel", cls: "btn-ghost" },
     { label: "Grant", cls: "btn-primary", onClick: async () => {
@@ -2162,38 +2747,34 @@ async function togglePractice(uid, value) {
 
 async function toggleBlock(uid, currentStatus) {
   const newStatus = currentStatus === "blocked" ? "active" : "blocked";
-  modal(`${newStatus === "blocked" ? "Block" : "Unblock"} this user?`,
-    `Status will change to "${newStatus}".`,
-    [
-      { label: "Cancel", cls: "btn-ghost" },
-      { label: "Confirm", cls: newStatus === "blocked" ? "btn-danger" : "btn-primary", onClick: async () => {
-        try {
-          await updateDoc(doc(db, "users", uid), { status: newStatus });
-          toast(`User ${newStatus}`, "ok");
-          loadStudentsList();
-        } catch (e) { toast("Failed: " + e.message, "err"); }
-      }}
-    ]);
+  modal(`${newStatus === "blocked" ? "Block" : "Unblock"} user?`, `Status: ${newStatus}`, [
+    { label: "Cancel", cls: "btn-ghost" },
+    { label: "Confirm", cls: newStatus === "blocked" ? "btn-danger" : "btn-primary", onClick: async () => {
+      try {
+        await updateDoc(doc(db, "users", uid), { status: newStatus });
+        toast("Updated", "ok");
+        loadStudentsList();
+      } catch (e) { toast("Failed: " + e.message, "err"); }
+    }}
+  ]);
 }
 
 async function approveRequest(rid, uid, type) {
   try {
     await updateDoc(doc(db, "accessRequests", rid), { status: "approved" });
     if (type === "practice") await updateDoc(doc(db, "users", uid), { practiceAccess: true });
-    toast("Request approved ✓", "ok");
+    toast("Approved ✓", "ok");
     loadRequests();
   } catch (e) { toast("Failed: " + e.message, "err"); }
 }
-
 async function rejectRequest(rid) {
   try {
     await updateDoc(doc(db, "accessRequests", rid), { status: "rejected" });
-    toast("Request rejected", "ok");
+    toast("Rejected", "ok");
     loadRequests();
   } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
-/* Question CRUD */
 function addQuestion() { openQEditor(-1); }
 function editQ(idx) { openQEditor(idx); }
 
@@ -2201,15 +2782,8 @@ function openQEditor(idx) {
   const isEdit = idx >= 0;
   const item = isEdit ? state._allQs[idx] : null;
   const q = item ? item.q : { q: "", p: "", img: "", au: "", o: ["","","",""], a: 0 };
-
-  // Extract raw image/audio paths (not scene: or tts: resolved)
-  let rawImg = "";
-  if (q.img) {
-    if (q.img.startsWith("data:")) rawImg = "";
-    else rawImg = q.img;
-  }
+  const rawImg = q.img && !q.img.startsWith("data:") ? q.img : "";
   const rawAu = q.au || "";
-
   modal(isEdit ? "Edit Question" : "Add Question", `
     <div class="grid-2">
       <div class="field"><label>Set</label>
@@ -2219,22 +2793,18 @@ function openQEditor(idx) {
         <select id="qeSec" class="input">${SECTIONS.map(s =>
           `<option value="${s.key}" ${(item && item.section === s.key) ? "selected" : ""}>${s.name}</option>`).join("")}</select></div>
     </div>
-    <div class="field"><label>Question</label>
-      <textarea id="qeQ" class="input">${esc(q.q)}</textarea></div>
-    <div class="field"><label>Passage (optional)</label>
-      <textarea id="qeP" class="input">${esc(q.p || "")}</textarea></div>
-    <div class="field"><label>Image (e.g. photos/q1.jpg · or scene:rain · or full URL)</label>
-      <input type="text" id="qeImg" class="input" value="${esc(rawImg)}" placeholder="photos/myimage.jpg"></div>
-    <div class="field"><label>Audio (e.g. audio/q1.mp3 · or tts:こんにちは · or full URL)</label>
-      <input type="text" id="qeAu" class="input" value="${esc(rawAu)}" placeholder="audio/myaudio.mp3"></div>
-    <div class="field"><label>Correct Answer</label>
+    <div class="field"><label>Question</label><textarea id="qeQ" class="input">${esc(q.q)}</textarea></div>
+    <div class="field"><label>Passage</label><textarea id="qeP" class="input">${esc(q.p || "")}</textarea></div>
+    <div class="field"><label>Image (photos/q1.jpg)</label><input type="text" id="qeImg" class="input" value="${esc(rawImg)}"></div>
+    <div class="field"><label>Audio (audio/q1.mp3)</label><input type="text" id="qeAu" class="input" value="${esc(rawAu)}"></div>
+    <div class="field"><label>Correct</label>
       <select id="qeAns" class="input">${"ABCD".split("").map((l, i) =>
         `<option value="${i}" ${q.a === i ? "selected" : ""}>${l}</option>`).join("")}</select></div>
     <div class="grid-2">
       <div class="field"><label>A</label><input type="text" id="qeA" class="input" value="${esc(q.o[0])}"></div>
       <div class="field"><label>B</label><input type="text" id="qeB" class="input" value="${esc(q.o[1])}"></div>
       <div class="field"><label>C</label><input type="text" id="qeC" class="input" value="${esc(q.o[2])}"></div>
-      <div class="field"><label>D (optional)</label><input type="text" id="qeD" class="input" value="${esc(q.o[3])}"></div>
+      <div class="field"><label>D</label><input type="text" id="qeD" class="input" value="${esc(q.o[3])}"></div>
     </div>
   `, [
     { label: "Cancel", cls: "btn-ghost" },
@@ -2252,85 +2822,70 @@ async function saveQ(idx) {
   const answer = "ABCD"[+$("qeAns").value];
   const A = $("qeA").value.trim(), B = $("qeB").value.trim();
   const C = $("qeC").value.trim(), D = $("qeD").value.trim();
-
-  if (!question || !A || !B || !C) return toast("Question, A, B, C required", "err");
-  if (answer === "D" && !D) return toast("Answer D but option D empty", "err");
-
+  if (!question || !A || !B || !C) return toast("Required: Q, A, B, C", "err");
+  if (answer === "D" && !D) return toast("Option D empty", "err");
   const newRow = { set: setNum, section, question, passage, image, audio, answer, A, B, C, D };
-
   try {
     const currentRows = await fetchQuestionsFromFirestore();
     const list = [...currentRows];
-
     if (idx >= 0) {
       const item = state._allQs[idx];
-      const globalIdx = list.findIndex(r =>
+      const gIdx = list.findIndex(r =>
         r.set === item.set && r.section === item.section &&
         r.question === item.q.q && r.A === item.q.o[0]);
-      if (globalIdx >= 0) list[globalIdx] = newRow;
-      else list.push(newRow);
-    } else {
-      list.push(newRow);
-    }
-
+      if (gIdx >= 0) list[gIdx] = newRow; else list.push(newRow);
+    } else list.push(newRow);
     await setDoc(doc(db, QUESTIONS_DOC), { questions: list });
     clearQCache();
-
     const fresh = await fetchQuestionsFromFirestore();
     setCache(fresh);
     state.sets = buildSets(fresh);
     recomputeTotals();
     loadQuestionsList();
-    toast(idx >= 0 ? "Question updated ✓" : "Question added ✓", "ok");
-  } catch (e) {
-    console.error("saveQ", e);
-    toast("Failed: " + e.message, "err");
-  }
+    toast(idx >= 0 ? "Updated ✓" : "Added ✓", "ok");
+  } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
 async function deleteQ(idx) {
   const item = state._allQs[idx];
   if (!item) return;
-  modal("Delete this question?", `"${esc(item.q.q.slice(0, 60))}…" will be removed.`,
-    [
-      { label: "Cancel", cls: "btn-ghost" },
-      { label: "Delete", cls: "btn-danger", onClick: async () => {
-        try {
-          const currentRows = await fetchQuestionsFromFirestore();
-          const filtered = currentRows.filter(r =>
-            !(r.set === item.set && r.section === item.section &&
-              r.question === item.q.q && r.A === item.q.o[0]));
-          await setDoc(doc(db, QUESTIONS_DOC), { questions: filtered });
-          clearQCache();
-          const fresh = await fetchQuestionsFromFirestore();
-          setCache(fresh);
-          state.sets = buildSets(fresh);
-          recomputeTotals();
-          loadQuestionsList();
-          toast("Question deleted ✓", "ok");
-        } catch (e) { toast("Failed: " + e.message, "err"); }
-      }}
-    ]);
+  modal("Delete?", `"${esc(item.q.q.slice(0, 60))}…"`, [
+    { label: "Cancel", cls: "btn-ghost" },
+    { label: "Delete", cls: "btn-danger", onClick: async () => {
+      try {
+        const currentRows = await fetchQuestionsFromFirestore();
+        const filtered = currentRows.filter(r =>
+          !(r.set === item.set && r.section === item.section &&
+            r.question === item.q.q && r.A === item.q.o[0]));
+        await setDoc(doc(db, QUESTIONS_DOC), { questions: filtered });
+        clearQCache();
+        const fresh = await fetchQuestionsFromFirestore();
+        setCache(fresh);
+        state.sets = buildSets(fresh);
+        recomputeTotals();
+        loadQuestionsList();
+        toast("Deleted ✓", "ok");
+      } catch (e) { toast("Failed: " + e.message, "err"); }
+    }}
+  ]);
 }
 
 function previewQ(idx) {
   const item = state._allQs[idx];
   if (!item) return;
   const q = item.q;
-  modal("Question Preview", `
+  modal("Preview", `
     <div class="flex mb-1" style="gap:6px;flex-wrap:wrap">
       <span class="badge badge-info">Set ${item.set}</span>
       <span class="badge badge-muted">${esc(item.sectionName)}</span>
       <span class="badge badge-muted">${item.marks} marks</span>
     </div>
     ${q.p ? `<div class="passage" style="margin-top:12px">${esc(q.p)}</div>` : ""}
-    <div style="font-size:15px;font-weight:700;line-height:1.5;margin:12px 0;white-space:pre-line">${esc(q.q)}</div>
-    ${q.img ? `<img src="${esc(q.img)}" loading="lazy" style="width:100%;border-radius:10px;margin-bottom:12px" onerror="this.style.display='none'">` : ""}
-    ${q.au ? `<div class="muted small mb-2">🔊 ${esc(q.au)}</div>` : ""}
+    <div style="font-size:15px;font-weight:700;line-height:1.5;margin:12px 0">${esc(q.q)}</div>
     ${q.o.map((t, i) => {
       if (i === 3 && !t) return "";
       const isC = i === q.a;
-      return `<div style="padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-top:6px;font-size:13px;${isC ? "background:#d1fae5;border-color:var(--green);font-weight:700" : ""}">
+      return `<div style="padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-top:6px;font-size:13px;${isC ? "background:rgba(16,185,129,.15);border-color:var(--green);font-weight:700" : ""}">
         <b>${"ABCD"[i]}.</b> ${esc(t)} ${isC ? "✓" : ""}</div>`;
     }).join("")}
   `);
@@ -2345,32 +2900,30 @@ async function refreshQuestions() {
     state.sets = buildSets(fresh);
     recomputeTotals();
     if ($("questionsList")) loadQuestionsList();
-    toast("Questions refreshed ✓", "ok");
+    toast("Refreshed ✓", "ok");
   } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
-function exportJSON() {
-  (async () => {
-    try {
-      const rows = await fetchQuestionsFromFirestore();
-      const blob = new Blob([JSON.stringify({ questions: rows }, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = "questions.json"; a.click();
-      URL.revokeObjectURL(url);
-      toast("Downloaded questions.json", "ok");
-    } catch (e) { toast("Failed: " + e.message, "err"); }
-  })();
+async function exportJSON() {
+  try {
+    const rows = await fetchQuestionsFromFirestore();
+    const blob = new Blob([JSON.stringify({ questions: rows }, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "questions.json"; a.click();
+    URL.revokeObjectURL(url);
+    toast("Downloaded", "ok");
+  } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
 async function importJSON() {
-  const text = $("importText") && $("importText").value.trim();
-  if (!text) return toast("Paste JSON or upload a file", "err");
+  const text = $("importText")?.value.trim();
+  if (!text) return toast("Paste JSON", "err");
   let parsed;
-  try { parsed = JSON.parse(text); } catch (e) { return toast("Invalid JSON: " + e.message, "err"); }
+  try { parsed = JSON.parse(text); } catch (e) { return toast("Invalid: " + e.message, "err"); }
   const rows = Array.isArray(parsed) ? parsed : parsed.questions;
-  if (!Array.isArray(rows)) return toast("JSON must contain questions array", "err");
-  if (!confirm(`Replace all questions with ${rows.length}? Cannot be undone.`)) return;
+  if (!Array.isArray(rows)) return toast("Need questions array", "err");
+  if (!confirm(`Replace all with ${rows.length} questions?`)) return;
   try {
     await setDoc(doc(db, QUESTIONS_DOC), { questions: rows });
     clearQCache();
@@ -2379,7 +2932,7 @@ async function importJSON() {
     state.sets = buildSets(fresh);
     recomputeTotals();
     loadQuestionsList();
-    toast(`Imported ${rows.length} questions ✓`, "ok");
+    toast(`Imported ${rows.length} ✓`, "ok");
   } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
@@ -2387,19 +2940,18 @@ async function importJSON() {
    STUDENT ACTIONS
    ============================================================ */
 async function requestAccess() {
-  const p = state.profile;
-  if (!p) return;
+  if (!state.profile) return;
   try {
     const existing = await getDocs(query(
       collection(db, "accessRequests"),
       where("uid", "==", state.user.uid),
       where("status", "==", "pending")
     ));
-    if (!existing.empty) return toast("You already have a pending request", "warn");
+    if (!existing.empty) return toast("Pending request exists", "warn");
     await addDoc(collection(db, "accessRequests"), {
       uid: state.user.uid,
-      email: p.email || state.user.email || "",
-      name: p.name || "",
+      email: state.profile.email || "",
+      name: state.profile.name || "",
       type: "practice", status: "pending",
       createdAt: serverTimestamp()
     });
@@ -2413,36 +2965,113 @@ async function requestPremium(planId) {
   try {
     await addDoc(collection(db, "accessRequests"), {
       uid: state.user.uid,
-      email: state.profile.email || state.user.email || "",
+      email: state.profile.email || "",
       name: state.profile.name || "",
       type: "premium", planId, planName: plan.name, planPrice: plan.price,
       status: "pending", createdAt: serverTimestamp()
     });
-    toast("Request sent to admin ✓", "ok");
+    toast("Request sent ✓", "ok");
   } catch (e) { toast("Failed: " + e.message, "err"); }
 }
 
 /* ============================================================
-   SHARE
+   SHARE PNG (canvas)
    ============================================================ */
-async function shareResult() {
+async function sharePNG() {
   const r = state.params.result;
   if (!r) return;
-  const text = `🎌 I scored ${r.score}/${r.maxScore} (${r.percentage}%) on Dream Japan JFT Mock Test!\nSet ${r.setIdx} · ${r.setName}\n${r.score >= passMarks ? "✅ PASSED" : "📚 Practicing hard"}\n#JFT #DreamJapan`;
-  if (navigator.share) {
-    try { await navigator.share({ title: "Dream Japan JFT Result", text }); return; }
-    catch {}
-  }
-  try {
-    await navigator.clipboard.writeText(text);
-    toast("Copied to clipboard ✓", "ok");
-  } catch {
-    modal("Share Result", `<p style="white-space:pre-line;font-size:13px">${esc(text)}</p>`);
-  }
+  const p = state.profile || {};
+  const pass = r.score >= passMarks;
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080; canvas.height = 1080;
+  const ctx = canvas.getContext("2d");
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+  grad.addColorStop(0, "#6366f1");
+  grad.addColorStop(0.5, "#8b5cf6");
+  grad.addColorStop(1, "#a855f7");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1080);
+
+  // Big kanji
+  ctx.font = "bold 500px sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.08)";
+  ctx.textAlign = "center";
+  ctx.fillText("日", 540, 800);
+
+  // Header
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 52px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("Dream Japan", 540, 130);
+  ctx.font = "600 28px sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.85)";
+  ctx.fillText("JFT MOCK TEST · SET " + r.setIdx, 540, 180);
+
+  // Score circle
+  const cx = 540, cy = 500, radius = 220;
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(255,255,255,0.25)";
+  ctx.lineWidth = 30;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, -Math.PI/2, -Math.PI/2 + (Math.PI*2 * r.percentage/100));
+  ctx.strokeStyle = pass ? "#10b981" : "#ef4444";
+  ctx.lineWidth = 30;
+  ctx.lineCap = "round";
+  ctx.stroke();
+
+  // Score number
+  ctx.fillStyle = "#fff";
+  ctx.font = "900 160px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText(r.score, cx, cy + 40);
+  ctx.font = "700 48px sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.85)";
+  ctx.fillText("/ " + r.maxScore, cx, cy + 110);
+
+  // Result badge
+  ctx.font = "900 42px sans-serif";
+  ctx.fillStyle = pass ? "#10b981" : "#ef4444";
+  ctx.fillText(pass ? "PASSED" : "NOT PASSED", 540, 810);
+
+  // Name + meta
+  ctx.fillStyle = "#fff";
+  ctx.font = "800 44px sans-serif";
+  ctx.fillText(p.name || "Student", 540, 900);
+  ctx.font = "500 26px sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.8)";
+  ctx.fillText(`${r.percentage}% · ${r.correct} correct · ${r.wrong} wrong`, 540, 960);
+
+  // Footer
+  ctx.font = "500 22px sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,0.65)";
+  ctx.fillText("dreamjapan.app · #JFT #DreamJapan", 540, 1030);
+
+  // Try share / download
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
+    const file = new File([blob], "dream-japan-result.png", { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: "Dream Japan Result", text: `I scored ${r.percentage}% on Dream Japan JFT!` });
+        return;
+      } catch {}
+    }
+    // Fallback: download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `dream-japan-set${r.setIdx}.png`; a.click();
+    URL.revokeObjectURL(url);
+    toast("Image downloaded ✓", "ok");
+  });
 }
 
 /* ============================================================
-   AUTH LISTENER
+   AUTH STATE LISTENER
    ============================================================ */
 onAuthStateChanged(auth, async (user) => {
   if (state.userSub) { state.userSub(); state.userSub = null; }
@@ -2455,7 +3084,6 @@ onAuthStateChanged(auth, async (user) => {
   try {
     const profile = await ensureUserProfile(user);
     state.profile = profile;
-    // Admin: email match OR role admin (email verification not strictly needed for owner)
     state.isAdmin = user.email === ADMIN_EMAIL || profile.role === "admin";
 
     try {
@@ -2468,7 +3096,7 @@ onAuthStateChanged(auth, async (user) => {
     state.results = await loadResults(user.uid);
 
     if (profile.status === "blocked") {
-      modal("Account Blocked", "Your account has been blocked. Contact the administrator.", [
+      modal("Account Blocked", "Contact the administrator.", [
         { label: "Logout", cls: "btn-danger", onClick: handleLogout }
       ]);
       state.isAdmin = false;
@@ -2480,9 +3108,12 @@ onAuthStateChanged(auth, async (user) => {
     state.userSub = onSnapshot(doc(db, "users", user.uid), (snap) => {
       if (snap.exists()) {
         state.profile = { uid: user.uid, ...snap.data() };
-        if (state.screen !== "exam" && state.screen !== "result" && state.screen !== "practice") render();
+        if (!["exam", "result", "practice", "flashcards"].includes(state.screen)) render();
       }
     });
+
+    // Check achievements on login
+    setTimeout(() => checkAchievements(), 1500);
 
     navigate("home");
   } catch (e) {
@@ -2493,48 +3124,172 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 /* ============================================================
-   WINDOW API
+   GLOBAL EVENT DELEGATION
    ============================================================ */
-window.__dj = {
-  goHome: () => navigate("home"),
-  goSets: () => navigate("sets"),
-  goProfile: () => navigate("profile"),
-  goPremium: () => navigate("premium"),
-  goPractice: () => navigate("practice"),
-  goBookmarks: () => navigate("bookmarks"),
-  goLeaderboard: async () => {
-    state.leaderboard = await loadLeaderboard();
-    navigate("leaderboard");
-  },
-  goAdmin: () => { adminTab = "overview"; navigate("admin"); },
-  goResult: () => navigate("result"),
-  logout: handleLogout,
+document.addEventListener("click", async (e) => {
+  const target = e.target.closest("[data-nav],[data-action]");
+  if (!target) return;
+  e.preventDefault();
 
-  openSet: (i) => navigate("start", { setIdx: i }),
-  retrySet: () => {
-    const r = state.params.result;
-    if (!r) return;
-    const idx = state.sets.findIndex(s => s.idx === r.setIdx);
-    if (idx >= 0) navigate("start", { setIdx: idx });
-  },
-  selectOpt, jumpTo, prevQ, nextQ, askLeave,
-  openReview: (f) => navigate("review", { result: state.params.result, filter: f }),
-  shareResult,
-  startPractice,
-  removeBookmark,
-  toggleBookmark,
+  // Navigation
+  const nav = target.dataset.nav;
+  if (nav) {
+    if (nav === "leaderboard") state.leaderboard = await loadLeaderboard();
+    navigate(nav);
+    return;
+  }
 
-  requestAccess, requestPremium,
+  // Actions
+  const action = target.dataset.action;
+  const idx = target.dataset.idx;
+  const uid = target.dataset.uid;
+  const id = target.dataset.id;
 
-  adminTab: (t) => { adminTab = t; render(); },
-  filterStudents, filterQuestions,
-  grantPremium, togglePractice, toggleBlock,
-  approveRequest, rejectRequest,
-  addQuestion, editQ, deleteQ, previewQ,
-  refreshQuestions, exportJSON, importJSON
-};
+  const actions = {
+    requestAccess,
+    requestPremium: () => requestPremium(id),
+    startFlashcards: () => {
+      const p = state.profile || {};
+      const premActive = p.premium && daysLeft(p.premium.expiry) > 0;
+      if (!premActive && !p.practiceAccess && !state.isAdmin) {
+        return toast("Premium feature", "warn");
+      }
+      startFlashcards();
+    },
+    cycleTheme,
+    logout: handleLogout,
+    openSet: () => navigate("start", { setIdx: +idx }),
+    selectOpt: () => selectOpt(+idx),
+    jumpTo: () => jumpTo(+idx),
+    prevQ, nextQ, askLeave,
+    openReviewAll: () => navigate("review", { result: state.params.result, filter: "all" }),
+    openReviewWrong: () => navigate("review", { result: state.params.result, filter: "wrong" }),
+    sharePNG,
+    retrySet: () => {
+      const r = state.params.result;
+      if (!r) return;
+      const i = state.sets.findIndex(s => s.idx === r.setIdx);
+      if (i >= 0) navigate("start", { setIdx: i });
+    },
+    goResult: () => navigate("result"),
+    startPractice: () => {
+      const key = target.dataset.id;
+      const p = state.profile || {};
+      const premActive = p.premium && daysLeft(p.premium.expiry) > 0;
+      if (!premActive && !p.practiceAccess && !state.isAdmin) {
+        return toast("Premium feature", "warn");
+      }
+      startPractice(key);
+    },
+    flipCard: () => {
+      if (!state.flashcards) return;
+      state.flashcards.flipped = !state.flashcards.flipped;
+      render();
+    },
+    rateCard: () => rateFlashcard(+idx),
+    exitFlashcards: () => {
+      state.flashcards = null;
+      state._flashSession = { done: 0, correct: 0 };
+      navigate("home");
+    },
+    removeBookmark: () => removeBookmark(+idx),
+    flagQ: () => flagCurrentQuestion(),
+    adminTab: () => { adminTab = id; render(); },
+    grantPremium: () => grantPremium(uid),
+    togglePractice: () => togglePractice(uid, target.dataset.val === "true"),
+    toggleBlock: () => toggleBlock(uid, target.dataset.status),
+    approveRequest: () => approveRequest(target.dataset.rid, uid, target.dataset.type),
+    rejectRequest: () => rejectRequest(target.dataset.rid),
+    addQuestion, editQ: () => editQ(+idx), deleteQ: () => deleteQ(+idx),
+    previewQ: () => previewQ(+idx),
+    refreshQuestions, exportJSON, importJSON
+  };
 
-/* Initial */
+  if (actions[action]) {
+    try { await actions[action](); }
+    catch (err) { console.error(err); toast("Error: " + err.message, "err"); }
+  }
+});
+
+/* ============================================================
+   HELPERS: flashcards, flag, bookmark
+   ============================================================ */
+function startFlashcards() {
+  const deck = buildFlashcardDeck();
+  if (!deck.length) return toast("No flashcards available", "err");
+  // Filter to cards due for review (or new)
+  const p = state.profile || {};
+  const srs = p.flashcards || {};
+  const now = Date.now();
+  const due = deck.filter(c => !srs[c.id] || srs[c.id].due <= now);
+  const studyDeck = (due.length ? due : deck).slice(0, 20);
+  state.flashcards = { deck: studyDeck, idx: 0, flipped: false };
+  state._flashSession = { done: 0, correct: 0 };
+  navigate("flashcards");
+}
+
+async function toggleBookmark(setIdx, qi) {
+  if (!state.user || !state.exam) return;
+  const p = state.profile || {};
+  const bms = [...(p.bookmarks || [])];
+  const sec = state.exam.sections[state.exam.si];
+  const key = { set: setIdx, section: sec.key, qi: +qi };
+  const i = bms.findIndex(b => b.set === key.set && b.section === key.section && b.qi === key.qi);
+  if (i >= 0) bms.splice(i, 1); else bms.push({ ...key, addedAt: Date.now() });
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), { bookmarks: bms });
+    state.profile.bookmarks = bms;
+    toast(i >= 0 ? "Bookmark removed" : "Bookmarked ✓", "ok");
+  } catch (e) { toast("Failed", "err"); }
+}
+
+async function removeBookmark(i) {
+  const bms = [...(state.profile.bookmarks || [])];
+  bms.splice(i, 1);
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), { bookmarks: bms });
+    state.profile.bookmarks = bms;
+    render();
+    toast("Removed", "ok");
+  } catch (e) { toast("Failed", "err"); }
+}
+
+async function flagCurrentQuestion() {
+  const ex = state.exam || state.practice;
+  if (!ex) return;
+  const sec = ex.sections[ex.si];
+  const q = sec.questions[ex.qi];
+  modal("Report Question", "Describe the issue (optional):", [
+    { label: "Cancel", cls: "btn-ghost" },
+    { label: "Report", cls: "btn-primary", onClick: async () => {
+      try {
+        await addDoc(collection(db, "flaggedQuestions"), {
+          uid: state.user.uid, question: q.q, section: sec.key,
+          setIdx: ex.set ? ex.set.idx : null, reason: "user report",
+          createdAt: serverTimestamp()
+        });
+        toast("Report sent ✓", "ok");
+      } catch (e) { toast("Failed", "err"); }
+    }}
+  ]);
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+initTheme();
+registerSW();
+setupInstallPrompt();
+setupOffline();
+
+// Hash-based deep links
+window.addEventListener("hashchange", () => {
+  const h = location.hash.slice(1);
+  if (["home","sets","profile","premium","practice","flashcards","leaderboard"].includes(h)) {
+    if (state.user) navigate(h);
+  }
+});
+
 navigate("login");
 </script>
 </body>

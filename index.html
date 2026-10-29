@@ -1,417 +1,1168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airam Tech - Advanced Image Compressor</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <style>
-        :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a8a4e6;
-            --background: #f8f9fa;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dream Japan – JFT Mock Test</title>
+<style>
+:root{
+  --bg:#faf7f2;--card:#fff;--text:#1f1b19;--muted:#8a8179;
+  --red:#c94536;--red2:#e8604f;--redl:#fdf0ee;--line:#ece5dc;
+  --ok:#2e9e6b;--okl:#e8f7ef;--bad:#d64545;--badl:#fdecec;
+  --shadow:0 6px 20px rgba(80,40,30,.08);
+}
+:root[data-theme="dark"]{
+  --bg:#17151a;--card:#222027;--text:#f2eeea;--muted:#a09aa5;
+  --red:#e8604f;--red2:#f07a68;--redl:#3a2523;--line:#35323b;
+  --ok:#4fd39a;--okl:#173226;--bad:#f07272;--badl:#3a2020;
+  --shadow:0 6px 20px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Noto Sans JP",Roboto,sans-serif}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--text);display:flex;justify-content:center;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 85% -5%,rgba(201,69,54,.14),transparent 45%),
+             radial-gradient(circle at -10% 105%,rgba(232,96,79,.10),transparent 40%)}
+.app{width:100%;max-width:480px;position:relative}
+.screen{display:none;flex-direction:column;min-height:100vh;padding:18px 18px 34px;animation:in .32s ease}
+.screen.active{display:flex}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+.spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--red);
+  border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-        body {
-            background: var(--background);
-        }
+.hdr{display:flex;align-items:center;gap:12px;margin:8px 0 20px}
+.logo{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red2),var(--red));
+  display:grid;place-items:center;box-shadow:0 4px 14px rgba(201,69,54,.4);flex-shrink:0}
+.logo svg{width:22px;height:22px}
+.hdr h1{font-size:20px;font-weight:800;letter-spacing:-.4px}
+.hdr p{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1.5px;margin-top:1px}
+.theme{margin-left:auto;background:var(--card);border:1px solid var(--line);width:38px;height:38px;
+  border-radius:50%;font-size:17px;cursor:pointer;color:var(--text)}
+.back{background:none;border:0;color:var(--red);font-weight:700;font-size:14px;cursor:pointer;
+  padding:6px 0;margin-bottom:14px;align-self:flex-start}
 
-        nav {
-            background: #ffffff;
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+.hero{background:linear-gradient(135deg,#c94536,#e8735f);color:#fff;border-radius:22px;
+  padding:24px 20px;box-shadow:0 12px 30px rgba(201,69,54,.35);cursor:pointer;position:relative;
+  overflow:hidden;transition:transform .15s}
+.hero:active{transform:scale(.975)}
+.hero::after{content:"日本";position:absolute;right:-6px;bottom:-26px;font-size:92px;font-weight:900;opacity:.14}
+.hero small{font-size:11px;letter-spacing:1.4px;font-weight:700;opacity:.85}
+.hero h2{font-size:23px;margin:6px 0 8px;font-weight:800}
+.hero p{font-size:13px;opacity:.92;line-height:1.55;max-width:82%}
+.hst{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;background:rgba(255,255,255,.18);
+  border-radius:14px;padding:12px 6px;text-align:center;position:relative;z-index:1}
+.hst strong{display:block;font-size:24px;font-weight:800}
+.hst span{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;opacity:.92}
+.hero b{display:inline-block;margin-top:14px;background:rgba(255,255,255,.22);padding:9px 15px;
+  border-radius:20px;font-size:13px}
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            list-style: none;
-        }
+.sets{display:flex;flex-direction:column;gap:12px}
+.set{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;box-shadow:var(--shadow);
+  transition:transform .12s,border-color .2s}
+.set:hover{border-color:var(--red)}.set:active{transform:scale(.98)}
+.kana{width:48px;height:48px;border-radius:14px;background:var(--redl);color:var(--red);
+  display:grid;place-items:center;font-size:24px;font-weight:800;flex-shrink:0}
+.set .i{flex:1;min-width:0}
+.set small{font-size:10px;color:var(--red);font-weight:800;letter-spacing:.8px}
+.set h3{font-size:16px;font-weight:800;margin:2px 0;letter-spacing:.3px}
+.set em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.badge{font-size:11px;font-weight:800;padding:5px 10px;border-radius:20px;background:var(--line);color:var(--muted)}
+.badge.done{background:var(--okl);color:var(--ok)}
 
-        nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;
+  box-shadow:var(--shadow);margin-top:12px}
+.card .kana{width:70px;height:70px;font-size:34px;margin:0 auto 14px;border-radius:50%}
+.card h2{font-size:23px;font-weight:800;letter-spacing:.4px;text-align:center}
+.card .t{color:var(--red);font-size:11px;font-weight:800;letter-spacing:1.2px;display:block;
+  text-align:center;margin:6px 0 18px}
+.sh{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--muted);margin-bottom:10px;text-align:left}
+.pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.pill{background:var(--bg);border:1px solid var(--line);border-radius:20px;
+  padding:7px 12px;font-size:11.5px;font-weight:800;color:var(--text)}
+.pill b{color:var(--red)}
+.btn{width:100%;border:0;border-radius:14px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;
+  color:#fff;background:linear-gradient(135deg,var(--red2),var(--red));
+  box-shadow:0 8px 20px rgba(201,69,54,.32);transition:transform .1s;margin-top:10px}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+.btn.ghost{background:var(--card);color:var(--text);border:1.5px solid var(--line);box-shadow:none}
+.two{display:flex;gap:10px}
+.two .btn{font-size:14px;padding:14px 6px}
 
-        nav a:hover {
-            background: var(--background);
-            color: var(--primary-color);
-        }
+.rules{text-align:left;counter-reset:r;list-style:none;margin-bottom:4px}
+.rules li{list-style:none;position:relative;padding:9px 0 9px 30px;font-size:13px;line-height:1.5;
+  color:var(--text);border-bottom:1px dashed var(--line)}
+.rules li:last-child{border:0}
+.rules li::before{counter-increment:r;content:counter(r);position:absolute;left:0;top:10px;
+  width:20px;height:20px;border-radius:50%;background:var(--redl);color:var(--red);
+  font-size:10.5px;font-weight:800;display:grid;place-items:center}
+.check{display:flex;align-items:flex-start;gap:10px;margin:14px 0 4px;text-align:left;
+  background:var(--bg);border-radius:12px;padding:13px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--red);flex-shrink:0;margin-top:1px}
+.check span{font-size:12.5px;font-weight:600;line-height:1.4}
 
-        .logo {
-            text-align: center;
-            padding: 1.5rem 0;
-            background: linear-gradient(45deg, #6c5ce7, #857bec);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.exbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20;
+  background:var(--bg);padding:6px 0 10px;margin-bottom:4px}
+.xback{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);
+  color:var(--muted);font-size:15px;font-weight:800;cursor:pointer;flex-shrink:0}
+.exinfo{flex:1;min-width:0}
+.exinfo b{display:block;font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exinfo span{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.3px}
+.timer{display:flex;align-items:center;gap:5px;background:var(--redl);color:var(--red);
+  padding:8px 13px;border-radius:20px;font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.timer.low{background:var(--red);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.steps{display:flex;gap:6px;margin-bottom:12px}
+.step{flex:1;border-radius:9px;padding:8px 2px;text-align:center;font-size:9.5px;font-weight:800;
+  background:var(--card);border:1px solid var(--line);color:var(--muted);letter-spacing:.4px}
+.step.cur{background:var(--red);border-color:var(--red);color:#fff}
+.step.done{background:var(--okl);border-color:var(--ok);color:var(--ok)}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red2),var(--red));
+  border-radius:6px;transition:width .35s}
+.pal{display:flex;gap:6px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+.pal::-webkit-scrollbar{display:none}
+.dot{min-width:31px;height:31px;border-radius:9px;border:1.5px solid var(--line);background:var(--card);
+  font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer;flex-shrink:0}
+.dot.ans{background:var(--redl);color:var(--red);border-color:var(--red2)}
+.dot.cur{background:var(--red);color:#fff;border-color:var(--red)}
+.dot:disabled{opacity:.3;cursor:not-allowed;border-style:dashed}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;
+  box-shadow:var(--shadow);margin-bottom:14px}
+.meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px}
+.qn{font-size:11.5px;font-weight:800;color:var(--red);white-space:nowrap}
+.tag{font-size:10px;font-weight:800;background:var(--line);padding:4px 9px;border-radius:20px;
+  color:var(--muted);letter-spacing:.5px;white-space:nowrap}
+.mk{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap}
+.passage{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--red2);
+  border-radius:10px;padding:14px;font-size:14.5px;line-height:1.75;margin-bottom:14px;
+  white-space:pre-line;text-align:left}
+.qt{font-size:18px;font-weight:700;line-height:1.6;margin-bottom:14px;white-space:pre-line;text-align:left}
+.media{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.media img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.aud{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);
+  padding:12px 14px;border-radius:14px}
+.play{width:44px;height:44px;border-radius:50%;border:0;background:var(--red);color:#fff;
+  font-size:16px;cursor:pointer;flex-shrink:0;font-weight:800}
+.play.rep{width:38px;height:38px;background:var(--redl);color:var(--red);font-size:18px}
+.wave{display:flex;align-items:center;gap:3px;height:26px;flex:1;min-width:0;overflow:hidden}
+.wave i{width:4px;height:8px;border-radius:3px;background:var(--red2);opacity:.4;flex-shrink:0}
+.aud.on .wave i{animation:w .7s ease-in-out infinite;opacity:1}
+.wave i:nth-child(2n){animation-delay:.15s}.wave i:nth-child(3n){animation-delay:.3s}
+@keyframes w{50%{height:24px}}
+.aud span{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:11px;padding:14px;border:1.5px solid var(--line);
+  border-radius:13px;background:var(--card);cursor:pointer;transition:all .16s}
+.opt:hover{border-color:var(--red2)}
+.opt.sel{border-color:var(--red);background:var(--redl);transform:translateX(3px)}
+.ltr{width:27px;height:27px;border-radius:50%;border:2px solid var(--line);display:grid;
+  place-items:center;font-size:11.5px;font-weight:800;color:var(--muted);flex-shrink:0}
+.opt.sel .ltr{background:var(--red);border-color:var(--red);color:#fff}
+.opt .tx{font-size:14.5px;font-weight:500;line-height:1.45;text-align:left}
+.opt.sel .tx{font-weight:700;color:var(--red)}
+.nav{display:flex;gap:11px;margin-top:auto;padding-top:12px}
+.nb{flex:1;padding:15px;border-radius:13px;font-size:14.5px;font-weight:800;cursor:pointer;
+  border:1.5px solid var(--line);background:var(--card);color:var(--text)}
+.nb.p{background:linear-gradient(135deg,var(--red2),var(--red));color:#fff;border-color:transparent;
+  box-shadow:0 6px 16px rgba(201,69,54,.3)}
+.nb:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
 
-        .container {
-            max-width: 800px;
-            margin: 1rem auto;
-            padding: 1.5rem;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
+.rescard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 20px;
+  box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden}
+.rb{display:inline-block;font-size:11.5px;font-weight:900;letter-spacing:1.4px;padding:7px 18px;
+  border-radius:20px;margin-bottom:14px}
+.rb.pass{background:var(--okl);color:var(--ok)}
+.rb.fail{background:var(--badl);color:var(--bad)}
+.ring{position:relative;width:158px;height:158px;margin:0 auto 10px}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:12;stroke-linecap:round}
+.ring .bg{stroke:var(--line)}
+.ring .fg{transition:stroke-dashoffset 1.2s cubic-bezier(.3,.8,.4,1)}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font-size:40px;font-weight:900;line-height:1;letter-spacing:-1px}
+.ring span{font-size:12px;color:var(--muted);font-weight:800;margin-top:4px}
+.grade{font-size:14.5px;font-weight:800;margin-bottom:18px;line-height:1.5}
+.rs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--bg);
+  padding:14px 4px;border-radius:14px}
+.rs h4{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.rs p{font-size:18px;font-weight:900;margin-top:2px}
+.rs p.g{color:var(--ok)}.rs p.r{color:var(--bad)}
+.secscore{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid var(--line);text-align:left}
+.secscore:last-child{border:0}
+.secscore .n{font-size:12px;font-weight:800;width:76px;flex-shrink:0;line-height:1.25}
+.secscore .b{flex:1;height:7px;background:var(--line);border-radius:7px;overflow:hidden}
+.secscore .b i{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,var(--red2),var(--red));transition:width .9s ease}
+.secscore .v{font-size:11.5px;font-weight:900;min-width:52px;text-align:right;color:var(--red)}
 
-        .upload-area {
-            border: 2px dashed var(--secondary-color);
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            cursor: pointer;
-            border-radius: 12px;
-            transition: all 0.3s;
-            background: #fbfaff;
-            position: relative;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.rvhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.rvhead h2{font-size:16px;font-weight:800}
+.tabs{display:flex;gap:6px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:12px;
+  font-weight:800;padding:7px 13px;border-radius:20px;cursor:pointer}
+.tab.on{background:var(--red);border-color:var(--red);color:#fff}
+.rvsec{font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:var(--red);
+  margin:18px 0 8px;text-align:left}
+.rv{display:flex;flex-direction:column;gap:10px;text-align:left}
+.ri{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--ok);
+  border-radius:12px;padding:13px 14px;font-size:13px;line-height:1.55}
+.ri.x{border-left-color:var(--bad)}
+.ri b{display:block;font-size:13px;margin-bottom:7px;line-height:1.5}
+.ri .passage{font-size:13px;padding:10px;margin-bottom:8px}
+.ri img{width:100%;border-radius:10px;margin-bottom:8px}
+.ri .rau{font-size:11.5px;color:var(--muted);margin-bottom:7px;font-weight:700}
+.ro{padding:9px 11px;border:1px solid var(--line);border-radius:9px;margin-top:6px;font-size:12.5px}
+.ro.c{background:var(--okl);border-color:var(--ok);font-weight:700}
+.ro.w{background:var(--badl);border-color:var(--bad)}
+.ri .n{color:var(--bad);font-weight:800;font-size:12px;margin-top:7px}
 
-        #previewImage {
-            max-width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .upload-area:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .controls {
-            display: grid;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        input[type="number"], input[type="range"] {
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 200px;
-        }
-
-        input[type="range"] {
-            max-width: 300px;
-            accent-color: var(--primary-color);
-        }
-
-        button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-            justify-content: center;
-        }
-
-        button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #f8f9ff;
-            border-radius: 8px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 0.5rem;
-        }
-
-        .stat-item span {
-            display: block;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-top: 0.25rem;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--primary-color);
-            transition: width 0.3s;
-        }
-
-        footer {
-            background: #2d3436;
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            nav ul {
-                gap: 0.5rem;
-            }
-
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.25rem 0.5rem;
-            }
-
-            .upload-area {
-                padding: 1.5rem;
-                min-height: 150px;
-            }
-
-            .input-group {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            input[type="number"], input[type="range"] {
-                max-width: 100%;
-            }
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;
+  justify-content:center;z-index:99;padding:20px;backdrop-filter:blur(3px)}
+.ov.show{display:flex}
+.box{background:var(--card);border-radius:20px;padding:24px;max-width:330px;width:100%;
+  text-align:center;animation:in .25s}
+.box h3{font-size:19px;margin-bottom:8px}
+.box p{font-size:13.5px;color:var(--muted);margin-bottom:20px;line-height:1.55}
+.acts{display:flex;gap:10px}
+.acts button{flex:1;padding:13px;border-radius:12px;border:0;font-weight:800;font-size:14.5px;cursor:pointer}
+.a1{background:var(--redl);color:var(--red)}
+.a2{background:var(--red);color:#fff}
+.petal{position:fixed;top:-20px;width:10px;height:10px;background:#f6b3bd;border-radius:100% 0 100% 0;
+  opacity:.85;pointer-events:none;animation:fall linear forwards;z-index:50}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg) translateX(40px);opacity:0}}
+</style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="privacy.html">Privacy</a></li>
-            <li><a href="terms.html">Terms</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-    </nav>
+<div class="app">
 
-    <div class="logo">
-        <h1>🖼️ Airam Compressor</h1>
+  <!-- ============ LOADING ============ -->
+  <div class="screen active" id="loading">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:100vh">
+      <div class="spinner"></div>
+      <p style="font-size:13px;color:var(--muted);font-weight:700">Loading questions…</p>
+    </div>
+  </div>
+
+  <!-- ============ ERROR ============ -->
+  <div class="screen" id="error">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:100vh;padding:24px;text-align:center">
+      <div style="font-size:48px">⚠️</div>
+      <h2 style="font-size:18px;font-weight:800">Could not load questions</h2>
+      <p style="font-size:13px;color:var(--muted);line-height:1.6;max-width:300px" id="errMsg">Please check your connection and try again.</p>
+      <button class="btn" style="max-width:220px" onclick="retryLoad()">Retry</button>
+    </div>
+  </div>
+
+  <!-- ============ HOME ============ -->
+  <div class="screen" id="home">
+    <div class="hdr">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div><h1>Dream Japan</h1><p>JFT MOCK TEST</p></div>
+      <button class="theme" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
     </div>
 
-    <div class="container">
-        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-            <img id="previewImage" alt="Image preview">
-            <p id="uploadText">📁 Drag & drop or click to upload</p>
-            <input type="file" id="fileInput" accept="image/*" hidden>
-        </div>
-
-        <div class="stats" id="stats" style="display: none;">
-            <div class="stat-item">
-                Original Size: <span id="originalSize">0 KB</span>
-            </div>
-            <div class="stat-item">
-                Dimensions: <span id="imageDimensions">0x0</span>
-            </div>
-            <div class="stat-item">
-                Target Size: <span id="targetSize">0 KB</span>
-            </div>
-            <div class="stat-item">
-                Compressed: <span id="compressedSize">0 KB</span>
-            </div>
-        </div>
-
-        <div class="controls">
-            <div class="input-group">
-                <label>Target Size (KB):</label>
-                <input type="number" id="targetKB" min="10" value="100">
-                <label>Quality:</label>
-                <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
-
-            <button onclick="compressImage()" id="compressBtn">🚀 Compress Now</button>
-            <a id="downloadLink" style="display: none;">
-                <button>💾 Download Compressed Image</button>
-            </a>
-        </div>
+    <div class="hero" onclick="show('sets')">
+      <small>JFT-BASIC · PRACTICE SERIES</small>
+      <h2>Mock Test 2026</h2>
+      <p>Six full-length practice sets built on the official 4-section JFT pattern.</p>
+      <div class="hst">
+        <div><strong id="s-sets">6</strong><span>Sets</span></div>
+        <div><strong id="s-done">0</strong><span>Completed</span></div>
+        <div><strong id="s-best">–</strong><span>Best %</span></div>
+      </div>
+      <b>Start practising →</b>
     </div>
 
-    <footer>
-        <p>&copy; 2024 Airam Tech. Crafted with ❤️ by <a href="https://airamtech.com" target="_blank">Airam Tech</a></p>
-    </footer>
+    <p style="text-align:center;font-size:10px;color:var(--muted);margin-top:24px;font-weight:600">
+      <span id="dataInfo">Loaded</span> · 
+      <button onclick="retryLoad()" style="background:none;border:0;color:var(--red);font-weight:800;cursor:pointer;font-size:10px;text-decoration:underline;padding:0;font-family:inherit">Refresh</button>
+    </p>
+  </div>
 
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const compressBtn = document.getElementById('compressBtn');
-        const downloadLink = document.getElementById('downloadLink');
-        const targetKB = document.getElementById('targetKB');
-        const qualityRange = document.getElementById('quality');
-        const stats = document.getElementById('stats');
-        const progress = document.getElementById('progress');
-        const previewImage = document.getElementById('previewImage');
-        const uploadText = document.getElementById('uploadText');
+  <!-- ============ SET LIST ============ -->
+  <div class="screen" id="sets">
+    <div class="hdr">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 4L20 19H4L12 4Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div><h1>Dream Japan</h1><p>CHOOSE A SET</p></div>
+    </div>
+    <button class="back" onclick="show('home')">← Back</button>
+    <div class="sets" id="set-list"></div>
+  </div>
 
-        let originalFile = null;
+  <!-- ============ START ============ -->
+  <div class="screen" id="start">
+    <button class="back" onclick="show('sets')">← Back</button>
+    <div class="card">
+      <div class="kana" id="st-kana"></div>
+      <h2 id="st-name"></h2>
+      <span class="t">JFT-BASIC PRACTICE MOCK TEST</span>
 
-        fileInput.addEventListener('change', function(e) {
-            originalFile = e.target.files[0];
-            if (originalFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                    uploadText.style.display = 'none';
-                    
-                    // Get image dimensions
-                    previewImage.onload = () => {
-                        document.getElementById('imageDimensions').textContent = 
-                            `${previewImage.naturalWidth}x${previewImage.naturalHeight}`;
-                    };
-                };
-                reader.readAsDataURL(originalFile);
-                
-                stats.style.display = 'grid';
-                document.getElementById('originalSize').textContent = 
-                    (originalFile.size / 1024).toFixed(2) + ' KB';
-                document.getElementById('targetSize').textContent = 
-                    targetKB.value + ' KB';
-            }
-        });
+      <div class="pillrow">
+        <span class="pill"><b id="pillQ">52</b> questions</span>
+        <span class="pill"><b id="pillM">250</b> marks</span>
+        <span class="pill"><b>60</b> min</span>
+        <span class="pill">Pass <b id="pillP">200</b></span>
+      </div>
 
-        async function compressImage() {
-            if (!originalFile) return;
+      <div class="sh">Exam rules</div>
+      <ol class="rules">
+        <li>You cannot go back to a previous section once finished.</li>
+        <li>The timer starts as soon as you tap START EXAM and auto-submits at 00:00.</li>
+        <li>You must answer a question before moving to the next one.</li>
+        <li>Audio can be replayed a limited number of times — headphones recommended.</li>
+        <li>Do not refresh or leave the exam. Keep a stable internet connection.</li>
+        <li>Pass mark is <b id="passRule">200 / 250 (80%)</b>.</li>
+      </ol>
 
-            compressBtn.disabled = true;
-            progress.style.width = '0%';
-            
-            try {
-                const targetSizeKB = Number(targetKB.value);
-                let quality = Number(qualityRange.value);
-                let compressedBlob = await compressToQuality(originalFile, quality);
-                
-                if ((compressedBlob.size / 1024) > targetSizeKB) {
-                    compressedBlob = await findOptimalQuality(originalFile, targetSizeKB);
-                }
+      <label class="check">
+        <input type="checkbox" id="agree" onchange="document.getElementById('startBtn').disabled=!this.checked">
+        <span>I have read and understood the exam rules, and I am ready to begin.</span>
+      </label>
 
-                updateUIStats(compressedBlob.size);
-                enableDownload(compressedBlob);
-            } catch (error) {
-                console.error('Compression error:', error);
-                alert('Error compressing image. Please try again.');
-            } finally {
-                compressBtn.disabled = false;
-            }
-        }
+      <button class="btn" id="startBtn" disabled onclick="beginExam()">START EXAM</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;text-align:center;line-height:1.5">
+        Best score: <b id="st-b" style="color:var(--red)">–</b>
+      </p>
+    </div>
+  </div>
 
-        async function compressToQuality(file, quality) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.src = URL.createObjectURL(file);
-                
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.naturalWidth;
-                    canvas.height = img.naturalHeight;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    
-                    canvas.toBlob((blob) => {
-                        resolve(blob);
-                    }, 'image/jpeg', quality);
-                };
-            });
-        }
+  <!-- ============ EXAM ============ -->
+  <div class="screen" id="exam">
+    <div class="exbar">
+      <button class="xback" onclick="askLeave()" aria-label="Leave exam">✕</button>
+      <div class="exinfo"><b id="ex-set"></b><span id="ex-sec"></span></div>
+      <div class="timer" id="timer">⏱ <span id="tm">60:00</span></div>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="bar"><i id="prog"></i></div>
+    <div class="pal" id="pal"></div>
 
-        async function findOptimalQuality(file, targetKB) {
-            let minQuality = 0.1;
-            let maxQuality = 1.0;
-            let optimalBlob = file;
-            
-            for (let i = 0; i < 6; i++) {
-                const midQuality = (minQuality + maxQuality) / 2;
-                const blob = await compressToQuality(file, midQuality);
-                const currentSizeKB = blob.size / 1024;
-                
-                updateProgress((i + 1) * 16.66);
-                
-                if (currentSizeKB > targetKB) {
-                    maxQuality = midQuality;
-                } else {
-                    minQuality = midQuality;
-                    optimalBlob = blob;
-                }
-            }
-            
-            return optimalBlob;
-        }
+    <div class="qcard">
+      <div class="meta">
+        <span class="qn" id="ex-n"></span>
+        <span class="tag" id="ex-t"></span>
+        <span class="mk" id="ex-m"></span>
+      </div>
+      <div id="ex-pass"></div>
+      <div class="qt" id="ex-q"></div>
+      <div class="media" id="media"></div>
+      <div class="opts" id="opts"></div>
+    </div>
 
-        function updateProgress(percentage) {
-            progress.style.width = percentage + '%';
-        }
+    <div class="nav">
+      <button class="nb" id="prev" onclick="go(-1)">← Previous</button>
+      <button class="nb p" id="next" onclick="nextQ()">Next →</button>
+    </div>
+  </div>
 
-        function updateUIStats(compressedSize) {
-            const compressedKB = (compressedSize / 1024).toFixed(2);
-            document.getElementById('compressedSize').textContent = 
-                compressedKB + ' KB';
-            
-            const reduction = ((originalFile.size - compressedSize) / originalFile.size * 100).toFixed(1);
-            progress.style.width = '100%';
-        }
+  <!-- ============ RESULT ============ -->
+  <div class="screen" id="result">
+    <div class="rescard">
+      <div class="rb" id="rs-badge">—</div>
+      <span class="t" id="rs-set"></span>
+      <div class="ring">
+        <svg width="158" height="158" viewBox="0 0 158 158">
+          <circle class="bg" cx="79" cy="79" r="68"/>
+          <circle class="fg" id="ring" cx="79" cy="79" r="68" stroke-dasharray="427.3" stroke-dashoffset="427.3"/>
+        </svg>
+        <div><b id="rs-score">0</b><span id="rs-total">/ 250</span></div>
+      </div>
+      <div class="grade" id="rs-grade"></div>
+      <div class="rs">
+        <div><h4>Correct</h4><p class="g" id="rs-c">0</p></div>
+        <div><h4>Wrong</h4><p class="r" id="rs-w">0</p></div>
+        <div><h4>Skipped</h4><p id="rs-u">0</p></div>
+        <div><h4>Percent</h4><p id="rs-p">0%</p></div>
+      </div>
+    </div>
 
-        function enableDownload(blob) {
-            const url = URL.createObjectURL(blob);
-            downloadLink.href = url;
-            downloadLink.download = `compressed_${originalFile.name}`;
-            downloadLink.style.display = 'block';
-        }
-    </script>
+    <div class="card">
+      <div class="sh">Section-wise score</div>
+      <div id="sec-scores"></div>
+      <div class="secscore" style="border-top:1px solid var(--line);padding-top:12px">
+        <span class="nm" style="color:var(--red);font-weight:800;font-size:12px">Time used</span>
+        <div class="b"></div>
+        <span class="v" id="rs-time">00:00</span>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:14px">
+      <button class="btn ghost" onclick="openReview('all')">All Answers</button>
+      <button class="btn ghost" onclick="openReview('wrong')">Wrong Only</button>
+    </div>
+    <button class="btn" onclick="beginExam()">Try Again</button>
+    <button class="btn ghost" onclick="show('sets');renderSets()">Back to Sets</button>
+  </div>
+
+  <!-- ============ REVIEW ============ -->
+  <div class="screen" id="review">
+    <button class="back" onclick="show('result')">← Back to Result</button>
+    <div class="rvhead">
+      <h2>Answer Review</h2>
+      <div class="tabs">
+        <button class="tab on" id="tab-all" onclick="openReview('all')">All</button>
+        <button class="tab" id="tab-wrong" onclick="openReview('wrong')">Wrong</button>
+      </div>
+    </div>
+    <div class="rv" id="rvlist"></div>
+  </div>
+
+</div>
+
+<div class="ov" id="ov"><div class="box"><h3 id="ov-t"></h3><p id="ov-p"></p><div class="acts" id="ov-a"></div></div></div>
+
+<script type="module">
+/* ==================================================================
+   FIREBASE INIT
+   ================================================================== */
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD_JxMqTdYiW2DF8lgAlojh1quO32M0CuI",
+  authDomain: "dream-japan-9cad8.firebaseapp.com",
+  projectId: "dream-japan-9cad8",
+  storageBucket: "dream-japan-9cad8.firebasestorage.app",
+  messagingSenderId: "587561440248",
+  appId: "1:587561440248:web:5a97ae4d2366e3b5583c0d",
+  measurementId: "G-V3M5626QM5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const DOC_PATH = "jftoctnovset/QORwII8D7qLZ7wuCDW36";
+
+/* ==================================================================
+   CACHE — avoid Firestore reads (free tier friendly)
+   ================================================================== */
+const CACHE_KEY = 'dj_questions_cache_v1';
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+
+function getCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const c = JSON.parse(raw);
+    if (!c || c.v !== 1 || !Array.isArray(c.questions)) return null;
+    return c;
+  } catch { return null; }
+}
+
+function setCache(rows) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      v: 1, ts: Date.now(), questions: rows
+    }));
+  } catch {}
+}
+
+function clearCache() {
+  try { localStorage.removeItem(CACHE_KEY); } catch {}
+}
+
+/* ==================================================================
+   FETCH FROM FIRESTORE
+   ================================================================== */
+async function fetchFromFirestore() {
+  const snap = await getDoc(doc(db, DOC_PATH));
+  if (!snap.exists()) throw new Error('Questions document not found');
+
+  const data = snap.data();
+  let rows = null;
+  if (Array.isArray(data)) rows = data;
+  else if (Array.isArray(data.questions)) rows = data.questions;
+  else {
+    for (const k of Object.keys(data)) {
+      if (Array.isArray(data[k])) { rows = data[k]; break; }
+    }
+  }
+  if (!rows || !rows.length) throw new Error('No questions found in document');
+  return rows;
+}
+
+async function loadQuestions(forceFresh = false) {
+  const cached = getCache();
+  if (!forceFresh && cached && (Date.now() - cached.ts) < CACHE_TTL_MS) {
+    return { questions: cached.questions, ts: cached.ts, fromCache: true };
+  }
+  try {
+    const rows = await fetchFromFirestore();
+    setCache(rows);
+    return { questions: rows, ts: Date.now(), fromCache: false };
+  } catch (err) {
+    if (cached) {
+      console.warn('Firestore failed, using stale cache:', err);
+      return { questions: cached.questions, ts: cached.ts, fromCache: true, stale: true, error: err };
+    }
+    throw err;
+  }
+}
+
+/* ==================================================================
+   CONSTANTS
+   ================================================================== */
+const SECTIONS = [
+  { key: 'sv', name: 'Script and Vocabulary',       short: 'VOCAB',  count: 16, marks: 3 },
+  { key: 'ce', name: 'Conversation and Expression', short: 'CONV',   count: 13, marks: 4 },
+  { key: 'lc', name: 'Listening Comprehension',     short: 'LISTEN', count: 11, marks: 6 },
+  { key: 'rc', name: 'Reading Comprehension',       short: 'READ',   count: 12, marks: 7 }
+];
+const NAMES = [
+  { name: 'SHIMEMASU',  kana: 'し' },
+  { name: 'HARE',       kana: 'は' },
+  { name: 'GAKUSEI',    kana: 'が' },
+  { name: 'ORIMASU',    kana: 'お' },
+  { name: 'PONPYUTA',   kana: 'ぽ' },
+  { name: 'MAGARIMASU', kana: 'ま' }
+];
+
+const EXAM_MIN = 60;
+const MAX_PLAYS = 2;
+
+/* Totals — recalculated after loading from Firestore */
+let TOTAL_Q = 52, FULL_MARKS = 250, PASS_MARKS = 200;
+
+/* ==================================================================
+   SCENE IMAGE GENERATOR
+   ================================================================== */
+function scene(kind) {
+  const sky = { rain: '#7f94a8', sun: '#6ec1f2', snow: '#c8d6e5', cloud: '#9fb3c4' }[kind] || '#6ec1f2';
+  let x = '';
+  if (kind === 'sun') x = '<circle cx="300" cy="55" r="30" fill="#ffd23f"/>';
+  else x = '<ellipse cx="110" cy="52" rx="55" ry="22" fill="#fff" opacity=".88"/>' +
+    '<ellipse cx="255" cy="44" rx="60" ry="24" fill="#fff" opacity=".88"/>';
+  if (kind === 'rain') for (let i = 0; i < 24; i++)
+    x += `<line x1="${20 + i * 15}" y1="${90 + (i * 37) % 60}" x2="${14 + i * 15}" y2="${110 + (i * 37) % 60}" stroke="#d8ecff" stroke-width="2"/>`;
+  if (kind === 'snow') for (let i = 0; i < 22; i++)
+    x += `<circle cx="${15 + i * 16}" cy="${95 + (i * 53) % 90}" r="3" fill="#fff"/>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200">
+    <rect width="360" height="200" fill="${sky}"/>${x}
+    <rect y="165" width="360" height="35" fill="#5d8a4e"/>
+    <polygon points="170,165 215,95 260,165" fill="#c94536"/></svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* ==================================================================
+   NORMALIZE row (supports both array and object format from Firestore)
+   ================================================================== */
+function normalizeRow(r) {
+  if (!r) return null;
+  if (Array.isArray(r)) {
+    if (r.length < 11) return null;
+    return {
+      set: Number(r[0]) || 1,
+      section: String(r[1] || 'sv').toLowerCase(),
+      question: String(r[2] || '').trim(),
+      passage: r[3] ? String(r[3]).trim() : '',
+      image: r[4] ? String(r[4]).trim() : '',
+      audio: r[5] ? String(r[5]).trim() : '',
+      answer: String(r[6] || 'A').toUpperCase(),
+      A: String(r[7] || '').trim(),
+      B: String(r[8] || '').trim(),
+      C: String(r[9] || '').trim(),
+      D: String(r[10] || '').trim()
+    };
+  }
+  return {
+    set: Number(r.set) || 1,
+    section: String(r.section || 'sv').toLowerCase(),
+    question: String(r.question || '').trim(),
+    passage: r.passage ? String(r.passage).trim() : '',
+    image: r.image ? String(r.image).trim() : '',
+    audio: r.audio ? String(r.audio).trim() : '',
+    answer: String(r.answer || 'A').toUpperCase(),
+    A: String(r.A || '').trim(),
+    B: String(r.B || '').trim(),
+    C: String(r.C || '').trim(),
+    D: String(r.D || '').trim()
+  };
+}
+
+/* ==================================================================
+   PARSE FIRESTORE ROWS → SETS structure
+   ================================================================== */
+function parseQuestions(rows) {
+  const sets = NAMES.map((n, i) => ({
+    idx: i + 1, name: n.name, kana: n.kana,
+    sections: SECTIONS.map(s => ({
+      key: s.key, name: s.name, short: s.short,
+      count: s.count, marks: s.marks, questions: []
+    }))
+  }));
+
+  rows.forEach(r => {
+    const row = normalizeRow(r);
+    if (!row) return;
+    const setNum = row.set;
+    if (setNum < 1 || setNum > 6) return;
+    const set = sets[setNum - 1];
+    const sec = set.sections.find(s => s.key === row.section);
+    if (!sec) return;
+
+    const opts = [row.A, row.B, row.C, row.D];
+    const ans = row.answer.charCodeAt(0) - 65;
+
+    sec.questions.push({
+      q: row.question,
+      p: row.passage || null,
+      img: row.image ? (row.image.startsWith('scene:') ? scene(row.image.slice(6)) : row.image) : null,
+      au: row.audio || null,
+      o: opts,
+      a: Math.max(0, Math.min(3, ans)),
+      sel: undefined,
+      locked: false,
+      played: 0
+    });
+  });
+
+  // Sync sec.count to actual loaded question count
+  sets.forEach(set => set.sections.forEach(sec => {
+    sec.count = sec.questions.length;
+  }));
+
+  return sets;
+}
+
+/* ==================================================================
+   STATE
+   ================================================================== */
+let SETS = [];
+let cur = null, si = 0, qi = 0, left = 0;
+let tick = null, paused = false, curAudio = null, rvFilter = 'all';
+
+const $ = id => document.getElementById(id);
+
+let best = {};
+try { best = JSON.parse(localStorage.getItem('dj_best') || '{}'); } catch (e) { best = {}; }
+function saveBest() { try { localStorage.setItem('dj_best', JSON.stringify(best)); } catch (e) {} }
+try { const t = localStorage.getItem('dj_theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+
+/* ==================================================================
+   UI HELPERS
+   ================================================================== */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  scrollTo(0, 0);
+  if (id === 'home') homeStats();
+}
+
+function toggleTheme() {
+  const r = document.documentElement;
+  r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('dj_theme', r.dataset.theme); } catch (e) {}
+}
+
+function homeStats() {
+  const v = Object.values(best);
+  $('s-sets').textContent = SETS.length;
+  $('s-done').textContent = v.length;
+  $('s-best').textContent = v.length ? Math.max.apply(null, v.map(b => b.pct)) + '%' : '–';
+}
+
+function updateTotals() {
+  if (!SETS.length) return;
+  const sections = SETS[0].sections;
+  TOTAL_Q = sections.reduce((a, s) => a + s.questions.length, 0);
+  FULL_MARKS = sections.reduce((a, s) => a + s.questions.length * s.marks, 0);
+  PASS_MARKS = Math.round(FULL_MARKS * 0.8);
+
+  const pillQ = $('pillQ'), pillM = $('pillM'), pillP = $('pillP'), passRule = $('passRule');
+  if (pillQ) pillQ.textContent = TOTAL_Q;
+  if (pillM) pillM.textContent = FULL_MARKS;
+  if (pillP) pillP.textContent = PASS_MARKS;
+  if (passRule) passRule.textContent = PASS_MARKS + ' / ' + FULL_MARKS + ' (80%)';
+}
+
+function setDataInfo(result) {
+  const el = $('dataInfo');
+  if (!el) return;
+  if (result.fromCache) {
+    const ageMin = Math.floor((Date.now() - result.ts) / 60000);
+    el.textContent = ageMin < 1 ? 'Loaded just now' : 'Cached ' + ageMin + ' min ago';
+    if (result.stale) el.textContent += ' (offline)';
+  } else {
+    el.textContent = 'Fresh from server';
+  }
+}
+
+/* ==================================================================
+   SET LIST
+   ================================================================== */
+function renderSets() {
+  const c = $('set-list'); c.innerHTML = '';
+  SETS.forEach((s, i) => {
+    const b = best[s.name];
+    const d = document.createElement('div');
+    d.className = 'set';
+    d.onclick = () => openStart(i);
+    d.innerHTML = '<div class="kana">' + s.kana + '</div>' +
+      '<div class="i"><small>SET ' + s.idx + '</small><h3></h3>' +
+      '<em>' + TOTAL_Q + ' questions · ' + FULL_MARKS + ' marks · 60 min</em></div>' +
+      '<span class="badge ' + (b ? 'done' : '') + '">' + (b ? b.pct + '%' : 'New') + '</span>';
+    d.querySelector('h3').textContent = s.name;
+    c.appendChild(d);
+  });
+}
+
+function openStart(i) {
+  cur = SETS[i];
+  $('st-kana').textContent = cur.kana;
+  $('st-name').textContent = cur.name;
+  const b = best[cur.name];
+  $('st-b').textContent = b ? b.score + ' / ' + FULL_MARKS + ' (' + b.pct + '%)' : '–';
+  $('agree').checked = false;
+  $('startBtn').disabled = true;
+  show('start');
+}
+
+/* ==================================================================
+   EXAM ENGINE
+   ================================================================== */
+function firstUnanswered(sec) {
+  for (let i = 0; i < sec.questions.length; i++)
+    if (sec.questions[i].sel === undefined) return i;
+  return sec.questions.length;
+}
+
+function beginExam() {
+  cur.sections.forEach(s => s.questions.forEach(q => { q.sel = undefined; q.locked = false; q.played = 0; }));
+  si = 0; qi = 0; paused = false; left = EXAM_MIN * 60;
+  startTimer();
+  renderExam();
+  show('exam');
+}
+
+function startTimer() {
+  clearInterval(tick);
+  drawTime();
+  tick = setInterval(() => {
+    if (paused) return;
+    left--;
+    drawTime();
+    if (left <= 0) {
+      clearInterval(tick);
+      modal('Time is up!', 'Your exam is being submitted automatically.', [['View results', 'a2', finish]]);
+    }
+  }, 1000);
+}
+
+function drawTime() {
+  const m = Math.max(0, Math.floor(left / 60)), s = Math.max(0, left % 60);
+  $('tm').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  $('timer').classList.toggle('low', left <= 600);
+}
+
+function renderExam() {
+  stopAudio();
+  const sec = cur.sections[si], q = sec.questions[qi];
+
+  $('ex-set').textContent = 'Set ' + cur.idx + ' · ' + cur.name;
+  $('ex-sec').textContent = 'Section ' + (si + 1) + ' of 4 — ' + sec.name;
+  $('ex-n').textContent = 'Q ' + (qi + 1) + ' of ' + sec.count;
+  $('ex-t').textContent = sec.short;
+  $('ex-m').textContent = sec.marks + ' marks';
+
+  const st = $('steps'); st.innerHTML = '';
+  cur.sections.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'step' + (i === si ? ' cur' : (i < si ? ' done' : ''));
+    d.textContent = s.short;
+    st.appendChild(d);
+  });
+
+  const ps = $('ex-pass'); ps.innerHTML = '';
+  if (q.p) { const p = document.createElement('div'); p.className = 'passage'; p.textContent = q.p; ps.appendChild(p); }
+
+  $('ex-q').textContent = q.q;
+
+  const md = $('media'); md.innerHTML = '';
+  if (q.img) { const im = document.createElement('img'); im.src = q.img; im.alt = ''; md.appendChild(im); }
+  if (q.au) {
+    const a = document.createElement('div');
+    a.className = 'aud'; a.id = 'aud';
+    a.innerHTML = '<button class="play" aria-label="Play audio">▶</button>' +
+      '<button class="play rep" aria-label="Replay audio">↻</button>' +
+      '<div class="wave">' + '<i></i>'.repeat(18) + '</div>' +
+      '<span></span>';
+    a.querySelectorAll('.play').forEach(b => b.onclick = () => playAudio(q));
+    md.appendChild(a);
+    updateAudioLabel(q);
+  }
+  md.style.display = (q.img || q.au) ? 'flex' : 'none';
+
+  const o = $('opts'); o.innerHTML = '';
+  q.o.forEach((t, i) => {
+    if (i === 3 && !t) return; // skip empty D
+    const d = document.createElement('div');
+    d.className = 'opt' + (q.sel === i ? ' sel' : '');
+    d.onclick = () => selectOpt(i);
+    const l = document.createElement('div'); l.className = 'ltr'; l.textContent = 'ABCD'[i];
+    const x = document.createElement('div'); x.className = 'tx'; x.textContent = t;
+    d.appendChild(l); d.appendChild(x);
+    o.appendChild(d);
+  });
+
+  $('prev').disabled = (qi === 0);
+  const nx = $('next');
+  nx.textContent = (qi === sec.count - 1)
+    ? (si === cur.sections.length - 1 ? 'Submit Exam ✓' : 'Finish Section →')
+    : 'Next →';
+  nx.disabled = (q.sel === undefined);
+
+  renderPalette();
+  updateBar();
+}
+
+function renderPalette() {
+  const sec = cur.sections[si];
+  const limit = firstUnanswered(sec);
+  const p = $('pal'); p.innerHTML = '';
+  sec.questions.forEach((q, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (q.sel !== undefined ? ' ans' : '') + (i === qi ? ' cur' : '');
+    b.textContent = i + 1;
+    b.disabled = (i > limit);
+    b.onclick = () => { if (i > limit) return; qi = i; renderExam(); };
+    p.appendChild(b);
+  });
+}
+
+function updateBar() {
+  const sec = cur.sections[si];
+  const done = sec.questions.filter(q => q.sel !== undefined).length;
+  $('prog').style.width = (done / sec.questions.length * 100) + '%';
+}
+
+function selectOpt(i) {
+  const sec = cur.sections[si], q = sec.questions[qi];
+  if (q.locked) return;
+  q.sel = i;
+  document.querySelectorAll('#opts .opt').forEach((el, k) => {
+    el.classList.toggle('sel', k === i);
+  });
+  renderPalette();
+  updateBar();
+  $('next').disabled = false;
+}
+
+function go(d) {
+  const n = qi + d;
+  if (n >= 0 && n < cur.sections[si].count) { qi = n; renderExam(); }
+}
+
+function nextQ() {
+  const sec = cur.sections[si], q = sec.questions[qi];
+  if (q.sel === undefined) return;
+  if (qi < sec.count - 1) { qi++; renderExam(); return; }
+  finishSection();
+}
+
+function finishSection() {
+  const sec = cur.sections[si];
+  const un = sec.questions.filter(q => q.sel === undefined).length;
+  const last = (si === cur.sections.length - 1);
+  const title = last ? 'Submit your exam?' : 'Complete this section?';
+  const body = (un ? un + ' question(s) unanswered in this section. ' : '') +
+    (last ? 'You cannot change your answers after submitting.'
+          : 'You cannot return to this section once you continue.');
+  modal(title, body, [
+    ['Review', 'a1'],
+    [last ? 'Submit' : 'Continue', 'a2', () => {
+      sec.questions.forEach(q => q.locked = true);
+      if (last) { finish(); }
+      else { si++; qi = 0; renderExam(); }
+    }]
+  ]);
+}
+
+/* ==================================================================
+   AUDIO
+   ================================================================== */
+function setPlaying(on) {
+  const a = $('aud');
+  if (!a) return;
+  a.classList.toggle('on', on);
+  const b = a.querySelector('.play:not(.rep)');
+  if (b) b.textContent = on ? '■' : '▶';
+}
+
+function updateAudioLabel(q) {
+  const a = $('aud');
+  if (!a) return;
+  const left = Math.max(0, MAX_PLAYS - (q.played || 0));
+  const s = a.querySelector('span');
+  if (s) s.textContent = left > 0 ? 'Tap to listen (' + left + ' left)' : 'No plays left';
+}
+
+function stopAudio() {
+  if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  setPlaying(false);
+}
+
+function playAudio(q) {
+  if ((q.played || 0) >= MAX_PLAYS) {
+    modal('Audio limit reached', 'You can play the audio only ' + MAX_PLAYS + ' times per question.', [['OK', 'a2']]);
+    return;
+  }
+  stopAudio();
+  q.played = (q.played || 0) + 1;
+  updateAudioLabel(q);
+  const src = q.au;
+  if (src.startsWith('tts:')) {
+    if (!('speechSynthesis' in window)) {
+      modal('Audio unavailable', 'Speech is not supported on this device.', [['OK', 'a2']]);
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(src.slice(4));
+    u.lang = 'ja-JP'; u.rate = .85;
+    u.onend = u.onerror = () => setPlaying(false);
+    setPlaying(true);
+    setTimeout(() => speechSynthesis.speak(u), 80);
+  } else {
+    curAudio = new Audio(src);
+    curAudio.onended = curAudio.onerror = () => setPlaying(false);
+    setPlaying(true);
+    curAudio.play().catch(() => setPlaying(false));
+  }
+}
+
+/* ==================================================================
+   MODAL
+   ================================================================== */
+function modal(t, p, btns) {
+  $('ov-t').textContent = t;
+  $('ov-p').textContent = p;
+  const a = $('ov-a'); a.innerHTML = '';
+  (btns || [['OK', 'a2']]).forEach(b => {
+    const btn = document.createElement('button');
+    btn.textContent = b[0]; btn.className = b[1];
+    btn.onclick = () => { $('ov').classList.remove('show'); if (b[2]) b[2](); };
+    a.appendChild(btn);
+  });
+  $('ov').classList.add('show');
+}
+
+function askLeave() {
+  paused = true; stopAudio();
+  modal('Leave the exam?', 'Your progress will be lost and the timer will stop.', [
+    ['Leave', 'a1', () => { clearInterval(tick); renderSets(); show('sets'); }],
+    ['Continue', 'a2', () => { paused = false; }]
+  ]);
+}
+
+/* ==================================================================
+   RESULT
+   ================================================================== */
+function petals() {
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (3 + Math.random() * 3) + 's';
+    p.style.animationDelay = (Math.random() * 1.2) + 's';
+    p.style.transform = 'scale(' + (0.6 + Math.random()) + ')';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 7500);
+  }
+}
+
+function finish() {
+  clearInterval(tick); stopAudio();
+  const used = EXAM_MIN * 60 - left;
+
+  let score = 0, correct = 0, unanswered = 0;
+  const per = cur.sections.map(s => {
+    let c = 0, u = 0;
+    s.questions.forEach(q => {
+      if (q.sel === undefined) u++;
+      else if (q.sel === q.a) c++;
+    });
+    const sc = c * s.marks;
+    score += sc; correct += c; unanswered += u;
+    return { name: s.name, short: s.short, correct: c, score: sc, max: s.count * s.marks };
+  });
+  const wrong = TOTAL_Q - correct - unanswered;
+  const pct = FULL_MARKS ? Math.round(score / FULL_MARKS * 100) : 0;
+  const pass = score >= PASS_MARKS;
+
+  const prev = best[cur.name];
+  if (!prev || pct > prev.pct) { best[cur.name] = { score: score, pct: pct }; saveBest(); }
+
+  $('rs-badge').textContent = pass ? 'PASSED' : 'NOT PASSED';
+  $('rs-badge').className = 'rb ' + (pass ? 'pass' : 'fail');
+  $('rs-set').textContent = 'SET ' + cur.idx + ' · ' + cur.name;
+  $('rs-score').textContent = score;
+  $('rs-total').textContent = '/ ' + FULL_MARKS;
+  $('rs-c').textContent = correct;
+  $('rs-w').textContent = wrong;
+  $('rs-u').textContent = unanswered;
+  $('rs-p').textContent = pct + '%';
+  $('rs-grade').innerHTML = pass
+    ? (pct >= 95 ? '🌸 Outstanding! You are exam ready.'
+      : pct >= 88 ? '✅ PASSED — excellent work!'
+      : '✅ PASSED — good work, keep polishing.')
+    : '❌ Not passed — you need ' + (PASS_MARKS - score) + ' more mark(s) to reach ' + PASS_MARKS + '.';
+
+  const m = Math.floor(used / 60), s = used % 60;
+  $('rs-time').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+
+  $('sec-scores').innerHTML = per.map(p =>
+    '<div class="secscore">' +
+      '<div class="n">' + p.name + '</div>' +
+      '<div class="b"><i style="width:' + (p.max ? (p.score / p.max * 100) : 0) + '%"></i></div>' +
+      '<div class="v">' + p.score + ' / ' + p.max + '</div>' +
+    '</div>').join('');
+
+  const ring = $('ring');
+  ring.style.stroke = pass ? 'var(--ok)' : 'var(--red)';
+  ring.style.strokeDashoffset = 427.3;
+  requestAnimationFrame(() => setTimeout(() => {
+    ring.style.strokeDashoffset = 427.3 * (1 - pct / 100);
+  }, 80));
+
+  show('result');
+  if (pass) petals();
+}
+
+/* ==================================================================
+   REVIEW
+   ================================================================== */
+function openReview(f) {
+  rvFilter = f || 'all';
+  $('tab-all').classList.toggle('on', rvFilter === 'all');
+  $('tab-wrong').classList.toggle('on', rvFilter === 'wrong');
+  renderReview();
+  show('review');
+}
+
+function renderReview() {
+  const list = $('rvlist'); list.innerHTML = '';
+  let shown = 0;
+
+  cur.sections.forEach(s => {
+    const items = s.questions
+      .map((q, i) => ({ q: q, i: i }))
+      .filter(o => rvFilter === 'all' || o.q.sel !== o.q.a);
+    if (!items.length) return;
+
+    const h = document.createElement('div');
+    h.className = 'rvsec';
+    h.textContent = s.name + ' · ' + s.marks + ' marks each';
+    list.appendChild(h);
+
+    items.forEach(o => {
+      shown++;
+      const q = o.q, ok = (q.sel === q.a);
+      const d = document.createElement('div');
+      d.className = 'ri' + (ok ? '' : ' x');
+
+      const b = document.createElement('b');
+      b.textContent = 'Q' + (o.i + 1) + ' · ' + s.marks + ' marks' + (q.sel === undefined ? ' · not answered' : '');
+      d.appendChild(b);
+
+      if (q.p) { const p = document.createElement('div'); p.className = 'passage'; p.textContent = q.p; d.appendChild(p); }
+      if (q.img) { const im = document.createElement('img'); im.src = q.img; im.alt = ''; d.appendChild(im); }
+      if (q.au) {
+        const a = document.createElement('div');
+        a.className = 'rau';
+        a.textContent = '🔊 ' + (q.au.startsWith('tts:') ? q.au.slice(4) : q.au);
+        d.appendChild(a);
+      }
+
+      const qt = document.createElement('div');
+      qt.style.margin = '4px 0 6px';
+      qt.style.whiteSpace = 'pre-line';
+      qt.textContent = q.q;
+      d.appendChild(qt);
+
+      q.o.forEach((txt, k) => {
+        if (k === 3 && !txt) return;
+        const row = document.createElement('div');
+        const isCorrect = (k === q.a), isYours = (k === q.sel);
+        row.className = 'ro' + (isCorrect ? ' c' : '') + ((isYours && !isCorrect) ? ' w' : '');
+        row.textContent = 'ABCD'[k] + '. ' + txt +
+          (isCorrect ? '  ✓ Correct' : '') +
+          ((isYours && !isCorrect) ? '  ✗ Your answer' : '');
+        d.appendChild(row);
+      });
+
+      list.appendChild(d);
+    });
+  });
+
+  if (!shown) {
+    const e = document.createElement('div');
+    e.className = 'ri';
+    e.textContent = '🎉 Perfect! No wrong answers to review.';
+    list.appendChild(e);
+  }
+}
+
+/* ==================================================================
+   KEYBOARD SHORTCUTS
+   ================================================================== */
+addEventListener('keydown', e => {
+  if (!$('exam').classList.contains('active')) return;
+  if ($('ov').classList.contains('show')) return;
+  const sec = cur.sections[si];
+  if (e.key >= '1' && e.key <= '4') {
+    const i = +e.key - 1;
+    if (i < sec.questions[qi].o.length) selectOpt(i);
+  } else if (e.key === 'ArrowLeft') { go(-1); }
+  else if (e.key === 'ArrowRight') { nextQ(); }
+});
+
+/* ==================================================================
+   BOOT
+   ================================================================== */
+async function boot(forceFresh = false) {
+  show('loading');
+  try {
+    const result = await loadQuestions(forceFresh);
+    SETS = parseQuestions(result.questions);
+    updateTotals();
+    renderSets();
+    homeStats();
+    setDataInfo(result);
+    show('home');
+  } catch (err) {
+    console.error('Boot error:', err);
+    const msg = $('errMsg');
+    if (msg) msg.textContent = err.message || 'Failed to load questions. Check your internet and try again.';
+    show('error');
+  }
+}
+
+async function retryLoad() {
+  clearCache();
+  await boot(true);
+}
+
+/* ==================================================================
+   EXPOSE FUNCTIONS ON WINDOW (for inline onclick handlers)
+   ================================================================== */
+window.toggleTheme = toggleTheme;
+window.show = show;
+window.beginExam = beginExam;
+window.askLeave = askLeave;
+window.go = go;
+window.nextQ = nextQ;
+window.openReview = openReview;
+window.renderSets = renderSets;
+window.retryLoad = retryLoad;
+
+/* Auto-boot */
+boot(false);
+</script>
 </body>
 </html>

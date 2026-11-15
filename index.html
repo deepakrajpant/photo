@@ -184,7 +184,7 @@ button{font:inherit;cursor:pointer}
 
 <!-- ONBOARDING -->
 <section id="view-onboarding" class="page" hidden>
-  <div class="stepdots row" style="gap:5px">
+  <div class="row" style="gap:5px">
     <i id="dot1" style="flex:1;height:4px;border-radius:3px;background:var(--blue)"></i>
     <i id="dot2" style="flex:1;height:4px;border-radius:3px;background:var(--line)"></i>
   </div>
@@ -238,7 +238,6 @@ button{font:inherit;cursor:pointer}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
   getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider,
@@ -264,7 +263,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
-try { getAnalytics(app); } catch(e){ /* analytics may be blocked in some browsers */ }
 
 /* ================= CONSTANTS ================= */
 const ADMIN_EMAIL = "deepakrajpant978@gmail.com";
@@ -404,7 +402,7 @@ function friendlyAuthError(e){
     "auth/weak-password":"Password must be at least 6 characters.",
     "auth/popup-closed-by-user":"Sign-in window closed. Please try again.",
     "auth/operation-not-allowed":"This sign-in method is disabled. Enable it in Firebase Console.",
-    "auth/unauthorized-domain":"This domain is not authorized for Google sign-in."
+    "auth/unauthorized-domain":"This domain is not authorized in Firebase Console → Authentication → Settings → Authorized domains."
   })[e.code] || e.message || "Something went wrong.";
 }
 
@@ -756,7 +754,7 @@ async function handleReaderAction(act, materialId){
   if(act==="report"){
     const reason = prompt("What is wrong with this material?");
     if(reason) await addDoc(collection(db,"reports"), {
-      materialId, reason, uid:state.user.uid, email:state.user.email, createdAt: serverTimestamp()
+      materialId, reason, uid:state.user.uid, email:state.user.email, createdAt:serverTimestamp()
     });
     toast("Report submitted.");
   }

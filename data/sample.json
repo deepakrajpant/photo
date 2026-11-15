@@ -1,0 +1,2256 @@
+{
+  "schemaVersion": "1.0",
+  "records": [
+    {
+      "collection": "exams",
+      "id": "ntc",
+      "data": {
+        "title": "Nepal Telecom",
+        "status": "published",
+        "sortOrder": 0
+      }
+    },
+    {
+      "collection": "exams",
+      "id": "nea",
+      "data": {
+        "title": "Nepal Electricity Authority",
+        "status": "published",
+        "sortOrder": 1
+      }
+    },
+    {
+      "collection": "exams",
+      "id": "general",
+      "data": {
+        "title": "General Loksewa",
+        "status": "published",
+        "sortOrder": 2
+      }
+    },
+    {
+      "collection": "subjects",
+      "id": "science",
+      "data": {
+        "title": "Science & Technology",
+        "description": "Shared science fundamentals for selected examinations.",
+        "examId": "ntc",
+        "examIds": [
+          "ntc",
+          "nea",
+          "general"
+        ],
+        "status": "published",
+        "sortOrder": 0
+      }
+    },
+    {
+      "collection": "chapters",
+      "id": "science-foundations",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "title": "Science Foundations",
+        "description": "Understand the concept, then practice your recall.",
+        "status": "published",
+        "sortOrder": 0
+      }
+    },
+    {
+      "collection": "notes",
+      "id": "science-foundations",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "title": "Science Foundations · आधारभूत विज्ञान",
+        "contentHtml": "<h2>How to study this chapter</h2><p>Read each definition, recall it without looking, and then solve a question. These are author-created practice notes, not official past questions.</p><h2>SI units</h2><table><tr><th>Quantity</th><th>Unit</th></tr><tr><td>Current</td><td>ampere (A)</td></tr><tr><td>Resistance</td><td>ohm (Ω)</td></tr><tr><td>Force</td><td>newton (N)</td></tr><tr><td>Energy</td><td>joule (J)</td></tr><tr><td>Power</td><td>watt (W)</td></tr></table><h2>Electric circuits</h2><p>Ohm’s law: V = IR. For a fixed resistance, P = V²/R. State the assumptions before applying a formula.</p><h2>Waves</h2><p>Period T = 1/f. Convert milliseconds and seconds before calculating.</p><h2>General science</h2><p>Water is H₂O. The Moon is Earth’s natural satellite. Water’s boiling temperature depends on pressure.</p>",
+        "keyFacts": [
+          "V = IR",
+          "P = V²/R",
+          "T = 1/f"
+        ],
+        "commonMistakes": [
+          "Confusing energy (joule) with power (watt).",
+          "Using 100°C as a boiling point without a pressure condition."
+        ],
+        "examTips": [
+          "Write units in every numerical answer.",
+          "Reattempt incorrect questions on a later day."
+        ],
+        "access": "free",
+        "status": "published"
+      }
+    },
+    {
+      "collection": "topics",
+      "id": "electricity",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "title": "विद्युत् आधारभूत",
+        "status": "published",
+        "sortOrder": 0
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-1",
+        "questionText": "विद्युत् प्रवाहको SI एकाइ कुन हो?",
+        "options": [
+          "एम्पियर",
+          "भोल्ट",
+          "ओहम",
+          "वाट"
+        ],
+        "correctOption": 0,
+        "level": 1,
+        "importance": "high",
+        "explanation": "Electric current is measured in amperes.",
+        "memoryTrick": "Current → ampere",
+        "shortAnswer": "एम्पियर",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Electric current is measured in amperes.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-2",
+        "questionText": "प्रतिरोधको SI एकाइ कुन हो?",
+        "options": [
+          "वाट",
+          "ओहम",
+          "जुल",
+          "कुलम्ब"
+        ],
+        "correctOption": 1,
+        "level": 1,
+        "importance": "high",
+        "explanation": "Electrical resistance is measured in ohms.",
+        "memoryTrick": "Resistance → ohm",
+        "shortAnswer": "ओहम",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Electrical resistance is measured in ohms.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-3",
+        "questionText": "12 V स्रोतमा 6 Ω प्रतिरोध जोड्दा प्रवाह कति हुन्छ?",
+        "options": [
+          "1 A",
+          "2 A",
+          "6 A",
+          "72 A"
+        ],
+        "correctOption": 1,
+        "level": 2,
+        "importance": "high",
+        "explanation": "By Ohm’s law, I = V/R = 12/6 = 2 A.",
+        "memoryTrick": "V = IR",
+        "shortAnswer": "2 A",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "By Ohm’s law, I = V/R = 12/6 = 2 A.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-4",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-4",
+        "questionText": "दुईवटा 10 Ω प्रतिरोध समानान्तर जोड्दा तुल्य प्रतिरोध कति हुन्छ?",
+        "options": [
+          "20 Ω",
+          "10 Ω",
+          "5 Ω",
+          "100 Ω"
+        ],
+        "correctOption": 2,
+        "level": 2,
+        "importance": "high",
+        "explanation": "For equal resistors in parallel, equivalent resistance is R/n = 5 Ω.",
+        "memoryTrick": "Equal parallel resistors → divide by count",
+        "shortAnswer": "5 Ω",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "For equal resistors in parallel, equivalent resistance is R/n = 5 Ω.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-5",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-5",
+        "questionText": "आदर्श capacitor को DC steady state व्यवहार के हुन्छ?",
+        "options": [
+          "Short circuit",
+          "Open circuit",
+          "Negative resistance",
+          "Voltage source"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "high",
+        "explanation": "After the charging transient, an ideal capacitor passes no steady DC current.",
+        "memoryTrick": "Capacitor blocks steady DC",
+        "shortAnswer": "Open circuit",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "After the charging transient, an ideal capacitor passes no steady DC current.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-electricity-6",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-6",
+        "questionText": "स्थिर प्रतिरोधमा भोल्टेज दोब्बर हुँदा शक्ति कति गुणा हुन्छ?",
+        "options": [
+          "2",
+          "4",
+          "8",
+          "1/2"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "high",
+        "explanation": "P = V²/R. Doubling V multiplies power by four.",
+        "memoryTrick": "Square the voltage ratio",
+        "shortAnswer": "4",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "electricity",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "P = V²/R. Doubling V multiplies power by four.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-basic",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-basic",
+        "title": "electricity · basic",
+        "kind": "basic",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            1
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-medium",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-medium",
+        "title": "electricity · medium",
+        "kind": "medium",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            2
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-hard",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-hard",
+        "title": "electricity · hard",
+        "kind": "hard",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-important",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-important",
+        "title": "electricity · important",
+        "kind": "important",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "high"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-mixed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-mixed",
+        "title": "electricity · mixed",
+        "kind": "mixed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-speed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-speed",
+        "title": "electricity · speed",
+        "kind": "speed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 20,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 600,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-electricity-full",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "id": "sample-electricity-full",
+        "title": "electricity · full",
+        "kind": "full",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "electricity"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 50,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-electricity-l1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "title": "विद्युत् आधारभूत · Basic foundations",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 1,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Understand the fundamentals"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>Electric current is measured in amperes.</p><p>Electrical resistance is measured in ohms.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Current → ampere",
+              "Resistance → ohm"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "एम्पियर · ओहम"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-electricity-l2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "title": "विद्युत् आधारभूत · Connections and comparison",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 2,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Connect the ideas"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>By Ohm’s law, I = V/R = 12/6 = 2 A.</p><p>For equal resistors in parallel, equivalent resistance is R/n = 5 Ω.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "V = IR",
+              "Equal parallel resistors → divide by count"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "2 A · 5 Ω"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-electricity-l3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "electricity",
+        "title": "विद्युत् आधारभूत · Advanced recall",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 3,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Recall the details"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>After the charging transient, an ideal capacitor passes no steady DC current.</p><p>P = V²/R. Doubling V multiplies power by four.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Capacitor blocks steady DC",
+              "Square the voltage ratio"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "Open circuit · 4"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "topics",
+      "id": "physics",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "title": "Physics and Units",
+        "status": "published",
+        "sortOrder": 1
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-1",
+        "questionText": "बलको SI एकाइ कुन हो?",
+        "options": [
+          "न्युटन",
+          "वाट",
+          "पास्कल",
+          "जुल"
+        ],
+        "correctOption": 0,
+        "level": 1,
+        "importance": "high",
+        "explanation": "Force is measured in newtons.",
+        "memoryTrick": "Force → newton",
+        "shortAnswer": "न्युटन",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Force is measured in newtons.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-2",
+        "questionText": "ऊर्जाको SI एकाइ कुन हो?",
+        "options": [
+          "वाट",
+          "जुल",
+          "एम्पियर",
+          "हर्ट्ज"
+        ],
+        "correctOption": 1,
+        "level": 1,
+        "importance": "high",
+        "explanation": "Energy is measured in joules. Power is measured in watts.",
+        "memoryTrick": "Energy → joule; power → watt",
+        "shortAnswer": "जुल",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Energy is measured in joules. Power is measured in watts.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-3",
+        "questionText": "आवृत्ति 50 Hz भएको तरंगको आवर्तकाल कति हुन्छ?",
+        "options": [
+          "20 ms",
+          "50 ms",
+          "2 s",
+          "5 s"
+        ],
+        "correctOption": 0,
+        "level": 2,
+        "importance": "high",
+        "explanation": "T = 1/f = 1/50 s = 0.02 s = 20 ms.",
+        "memoryTrick": "T = 1/f",
+        "shortAnswer": "20 ms",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "T = 1/f = 1/50 s = 0.02 s = 20 ms.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-4",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-4",
+        "questionText": "10 N बलले वस्तुलाई बलकै दिशामा 2 m सार्दा कार्य कति हुन्छ?",
+        "options": [
+          "5 J",
+          "12 J",
+          "20 J",
+          "100 J"
+        ],
+        "correctOption": 2,
+        "level": 2,
+        "importance": "medium",
+        "explanation": "W = Fd cos θ. Here θ = 0, so W = 10 × 2 = 20 J.",
+        "memoryTrick": "Same direction → multiply",
+        "shortAnswer": "20 J",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "W = Fd cos θ. Here θ = 0, so W = 10 × 2 = 20 J.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-5",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-5",
+        "questionText": "निर्वातमा electromagnetic wave को गति लगभग कति हुन्छ?",
+        "options": [
+          "3 × 10⁶ m/s",
+          "3 × 10⁸ m/s",
+          "3 × 10⁴ m/s",
+          "3 × 10² m/s"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "high",
+        "explanation": "Electromagnetic waves travel at approximately 3 × 10⁸ m/s in vacuum.",
+        "memoryTrick": "c ≈ 3 × 10⁸ m/s",
+        "shortAnswer": "3 × 10⁸ m/s",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Electromagnetic waves travel at approximately 3 × 10⁸ m/s in vacuum.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-physics-6",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-6",
+        "questionText": "कुन राशिको dimensions शक्ति बराबर हुन्छ?",
+        "options": [
+          "ऊर्जा × समय",
+          "बल × वेग",
+          "द्रव्यमान × वेग",
+          "बल × दूरी"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "medium",
+        "explanation": "Force × velocity has units N × m/s = J/s = watt.",
+        "memoryTrick": "Power = force × velocity",
+        "shortAnswer": "बल × वेग",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "physics",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Force × velocity has units N × m/s = J/s = watt.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-basic",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-basic",
+        "title": "physics · basic",
+        "kind": "basic",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            1
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-medium",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-medium",
+        "title": "physics · medium",
+        "kind": "medium",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            2
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-hard",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-hard",
+        "title": "physics · hard",
+        "kind": "hard",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-important",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-important",
+        "title": "physics · important",
+        "kind": "important",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "high"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-mixed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-mixed",
+        "title": "physics · mixed",
+        "kind": "mixed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-speed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-speed",
+        "title": "physics · speed",
+        "kind": "speed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 20,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 600,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-physics-full",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "id": "sample-physics-full",
+        "title": "physics · full",
+        "kind": "full",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "physics"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 50,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-physics-l1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "title": "Physics and Units · Basic foundations",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 1,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Understand the fundamentals"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>Force is measured in newtons.</p><p>Energy is measured in joules. Power is measured in watts.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Force → newton",
+              "Energy → joule; power → watt"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "न्युटन · जुल"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-physics-l2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "title": "Physics and Units · Connections and comparison",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 2,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Connect the ideas"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>T = 1/f = 1/50 s = 0.02 s = 20 ms.</p><p>W = Fd cos θ. Here θ = 0, so W = 10 × 2 = 20 J.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "T = 1/f",
+              "Same direction → multiply"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "20 ms · 20 J"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-physics-l3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "physics",
+        "title": "Physics and Units · Advanced recall",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 3,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Recall the details"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>Electromagnetic waves travel at approximately 3 × 10⁸ m/s in vacuum.</p><p>Force × velocity has units N × m/s = J/s = watt.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "c ≈ 3 × 10⁸ m/s",
+              "Power = force × velocity"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "3 × 10⁸ m/s · बल × वेग"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "topics",
+      "id": "general-science",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "title": "सामान्य विज्ञान",
+        "status": "published",
+        "sortOrder": 2
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-1",
+        "questionText": "पृथ्वीको प्राकृतिक उपग्रह कुन हो?",
+        "options": [
+          "चन्द्रमा",
+          "मङ्गल",
+          "शुक्र",
+          "बुध"
+        ],
+        "correctOption": 0,
+        "level": 1,
+        "importance": "high",
+        "explanation": "The Moon is Earth’s natural satellite.",
+        "memoryTrick": "Earth → Moon",
+        "shortAnswer": "चन्द्रमा",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "The Moon is Earth’s natural satellite.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-2",
+        "questionText": "शुद्ध पानीको रासायनिक सूत्र कुन हो?",
+        "options": [
+          "CO₂",
+          "H₂O",
+          "O₂",
+          "NaCl"
+        ],
+        "correctOption": 1,
+        "level": 1,
+        "importance": "high",
+        "explanation": "A water molecule has two hydrogen atoms and one oxygen atom.",
+        "memoryTrick": "H₂O → 2 H + 1 O",
+        "shortAnswer": "H₂O",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "A water molecule has two hydrogen atoms and one oxygen atom.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-3",
+        "questionText": "मानक वायुमण्डलीय चापमा शुद्ध पानीको उम्लने तापक्रम लगभग कति हुन्छ?",
+        "options": [
+          "0°C",
+          "50°C",
+          "100°C",
+          "200°C"
+        ],
+        "correctOption": 2,
+        "level": 2,
+        "importance": "high",
+        "explanation": "At standard atmospheric pressure, pure water boils at approximately 100°C. Boiling temperature changes with pressure.",
+        "memoryTrick": "Specify pressure before boiling point",
+        "shortAnswer": "100°C",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "At standard atmospheric pressure, pure water boils at approximately 100°C. Boiling temperature changes with pressure.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-4",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-4",
+        "questionText": "प्रकाश संश्लेषणमा सामान्यतया कुन ग्यास ग्रहण हुन्छ?",
+        "options": [
+          "अक्सिजन",
+          "कार्बन डाइअक्साइड",
+          "हिलियम",
+          "नियन"
+        ],
+        "correctOption": 1,
+        "level": 2,
+        "importance": "medium",
+        "explanation": "Photosynthesis uses carbon dioxide and water to form carbohydrates, releasing oxygen.",
+        "memoryTrick": "CO₂ enters; O₂ leaves",
+        "shortAnswer": "कार्बन डाइअक्साइड",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Photosynthesis uses carbon dioxide and water to form carbohydrates, releasing oxygen.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-5",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-5",
+        "questionText": "pH 3 बाट pH 5 हुँदा hydrogen ion concentration कति हुन्छ?",
+        "options": [
+          "100 गुणा बढ्छ",
+          "100 गुणा घट्छ",
+          "2 गुणा बढ्छ",
+          "अपरिवर्तित"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "medium",
+        "explanation": "Each pH unit is a tenfold change. An increase of 2 means a 100-fold reduction in hydrogen ion activity in the usual introductory approximation.",
+        "memoryTrick": "Higher pH → lower H⁺",
+        "shortAnswer": "100 गुणा घट्छ",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Each pH unit is a tenfold change. An increase of 2 means a 100-fold reduction in hydrogen ion activity in the usual introductory approximation.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "questions",
+      "id": "sample-general-science-6",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-6",
+        "questionText": "समस्थानिकमा कुन संख्या समान हुन्छ?",
+        "options": [
+          "न्युट्रोन संख्या",
+          "परमाणु क्रमाङ्क",
+          "द्रव्यमान संख्या",
+          "न्युक्लिओन संख्या"
+        ],
+        "correctOption": 1,
+        "level": 3,
+        "importance": "high",
+        "explanation": "Isotopes are atoms of the same element with equal proton number but different neutron numbers.",
+        "memoryTrick": "Same element → same protons",
+        "shortAnswer": "परमाणु क्रमाङ्क",
+        "source": {
+          "title": "Author-created educational practice. Verify against your prescribed textbook; not an official PYQ."
+        },
+        "verification": "predicted",
+        "mcq": true,
+        "tags": [
+          "general-science",
+          "sample"
+        ],
+        "status": "published",
+        "explanationHtml": "Isotopes are atoms of the same element with equal proton number but different neutron numbers.",
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-basic",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-basic",
+        "title": "general-science · basic",
+        "kind": "basic",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            1
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-medium",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-medium",
+        "title": "general-science · medium",
+        "kind": "medium",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            2
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-hard",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-hard",
+        "title": "general-science · hard",
+        "kind": "hard",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-important",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-important",
+        "title": "general-science · important",
+        "kind": "important",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "high"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-mixed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-mixed",
+        "title": "general-science · mixed",
+        "kind": "mixed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 6,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-speed",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-speed",
+        "title": "general-science · speed",
+        "kind": "speed",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 20,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 600,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "testSets",
+      "id": "sample-general-science-full",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "id": "sample-general-science-full",
+        "title": "general-science · full",
+        "kind": "full",
+        "status": "published",
+        "selectionRules": {
+          "topicIds": [
+            "general-science"
+          ],
+          "levels": [
+            1,
+            2,
+            3
+          ],
+          "questionCount": 50,
+          "levelMix": {
+            "l1": 40,
+            "l2": 40,
+            "l3": 20
+          },
+          "importanceMin": "low"
+        },
+        "durationSeconds": 1200,
+        "scoring": {
+          "marksPerQuestion": 1,
+          "negativeMarks": 0,
+          "passPercentage": 60
+        },
+        "unlockPolicy": {
+          "enabled": false
+        },
+        "access": "free"
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-general-science-l1",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "title": "सामान्य विज्ञान · Basic foundations",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 1,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Understand the fundamentals"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>The Moon is Earth’s natural satellite.</p><p>A water molecule has two hydrogen atoms and one oxygen atom.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Earth → Moon",
+              "H₂O → 2 H + 1 O"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "चन्द्रमा · H₂O"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-general-science-l2",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "title": "सामान्य विज्ञान · Connections and comparison",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 2,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Connect the ideas"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>At standard atmospheric pressure, pure water boils at approximately 100°C. Boiling temperature changes with pressure.</p><p>Photosynthesis uses carbon dioxide and water to form carbohydrates, releasing oxygen.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Specify pressure before boiling point",
+              "CO₂ enters; O₂ leaves"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "100°C · कार्बन डाइअक्साइड"
+          }
+        ]
+      }
+    },
+    {
+      "collection": "materials",
+      "id": "sample-general-science-l3",
+      "data": {
+        "examId": "ntc",
+        "subjectId": "science",
+        "chapterId": "science-foundations",
+        "topicId": "general-science",
+        "title": "सामान्य विज्ञान · Advanced recall",
+        "description": "Author-created learning material linked to the practice questions at this level.",
+        "level": 3,
+        "importance": "high",
+        "access": "free",
+        "status": "published",
+        "source": {
+          "title": "Author-created educational practice; verify with your prescribed textbook. Not official PYQ."
+        },
+        "blocks": [
+          {
+            "id": "intro",
+            "type": "heading",
+            "text": "Recall the details"
+          },
+          {
+            "id": "explanation",
+            "type": "text",
+            "html": "<p>Each pH unit is a tenfold change. An increase of 2 means a 100-fold reduction in hydrogen ion activity in the usual introductory approximation.</p><p>Isotopes are atoms of the same element with equal proton number but different neutron numbers.</p>"
+          },
+          {
+            "id": "units",
+            "type": "table",
+            "rows": [
+              [
+                "Quantity",
+                "Unit"
+              ],
+              [
+                "Electric current",
+                "ampere (A)"
+              ],
+              [
+                "Force",
+                "newton (N)"
+              ],
+              [
+                "Energy",
+                "joule (J)"
+              ]
+            ]
+          },
+          {
+            "id": "memory",
+            "type": "facts",
+            "items": [
+              "Higher pH → lower H⁺",
+              "Same element → same protons"
+            ]
+          },
+          {
+            "id": "recall",
+            "type": "tips",
+            "text": "Close the material and recall the key facts before attempting the linked questions."
+          },
+          {
+            "id": "summary",
+            "type": "summary",
+            "text": "100 गुणा घट्छ · परमाणु क्रमाङ्क"
+          }
+        ]
+      }
+    }
+  ]
+}

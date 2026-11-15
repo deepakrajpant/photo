@@ -1,0 +1,117 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function signed(){return request.auth != null;}
+  function verified(){return signed() && request.auth.token.email_verified == true;}
+  function primaryAdmin(){return verified() && request.auth.token.email == 'deepakrajpant978@gmail.com';}
+  function role(){return get(/databases/$(database)/documents/adminRoles/$(request.auth.uid)).data;}
+  function staff(){return primaryAdmin() || (verified() && exists(/databases/$(database)/documents/adminRoles/$(request.auth.uid)) && role().enabled == true && active());}
+  function editor(){return primaryAdmin() || (staff() && role().role in ['owner','admin','editor']);}
+  function manager(){return primaryAdmin() || (staff() && role().role in ['owner','admin']);}
+  function support(){return primaryAdmin() || (staff() && role().role in ['owner','admin','support']);}
+  function owner(uid){return signed() && request.auth.uid == uid;}
+  function active(){return primaryAdmin() || (verified() && (!exists(/databases/$(database)/documents/users/$(request.auth.uid)/access/current) || get(/databases/$(database)/documents/users/$(request.auth.uid)/access/current).data.status == 'active'));}
+  function premium(){return active() && exists(/databases/$(database)/documents/users/$(request.auth.uid)/access/current) && get(/databases/$(database)/documents/users/$(request.auth.uid)/access/current).data.premiumUntil is timestamp && get(/databases/$(database)/documents/users/$(request.auth.uid)/access/current).data.premiumUntil > request.time;}
+  function entitled(d){return !('access' in d) || d.access == 'free' || premium() || (exists(/databases/$(database)/documents/appSettings/policy) && get(/databases/$(database)/documents/appSettings/policy).data.premiumEnabled == false);}
+  function published(d){return active() && d.status == 'published' && entitled(d);}
+  function status(d){return d.status in ['draft','published','archived','deleted'];}
+  function text(s,max){return s is string && s.size() <= max;}
+  function nonempty(s,max){return text(s,max) && s.size() > 0;}
+  function editorial(d){return status(d) && d.version is int && d.version > 0 && d.createdAt is timestamp && d.updatedAt == request.time && d.createdBy is string && d.updatedBy == request.auth.uid;}
+  function title(d){return nonempty(d.title,250);}
+  function question(d){return editorial(d) && nonempty(d.questionText,12000) && d.options is list && d.options.size() >= 2 && d.options.size() <= 6 && d.options[0] is string && d.options[1] is string && d.level in [1,2,3] && d.importance in ['low','medium','high'] && d.verification in ['official','verified_pyq','predicted'] && d.tags is list && d.tags.size() <= 30 && d.access in ['free','premium'] && d.mcq is bool && d.randomKey is number && d.randomKey >= 0 && d.randomKey <= 1 && d.solutionVersion is int && d.examId is string && d.subjectId is string && d.chapterId is string && d.topicId is string && !d.keys().hasAny(['correctOption','explanationHtml','shortAnswer','memoryTrick']);}
+  function validSolution(qid,d){return d.correctOption is int && d.correctOption >= 0 && d.correctOption < getAfter(/databases/$(database)/documents/questions/$(qid)).data.options.size() && text(d.explanationHtml,200000) && text(d.memoryTrick,10000) && text(d.shortAnswer,12000);}
+  function ownWrite(uid){return owner(uid) && active() && request.resource.data.updatedAt == request.time;}
+  function registrationOpen(){return primaryAdmin() || !exists(/databases/$(database)/documents/appSettings/policy) || get(/databases/$(database)/documents/appSettings/policy).data.registrationOpen == true;}
+  match /adminRoles/{uid} {
+   allow get: if owner(uid) || manager(); allow list: if manager();
+   allow create,update: if primaryAdmin() && uid != request.auth.uid && request.resource.data.keys().hasOnly(['role','enabled','assignedBy','assignedAt','createdAt','updatedAt']) && request.resource.data.role in ['admin','editor','support'] && request.resource.data.enabled is bool && request.resource.data.assignedBy == request.auth.uid && request.resource.data.assignedAt == request.time && request.resource.data.updatedAt == request.time;
+   allow delete: if false;
+  }
+  match /users/{uid} {
+   allow read: if owner(uid) || support();
+   allow create: if owner(uid) && registrationOpen() && request.resource.data.keys().hasOnly(['displayName','email','photoURL','targetExamId','dailyQuestionGoal','dailyMinutesGoal','examDate','preferences','createdAt','updatedAt','lastActiveDate','lastActiveAt','selectedExamIds','pendingExamIds','onboardingComplete','onboardingStep']) && request.resource.data.email == request.auth.token.email && nonempty(request.resource.data.displayName,100) && request.resource.data.dailyQuestionGoal is number && request.resource.data.dailyQuestionGoal >= 1 && request.resource.data.dailyQuestionGoal <= 500 && request.resource.data.updatedAt == request.time;
+   allow update: if owner(uid) && active() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName','photoURL','targetExamId','dailyQuestionGoal','dailyMinutesGoal','examDate','preferences','updatedAt','lastActiveDate','lastActiveAt','selectedExamIds','pendingExamIds','onboardingComplete','onboardingStep']) && nonempty(request.resource.data.displayName,100) && request.resource.data.dailyQuestionGoal >= 1 && request.resource.data.dailyQuestionGoal <= 500 && request.resource.data.dailyMinutesGoal >= 1 && request.resource.data.dailyMinutesGoal <= 600 && request.resource.data.updatedAt == request.time;
+   match /access/{id} {
+    allow read: if owner(uid) || support();
+    allow create,update: if manager() && id == 'current' && request.resource.data.keys().hasOnly(['status','premiumUntil','reason','changedBy','createdAt','updatedAt']) && request.resource.data.status in ['active','suspended'] && (request.resource.data.premiumUntil == null || request.resource.data.premiumUntil is timestamp) && request.resource.data.changedBy == request.auth.uid && request.resource.data.updatedAt == request.time;
+   }
+   match /subjects/{id} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['subjectId','examIds','addedAt','updatedAt']) && request.resource.data.subjectId == id && request.resource.data.examIds is list && request.resource.data.examIds.size() <= 10;
+    allow delete: if owner(uid) && active();
+   }
+   match /savedItems/{id} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['entityType','entityId','title','subjectId','chapterId','topicId','level','importance','favourite','revision','personalImportant','createdAt','updatedAt']) && request.resource.data.entityType in ['material','question'] && request.resource.data.entityId is string && request.resource.data.level in [1,2,3] && (!('favourite' in request.resource.data) || request.resource.data.favourite is bool) && (!('revision' in request.resource.data) || request.resource.data.revision is bool) && (!('personalImportant' in request.resource.data) || request.resource.data.personalImportant is bool);
+    allow delete: if owner(uid) && active();
+   }
+   match /materialProgress/{id} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['materialId','materialVersion','subjectId','chapterId','topicId','level','read','readAt','lastOpenedAt','blockId','createdAt','updatedAt']) && request.resource.data.materialId == id && request.resource.data.materialVersion is int && request.resource.data.level in [1,2,3] && (!('read' in request.resource.data) || request.resource.data.read is bool);
+   }
+   match /learningState/{id} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['materialId','title','topicId','level','lastOpenedAt','createdAt','updatedAt']) && request.resource.data.materialId is string && request.resource.data.level in [1,2,3];
+   }
+   match /questionProgress/{qid} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['examId','subjectId','chapterId','topicId','level','questionVersion','viewedAt','studiedAt','attempts','correct','wrong','consecutiveCorrectDays','lastCorrectDate','lastAttemptAt','lastReviewedAt','personalDifficulty','learningFlag','masteryState','masteredAt','recentCorrectDates','lastAnswerCorrect','updatedAt','createdAt']) && request.resource.data.attempts is int && request.resource.data.attempts >= 0 && request.resource.data.correct >= 0 && request.resource.data.wrong >= 0 && request.resource.data.correct + request.resource.data.wrong == request.resource.data.attempts && request.resource.data.masteryState in ['not_started','learning','needs_revision','mastered'];
+   }
+   match /bookmarks/{qid} {allow read: if owner(uid) || support(); allow create,update: if ownWrite(uid) && request.resource.data.questionId == qid && request.resource.data.keys().hasOnly(['questionId','topicId','createdAt','updatedAt']); allow delete: if owner(uid) && active();}
+   match /revisionSchedule/{qid} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['entityType','entityId','questionId','easeFactor','intervalDays','repetitions','lapses','lastRating','lastReviewAt','lastReviewDate','nextReviewAt','nextReviewDate','updatedAt','createdAt']) && request.resource.data.questionId == qid && request.resource.data.easeFactor is number && request.resource.data.easeFactor >= 1.3 && request.resource.data.intervalDays >= 1 && request.resource.data.nextReviewAt is timestamp;}
+   match /personalNotes/{nid} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['entityType','entityId','materialId','subjectId','topicId','level','kind','questionId','chapterId','noteVersion','text','selectedText','anchor','createdAt','updatedAt']) && request.resource.data.kind in ['question_note','chapter_highlight','material_note'] && text(request.resource.data.text,10000);allow delete: if owner(uid) && active();}
+   match /chapterProgress/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['title','noteVersion','readingPercent','readAt','lastOpenedAt','createdAt','updatedAt']) && request.resource.data.noteVersion is int;}
+   match /plans/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['dateKey','chapterId','topicId','targetQuestions','targetMinutes','status','createdAt','updatedAt']) && request.resource.data.status in ['planned','completed','skipped'] && request.resource.data.targetQuestions is number && request.resource.data.targetQuestions >= 1 && request.resource.data.targetQuestions <= 500;allow delete: if owner(uid) && active();}
+   match /dailyActivity/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['dateKey','viewed','attempted','correct','reviewed','activeSeconds','goalMet','createdAt','updatedAt']) && request.resource.data.dateKey == id && request.resource.data.attempted is int && request.resource.data.attempted >= 0 && request.resource.data.correct >= 0 && request.resource.data.correct <= request.resource.data.attempted;}
+   match /summary/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['studied','mastered','attempts','correct','bookmarked','activeSeconds','currentStreak','longestStreak','lastActiveDate','freezeWeekKey','freezeUsedDate','createdAt','updatedAt']);}
+   match /scopeStats/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['scopeType','scopeId','examId','studied','mastered','attempts','correct','createdAt','updatedAt']) && request.resource.data.scopeType in ['topic','subject','level','exam'] && request.resource.data.studied >= 0 && request.resource.data.mastered >= 0 && request.resource.data.attempts >= 0 && request.resource.data.correct >= 0 && request.resource.data.correct <= request.resource.data.attempts;}
+   match /studySessions/{sid} {
+    allow read: if owner(uid) || support();
+    allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['mode','scope','startedAt','endedAt','activeSeconds','viewed','attempted','correct','rated','status','createdAt','updatedAt']) && request.resource.data.status in ['active','completed','abandoned'] && request.resource.data.activeSeconds >= 0;
+    match /events/{eid} {allow read: if owner(uid) || support();allow create: if ownWrite(uid) && request.resource.data.keys().hasOnly(['questionId','questionVersion','type','selectedOption','isCorrect','rating','dateKey','occurredAt','createdAt','updatedAt']) && request.resource.data.type in ['view','answer','rating','reveal','flag'] && request.resource.data.occurredAt == request.time;}
+   }
+   match /testAttempts/{aid} {
+    allow read: if owner(uid) || support();
+    allow create: if ownWrite(uid) && request.resource.data.status == 'preparing' && request.resource.data.questionCount is int && request.resource.data.questionCount >= 1 && request.resource.data.questionCount <= 100 && request.resource.data.durationSeconds is number && request.resource.data.durationSeconds >= 60 && request.resource.data.durationSeconds <= 14400 && request.resource.data.integrity == 'client_practice';
+    allow update: if ownWrite(uid) && ((resource.data.status == 'preparing' && request.resource.data.status == 'active' && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','startedAt','expiresAt','lastSavedAt','updatedAt'])) || (resource.data.status == 'active' && request.resource.data.status in ['active','submitted','abandoned'] && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','submittedAt','lastSavedAt','updatedAt'])) || (resource.data.status == 'submitted' && !('result' in resource.data) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['result','updatedAt']) && request.resource.data.result is map));
+    match /items/{iid} {
+     allow read: if owner(uid) || support();
+     function attempt(){return get(/databases/$(database)/documents/users/$(uid)/testAttempts/$(aid)).data;}
+     allow create: if ownWrite(uid) && attempt().status == 'preparing' && request.resource.data.order is int && request.resource.data.order >= 0 && request.resource.data.order < 100 && request.resource.data.promptSnapshot is map && request.resource.data.promptSnapshot.options is list && request.resource.data.selectedOption == null;
+     allow update: if ownWrite(uid) && attempt().status == 'active' && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['selectedOption','markedForReview','timeSpentSeconds','updatedAt']) && (request.resource.data.selectedOption == null || (request.resource.data.selectedOption is int && request.resource.data.selectedOption >= 0 && request.resource.data.selectedOption < resource.data.promptSnapshot.options.size())) && request.resource.data.markedForReview is bool;
+    }
+   }
+   match /notifications/{id} {allow read: if owner(uid) || support();allow create: if manager();allow update: if ownWrite(uid) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readAt','updatedAt']);}
+   match /achievements/{id} {allow read: if owner(uid) || support();allow create,update: if ownWrite(uid) && request.resource.data.keys().hasOnly(['kind','scopeId','earnedAt','criteriaVersion','createdAt','updatedAt']);}
+  }
+  match /questions/{qid} {
+   allow get: if active() && !exists(/databases/$(database)/documents/questions/$(qid));
+   allow read: if editor() || published(resource.data);
+   allow create,update: if editor() && question(request.resource.data) && validSolution(qid,getAfter(/databases/$(database)/documents/questions/$(qid)/solutions/$(request.resource.data.solutionVersion)).data);
+   match /solutions/{version} {allow read: if editor() || published(get(/databases/$(database)/documents/questions/$(qid)).data);allow create: if editor() && validSolution(qid,request.resource.data);}
+   match /revisions/{version} {allow read: if editor();allow create: if editor() && request.resource.data.actorUid == request.auth.uid && request.resource.data.recordedAt == request.time;}
+   match /drafts/{version} {allow read: if editor();allow create,update: if editor() && request.resource.data.updatedAt == request.time;allow delete: if editor();}
+  }
+  match /{kind}/{id} {
+   function contentKind(){return kind in ['materials','exams','subjects','chapters','topics','notes','testSets','mockTests','announcements','currentAffairs','formulaSheets'];}
+   allow get: if contentKind() && active() && !exists(/databases/$(database)/documents/$(kind)/$(id));
+   allow read: if contentKind() && (editor() || published(resource.data));
+   allow create,update: if contentKind() && editor() && editorial(request.resource.data) && title(request.resource.data) && (kind != 'materials' || (request.resource.data.blocks is list && request.resource.data.blocks.size() >= 1 && request.resource.data.blocks.size() <= 60 && request.resource.data.level in [1,2,3] && request.resource.data.importance in ['low','medium','high'] && request.resource.data.topicId is string && request.resource.data.chapterId is string && request.resource.data.subjectId is string)) && (!('contentHtml' in request.resource.data) || text(request.resource.data.contentHtml,300000));
+   match /revisions/{version} {allow read: if contentKind() && editor();allow create: if contentKind() && editor() && request.resource.data.actorUid == request.auth.uid && request.resource.data.recordedAt == request.time;}
+   match /drafts/{version} {allow read: if contentKind() && editor();allow create,update: if contentKind() && editor() && request.resource.data.updatedAt == request.time;allow delete: if contentKind() && editor();}
+  }
+  match /mockTests/{tid}/items/{iid} {allow read: if editor() || published(get(/databases/$(database)/documents/mockTests/$(tid)).data);allow create,update: if editor() && request.resource.data.questionId is string && request.resource.data.order is int;allow delete: if editor();}
+  match /testSets/{tid}/items/{iid} {allow read: if editor() || published(get(/databases/$(database)/documents/testSets/$(tid)).data);allow create,update: if editor() && request.resource.data.questionId is string && request.resource.data.order is int;allow delete: if editor();}
+  match /searchEntries/{id} {allow read: if editor() || published(resource.data);allow create,update: if editor() && request.resource.data.tokens is list && request.resource.data.tokens.size() <= 120 && status(request.resource.data) && request.resource.data.updatedAt == request.time;}
+  match /questionReports/{id} {
+   allow read: if editor() || support() || (signed() && resource.data.reporterUid == request.auth.uid);
+   allow create: if active() && request.resource.data.keys().hasOnly(['entityType','entityId','reporterUid','questionId','questionVersion','reason','details','status','createdAt','updatedAt']) && request.resource.data.reporterUid == request.auth.uid && request.resource.data.status == 'pending' && request.resource.data.reason in ['Wrong Answer','Incorrect Explanation','Duplicate','Typo','Outdated','Missing Image','Other'] && text(request.resource.data.details,3000) && request.resource.data.createdAt == request.time;
+   allow update: if (editor() || support()) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','resolutionNotes','resolvedBy','resolvedAt','updatedAt']) && request.resource.data.status in ['pending','resolved'] && request.resource.data.resolvedBy == request.auth.uid;
+  }
+  match /importJobs/{id} {allow read: if editor();allow create,update: if editor() && request.resource.data.actorUid == request.auth.uid && request.resource.data.status in ['validated','committing','completed','partial','cancelled','failed'];match /items/{iid} {allow read: if editor();allow create,update: if editor() && request.resource.data.entityId is string;}}
+  match /adminAuditLogs/{id} {allow read: if staff();allow create: if staff() && request.resource.data.keys().hasOnly(['actorUid','action','entityType','entityId','recordedAt','beforeVersion','afterVersion','jobId']) && request.resource.data.actorUid == request.auth.uid && request.resource.data.recordedAt == request.time;}
+  match /appSettings/{id} {allow read: if id in ['public','policy'] || manager();allow create,update: if manager() && id in ['public','policy'] && request.resource.data.updatedAt == request.time;}
+  match /{path=**}/testAttempts/{id} {allow read: if support();}
+ }
+}

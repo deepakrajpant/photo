@@ -1,0 +1,58 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+let passed=0;const checks=[];
+function test(name,fn){fn();passed++;checks.push(name);console.log('PASS',name);}
+function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(d=>d.isDirectory()?files(path.join(dir,d.name)):[path.join(dir,d.name)]);}
+const all=files(root),js=all.filter(p=>/\.js$/.test(p));
+for(const p of js)test('Syntax: '+path.relative(root,p),()=>{const r=spawnSync(process.execPath,['--check',p],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);});
+test('All local module imports resolve',()=>{for(const p of js){const text=fs.readFileSync(p,'utf8');for(const m of text.matchAll(/(?:from\s*|import\s*\()(['"])(\.[^'"]+)\1/g))assert.ok(fs.existsSync(path.resolve(path.dirname(p),m[2])),p+' -> '+m[2]);}});
+const env=vm.createContext({console,URL,Date,Intl,Math,JSON,Map,Set,Number,String,Array,Object,RegExp,Promise,Error,Uint8Array,TextEncoder,crypto:globalThis.crypto,navigator:{onLine:true},setTimeout,clearTimeout});
+const modules=new Map(),externals=new Map();
+async function load(p){p=path.resolve(p);if(modules.has(p))return modules.get(p);const source=fs.readFileSync(p,'utf8'),mod=new vm.SourceTextModule(source,{context:env,identifier:p});modules.set(p,mod);await mod.link(async(spec,ref)=>{if(spec.startsWith('https://')){if(externals.has(spec))return externals.get(spec);const names=new Set();for(const f of js){const s=fs.readFileSync(f,'utf8');for(const m of s.matchAll(/import\s*\{([^}]+)\}\s*from\s*['"]([^'"]+)['"]/g))if(m[2]===spec)m[1].split(',').forEach(n=>names.add(n.trim()));}const stub=new vm.SyntheticModule([...names],function(){for(const n of names)this.setExport(n,(...args)=>{if(n==='getAuth')return {currentUser:null};return {};});},{context:env});externals.set(spec,stub);return stub;}return load(path.resolve(path.dirname(ref.identifier),spec));});return mod;}
+async function namespace(relative){const m=await load(path.join(root,relative));if(m.status!=='evaluated')await m.evaluate();return m.namespace;}
+const u=await namespace('assets/js/utils.js');
+const p=await namespace('assets/js/services/progress.js');
+const c=await namespace('assets/js/services/content.js');
+const e=await namespace('assets/js/services/exams.js');
+test('Nepal midnight boundary',()=>{assert.equal(u.dayKey('2026-11-12T18:14:59Z'),'2026-11-12');assert.equal(u.dayKey('2026-11-12T18:15:00Z'),'2026-11-13');});
+test('Nepal day arithmetic across year boundary',()=>assert.equal(u.addDays('2026-12-31',1),'2027-01-01'));
+test('Devanagari tokens preserve combining marks',()=>assert.ok(u.tokens('नेपालको संविधान').includes('नेपालको')));
+test('HTML escaping',()=>assert.equal(u.esc('<script>'),'&lt;script&gt;'));
+test('CSV formula injection guard',()=>assert.ok(u.csv([['=SUM(1,2)']]).includes("'=SUM")));
+test('Question validation rejects invalid answers and levels',()=>assert.ok(u.validateQuestion({questionText:'Q',options:['A','B'],correctOption:2,level:4,importance:'high'}).length>=2));
+test('SM-2 first Good review schedules tomorrow',()=>{const r=p.sm2({},'good','2026-11-12');assert.equal(r.intervalDays,1);assert.equal(r.nextReviewDate,'2026-11-13');});
+test('SM-2 second Good review schedules six days',()=>assert.equal(p.sm2({repetitions:1,intervalDays:1,easeFactor:2.5},'good','2026-11-12').intervalDays,6));
+test('SM-2 Again resets repetitions and increments lapses',()=>{const r=p.sm2({repetitions:4,lapses:2,easeFactor:1.3,intervalDays:40},'again','2026-11-12');assert.equal(r.repetitions,0);assert.equal(r.lapses,3);assert.equal(r.easeFactor,1.3);});
+test('Repeated answers on one day do not create mastery',()=>{let s={};for(let i=0;i<4;i++)s={...s,...p.masteryAfter(s,true,'2026-11-12')};assert.equal(s.consecutiveCorrectDays,1);assert.notEqual(s.masteryState,'mastered');});
+test('Three separate correct days create mastery',()=>{let s={};for(const day of ['2026-11-10','2026-11-11','2026-11-12'])s={...s,...p.masteryAfter(s,true,day)};assert.equal(s.masteryState,'mastered');});
+test('Incorrect answer resets mastered state',()=>{const s=p.masteryAfter({masteryState:'mastered',recentCorrectDates:['2026-11-10','2026-11-11','2026-11-12']},false,'2026-11-13');assert.equal(s.masteryState,'needs_revision');assert.equal(s.consecutiveCorrectDays,0);});
+const pool=Array.from({length:60},(_,i)=>({id:'q'+i,level:1+i%3,importance:'high'}));
+test('Mixed engine returns unique requested count',()=>{const m=c.mixQuestions(pool,{count:20,mix:[40,40,20]});assert.equal(m.questions.length,20);assert.equal(new Set(m.questions.map(q=>q.id)).size,20);assert.equal(m.actualMix.join(','),'8,8,4');});
+test('Mixed engine reports insufficient pool',()=>assert.equal(c.mixQuestions(pool.slice(0,3),{count:20}).shortage,17));
+test('Mixed engine excludes recent questions when possible',()=>{const m=c.mixQuestions(pool,{count:10,progress:{q0:{lastAttemptAt:new Date()}}});assert.ok(!m.questions.some(q=>q.id==='q0'));});
+test('Zero difficulty distribution is rejected',()=>assert.throws(()=>c.mixQuestions(pool,{mix:[0,0,0]})));
+test('Score handles correct, wrong, unanswered and negative marks',()=>{const items=[0,1,null].map((selectedOption,i)=>({questionId:'q'+i,selectedOption,marks:2,promptSnapshot:{subjectId:'s',topicId:'t',level:1}}));const answers={q0:{correctOption:0},q1:{correctOption:0},q2:{correctOption:0}};const r=e.score(items,answers,{negativeMarks:.5,passPercentage:60});assert.equal(r.obtained,1.5);assert.equal(r.maximum,6);assert.equal(r.correct,1);assert.equal(r.incorrect,1);assert.equal(r.unattempted,1);assert.equal(r.accuracy,50);assert.equal(r.passed,false);});
+test('Score scales to configured full marks',()=>{const r=e.score([{questionId:'q',selectedOption:0,marks:2,promptSnapshot:{subjectId:'s',topicId:'t',level:1}}],{q:{correctOption:0}},{targetFullMarks:250});assert.equal(r.obtained,250);assert.equal(r.maximum,250);});
+test('Missing answer key prevents a fabricated result',()=>assert.throws(()=>e.score([{questionId:'missing',marks:1,promptSnapshot:{}}],{})));
+test('Sample JSON contains valid predicted questions and level materials',()=>{const seed=JSON.parse(fs.readFileSync(path.join(root,'data/sample.json')));const seen=new Set();for(const r of seed.records){assert.ok(!seen.has(r.collection+'/'+r.id));seen.add(r.collection+'/'+r.id);if(r.collection==='questions'){assert.equal(u.validateQuestion(r.data).length,0);assert.equal(r.data.verification,'predicted');}}assert.equal(seed.records.filter(r=>r.collection==='questions').length,18);assert.equal(seed.records.filter(r=>r.collection==='materials').length,9);});
+test('Composite indexes stay below free database limit',()=>{const data=JSON.parse(fs.readFileSync(path.join(root,'firebase/indexes.json')));assert.ok(data.indexes.length<=200);const keys=data.indexes.map(i=>JSON.stringify(i));assert.equal(new Set(keys).size,keys.length);});
+test('Only the verified primary owner can delegate staff privileges',()=>{const rules=fs.readFileSync(path.join(root,'firebase/rules.txt'),'utf8');assert.match(rules,/function primaryAdmin\(\)\{return verified\(\) && request.auth.token.email == 'deepakrajpant978@gmail.com'/);const section=rules.slice(rules.indexOf('match /adminRoles/'),rules.indexOf('match /users/'));assert.ok(section.includes('allow create,update: if primaryAdmin()'));assert.ok(section.includes('uid != request.auth.uid'));assert.ok(section.includes('allow delete: if false'));});
+test('Required deliverables exist',()=>{for(const f of ['index.html','manifest.json','sw.js','README.md','firebase/rules.txt','firebase/indexes.json','data/sample.json','data/schema.md'])assert.ok(fs.existsSync(path.join(root,f)),f);});
+const learn=await namespace('assets/js/services/learning.js');
+test('Shared subject is deduplicated across examinations',()=>{const shared={id:'science',examIds:['ntc','nea']};const rows=learn.canonicalSubjects([shared,shared,{id:'other',examId:'general'}],['ntc','nea']);assert.equal(rows.length,1);assert.equal(rows[0].id,'science');});
+test('Legacy single-exam subject mapping remains supported',()=>assert.equal(learn.canonicalSubjects([{id:'s',examId:'ntc'}],['ntc']).length,1));
+test('Reading aggregates count eligible units rather than averaging chapters',()=>{const m=learn.aggregateMetrics([{materials:4,read:2,questions:10,assessed:10,mastered:6},{materials:1,read:1,questions:2,assessed:2,mastered:1}]);assert.equal(m.reading,60);assert.equal(m.mastery,58);});
+test('Untested questions remain Not assessed, not failed',()=>{const m=learn.aggregateMetrics([{materials:2,read:1,questions:20,assessed:0,mastered:0}]);assert.equal(m.mastery,null);assert.equal(m.accuracy,null);assert.equal(m.reading,50);});
+test('Read completion cannot create question mastery',()=>{const m=learn.aggregateMetrics([{materials:2,read:2,questions:2,assessed:0,mastered:0}]);assert.equal(m.reading,100);assert.equal(m.mastery,null);});
+test('Materials validate block type, IDs and media accessibility',()=>{assert.ok(learn.validateMaterial({title:'T',subjectId:'s',chapterId:'c',topicId:'t',level:1,importance:'high',blocks:[{id:'b',type:'image',url:'https://example.com/a.png'}]}).includes('Image alt text is required'));});
+test('Every supplied material has valid levels and blocks',()=>{const seed=JSON.parse(fs.readFileSync(path.join(root,'data/sample.json')));for(const r of seed.records.filter(r=>r.collection==='materials'))assert.equal(learn.validateMaterial(r.data).length,0);});
+test('Unsafe media URLs are rejected',()=>{assert.equal(learn.safeURL('javascript:alert(1)'), '');assert.equal(learn.safeURL('data:text/html,unsafe'),'');assert.equal(learn.safeURL('https://example.com/image.png'),'https://example.com/image.png');});
+test('YouTube accepts known hosts and rejects lookalikes',()=>{assert.equal(learn.youtubeId('https://youtu.be/abcdefghijk'),'abcdefghijk');assert.equal(learn.youtubeId('https://youtube.com.evil.test/watch?v=abcdefghijk'),'');assert.equal(learn.youtubeId('https://www.youtube.com/watch?v=abcdefghijk'),'abcdefghijk');});
+test('Single-element selectors are never treated as collections',()=>{for(const f of js){const source=fs.readFileSync(f,'utf8');assert.ok(!/(?<!\$)\$\('[^']*'(?:,\s*\w+)?\)\.forEach/.test(source),path.relative(root,f));}});
+test('Approved primary navigation and learning routes are connected',()=>{const app=fs.readFileSync(path.join(root,'assets/js/app.js'),'utf8');for(const route of ['/my-subjects','/saved','/onboarding/','/materials/'])assert.ok(app.includes(route),route);assert.ok(fs.readFileSync(path.join(root,'index.html'),'utf8').includes('learning.css'));});
+const report={executedAt:new Date().toISOString(),passed,checks,notExecuted:['Firebase Rules emulator: Java/Firebase CLI unavailable in this environment','Live Firebase authentication and Firestore integration: no test account/admin provisioning','Cross-device, browser accessibility and PWA install acceptance tests']};fs.writeFileSync(path.join(root,'tests/results.json'),JSON.stringify(report,null,2));console.log(`\n${passed} checks passed. See tests/results.json for scope and unexecuted checks.`);

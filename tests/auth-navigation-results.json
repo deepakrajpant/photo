@@ -1,0 +1,21 @@
+{
+  "executedAt": "2026-11-15T06:43:18.401Z",
+  "passed": 14,
+  "checks": [
+    "Verified owner has every admin permission without a role document",
+    "Unverified owner email cannot use administrative privileges",
+    "Lookalike and different-email accounts never become owner",
+    "A role read failure no longer destroys owner login or profile context",
+    "Denied profile reads are never treated as a missing profile to overwrite",
+    "Ordinary verified student retains ownership context and receives no admin rights",
+    "Delegated editor may edit content but cannot manage people or delegate roles",
+    "Disabled staff role removes all administrative capabilities",
+    "A client-editable profile role never grants administrator rights",
+    "Signed-out session removes previous role and profile context",
+    "Navigation preserves nested active groups and query parameters",
+    "Every admin destination resolves to its intended module",
+    "Unknown routes cannot silently become student or user-management pages",
+    "Fresh auth bootstrap includes readable issue recovery and explicit readiness"
+  ],
+  "scope": "Actual auth/access modules with simulated Firebase reads. Rules are statically inspected separately; live Firebase and real-browser tests are not included."
+}

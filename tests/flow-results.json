@@ -1,0 +1,16 @@
+{
+  "executedAt": "2026-11-15T06:43:18.241Z",
+  "passed": 9,
+  "checks": [
+    "Onboarding commits examination and canonical subject selection",
+    "Invalid subject mapping cannot overwrite existing selection",
+    "Reading completion changes reading without creating mastery",
+    "Favourite, personal-important and revision flags remain independent",
+    "Material review schedules its own card and never awards question correctness",
+    "Removing and readding subject preserves reading and revision history",
+    "A substantive material version change invalidates old read credit",
+    "Question answer events update learning atomically and idempotently",
+    "A later wrong answer resets recall credit and retains history"
+  ],
+  "scope": "Actual service code with an in-memory repository. Does not validate Firebase Rules, browser rendering, or the live project."
+}

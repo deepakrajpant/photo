@@ -1,0 +1,10 @@
+{
+  "name": "sajilo-gk",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules tests/run.mjs && node --experimental-vm-modules tests/flows.mjs && node --experimental-vm-modules tests/auth-navigation.mjs",
+    "serve": "node tests/serve.mjs"
+  }
+}
